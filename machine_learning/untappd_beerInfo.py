@@ -4,10 +4,13 @@ import csv
 import pickle
 from time import sleep
 
-client_id = 'ADD'
-client_secret = 'ADD'
-endpoint = 'http://api.untappd.com/v4'
-requestHeader = {'User-Agent': 'ADD'}
+with open('apiSettings.csv', 'rb') as settings:
+	reader = csv.reader(settings)
+	for row in reader:
+		client_id = row[0]
+		client_secret = row[1]
+		endpoint = row[2]
+		requestHeader = {'User-Agent': row[3]}
 
 def createUrl(method):
 	return endpoint + '/' + method
@@ -64,79 +67,83 @@ def main():
 	except:
 		pass
 
+	total = 0 
 	with open('userInfo_copy.csv', 'rb') as userNameFile:
 		reader = csv.reader(userNameFile)
 		for i, line in enumerate(reader):
+			userReviewCount = 0
 			if i <= lastLineNum: continue
 			userId = line[0]
 			username = line[1]
 			location = line[2]
-			users[userId] = line[1:]
-			userReviewCount = 4
-			offsetTotal = 0
-			users[userId].append({'ratings': []})
+			if (location != ''):
+				users[userId] = line[1:]
+				offsetTotal = 0
+				users[userId].append({'ratings': []})
 
-			print 'Processing ' + str(userId) + ': ' + username
-			# each response returns at most 25 reviews. To get more user reviews, call again with an offset
-			# get at most 100 reviews from the same user
-			while (userReviewCount > 0):
-				data = getUserReviewData(username, offsetTotal)
-				offset = data['response']['beers']['count']
-				offsetTotal += offset
-				reviews = data['response']['beers']['items']
-				for review in reviews:
-					userRating = review['rating_score']
-					if userRating > 0:
-						beerInfo = review['beer']
-						breweryInfo = review['brewery']
+				print 'Processing ' + str(userId) + ': ' + username
+				# each response returns at most 25 reviews. To get more user reviews, call again with an offset
+				# get at most 50 reviews from the same user
+				while (userReviewCount < 2):
+					print username + ': ' + str(userReviewCount + 1)
+					data = getUserReviewData(username, offsetTotal)
+					offset = data['response']['beers']['count']
+					offsetTotal += offset
+					reviews = data['response']['beers']['items']
+					for review in reviews:
+						userRating = review['rating_score']
+						if userRating > 0:
+							beerInfo = review['beer']
+							breweryInfo = review['brewery']
 
-						# print 'user: ' + username + ', ' + 'beer_id: ' + str(beerInfo['bid']) + ': ' + str(userRating)
-						# fill in beer information
-						if beerInfo['bid'] not in beers:
-							beer = {'name': unicode(beerInfo['beer_name']).encode("utf-8"), 'label': beerInfo['beer_label'],
-							'abv': beerInfo['beer_abv'], 'ibu': beerInfo['beer_ibu'], 'style': unicode(beerInfo['beer_style']).encode("utf-8"),
-							'description': unicode(beerInfo['beer_description']).encode("utf-8"), 'rating': beerInfo['rating_score'],
-							'brewery': breweryInfo['brewery_id']}
-							beers[beerInfo['bid']] = beer
-						else:
-							# the beer's overall rating may have changed in the time since it was stored
-							beers[beerInfo['bid']]['rating'] = beerInfo['rating_score']
-
-							# map breweery_id to a list of beers produced there
-							if breweyInfo['brewery_id'] not in breweryToBeers:
-								# store the current beer in a list of beers of the brewery
-								breweryToBeers[breweryInfo['brewery_id']] = [beerInfo['bid']]
+							# print 'user: ' + username + ', ' + 'beer_id: ' + str(beerInfo['bid']) + ': ' + str(userRating)
+							# fill in beer information
+							if beerInfo['bid'] not in beers:
+								beer = {'name': unicode(beerInfo['beer_name']).encode("utf-8"), 'label': beerInfo['beer_label'],
+								'abv': beerInfo['beer_abv'], 'ibu': beerInfo['beer_ibu'], 'style': unicode(beerInfo['beer_style']).encode("utf-8"),
+								'description': unicode(beerInfo['beer_description']).encode("utf-8"), 'rating': beerInfo['rating_score'],
+								'brewery': breweryInfo['brewery_id']}
+								beers[beerInfo['bid']] = beer
 							else:
-								# add current beer to brewery's list of beers
-								breweryToBeers[breweryInfo['brewery_id']].append(beerInfo['bid'])
+								# the beer's overall rating may have changed in the time since it was stored
+								beers[beerInfo['bid']]['rating'] = beerInfo['rating_score']
 
-						# fill in brewery information
-						if breweryInfo['brewery_id'] not in breweries:
-							brewery = {'name': breweryInfo['brewery_name']).encode("utf-8"), 'label': breweryInfo['brewery_label'],
-							'country': unicode(breweryInfo['country_name']).encode("utf-8"), 'location': unicode(breweryInfo['location']).encode("utf-8")}
-							breweries[breweryInfo['brewery_id']] = brewery
+								# map breweery_id to a list of beers produced there
+								if breweryInfo['brewery_id'] not in breweryToBeers:
+									# store the current beer in a list of beers of the brewery
+									breweryToBeers[breweryInfo['brewery_id']] = [beerInfo['bid']]
+								else:
+									# add current beer to brewery's list of beers
+									breweryToBeers[breweryInfo['brewery_id']].append(beerInfo['bid'])
 
-						# add list of beer ratings to user
-						users[userId][2]['ratings'].append({beerInfo['bid']: userRating})
-				userReviewCount -= 1
+							# fill in brewery information
+							if breweryInfo['brewery_id'] not in breweries:
+								brewery = {'name': unicode(breweryInfo['brewery_name']).encode("utf-8"), 'label': breweryInfo['brewery_label'],
+								'country': unicode(breweryInfo['country_name']).encode("utf-8"), 'location': unicode(breweryInfo['location']).encode("utf-8")}
+								breweries[breweryInfo['brewery_id']] = brewery
 
-				# store the dictionaries
-				with open('users.pkl', 'wb') as usersFile:
-					pickle.dump(users, usersFile)
-				with open('beers.pkl', 'wb') as beersFile:
-					pickle.dump(beers, beersFile)
-				with open('breweries.pkl', 'wb') as breweriesFile:
-					pickle.dump(breweries, breweriesFile)
-				with open('breweryToBeers.pkl', 'wb') as breweryToBeersFile:
-					pickle.dump(breweryToBeers, breweryToBeersFile)
+							# add list of beer ratings to user
+							users[userId][2]['ratings'].append({beerInfo['bid']: userRating})
+					userReviewCount += 1
 
-				sleep(38)
-				# if the offset is less than 25, then there are no more reviews to retrieve
-				if offset < 25:
-					break
+					# store the dictionaries
+					with open('users.pkl', 'wb') as usersFile:
+						pickle.dump(users, usersFile)
+					with open('beers.pkl', 'wb') as beersFile:
+						pickle.dump(beers, beersFile)
+					with open('breweries.pkl', 'wb') as breweriesFile:
+						pickle.dump(breweries, breweriesFile)
+					with open('breweryToBeers.pkl', 'wb') as breweryToBeersFile:
+						pickle.dump(breweryToBeers, breweryToBeersFile)
 
-			with open('last_line.txt', 'wb') as lastFile: lastFile.write(str(i))
-			print str(userId) + ': ' + username + ', Processed: ' + str(len(users[userId][2]['ratings'])) + ' reviews'
+					# if the offset is less than 25, then there are no more reviews to retrieve
+					if offset < 25:
+						break
+				total += len(users[userId][2]['ratings'])
+				with open('last_line.txt', 'wb') as lastFile: lastFile.write(str(i))
+				print str(userId) + ': ' + username + ', Processed: ' + str(len(users[userId][2]['ratings'])) + ' reviews'
+				print 'Total: ' + str(total)
+				sleep(38 * (userReviewCount))
 
 
 

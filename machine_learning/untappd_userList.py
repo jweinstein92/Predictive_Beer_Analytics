@@ -4,13 +4,16 @@ import csv
 from time import sleep
 
 """
-Predictive Beer Analytics script which retrieves the usernames of active members of Untappd.com
+Predictive Beer Analytics script which retrieves the usernames
+of active members of Untappd.com
 """
-
-client_id = 'ADD'
-client_secret = 'ADD'
-endpoint = 'http://api.untappd.com/v4'
-requestHeader = {'User-Agent': 'ADD'}
+with open('apiSettings.csv', 'rb') as settings:
+	reader = csv.reader(settings)
+	for row in reader:
+		client_id = row[0]
+		client_secret = row[1]
+		endpoint = row[2]
+		requestHeader = {'User-Agent': row[3]}
 
 
 def createUrl(method):
