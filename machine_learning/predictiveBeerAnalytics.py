@@ -1,33 +1,35 @@
 import requests
 import json
 import csv
+import mysql.connector
 
 
 class UntappdUser:
     def __init__(self, attribs):
-        self.uid = attribs.uid
-        self.username = attribs.username
-        self.location = attribs.location
+        self.uid = attribs['uid']
+        self.username = attribs['username']
+        self.location = attribs['location']
+        self.ratings = attribs['ratings']
 
 
 class UntappdBeer:
     def __init__(self, attribs):
-        self.name = attribs.name
-        self.label = attribs.label
-        self.abv = attribs.abv
-        self.ibu = attribs.ibu
-        self.style = attribs.style
-        self.description = attribs.description
-        self.rating = attribs.rating
-        self.brewery = attribs.brewery
+        self.name = attribs['name']
+        self.label = attribs['label']
+        self.abv = attribs['abv']
+        self.ibu = attribs['ibu']
+        self.style = attribs['style']
+        self.description = attribs['description']
+        self.rating = attribs['rating']
+        self.brewery = attribs['brewery']
 
 
 class UntappdBrewery:
     def __init__(self, attribs):
-        self.name = attribs.name
-        self.label = attribs.label
-        self.country = attribs.country
-        self.location = attribs.location
+        self.name = attribs['name']
+        self.label = attribs['label']
+        self.country = attribs['country']
+        self.location = attribs['location']
 
 
 class Untappd:
@@ -36,6 +38,9 @@ class Untappd:
         self.client_secret = ''
         self.endpoint = ''
         self.request_header = {}
+        self.users = []
+        self.beers = []
+        self.breweries = []
 
     def settings(self, filename):
         with open(filename, 'rb') as settings:
@@ -79,3 +84,38 @@ class Untappd:
                                 params=parameters)
         data = json.loads(response.text)
         return data
+
+
+def normalizeUsers(userList):
+    i = 1
+    for user in userList:
+        user.uid = str(i)
+        del user.username
+        i += 1
+    return userList
+
+# class DatabaseObject:
+#     def __init__(self):
+#         self.db_config = dict()
+
+#     def config(self, configFile):
+#         with open(configFile, 'rb') as config:
+#             reader = csv.reader(config)
+#             for row in reader:
+#                 user = row[0]
+#                 password = row[1]
+#                 host = row[2]
+#                 database = row[3]
+#             self.db_config = {
+#                 'user': user,
+#                 'password': password,
+#                 'host': host,
+#                 'database': database,
+#                 'raise_on_warnings': True
+#             }
+
+#     def dataToDatabase(self, data):
+#         print self.db_config
+#         cnx = mysql.connector.connect(**self.db_config)
+#         cursor = cnx.cursor()
+#         print 'hello'
