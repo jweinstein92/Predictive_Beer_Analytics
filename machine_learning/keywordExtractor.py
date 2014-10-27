@@ -34,10 +34,10 @@ def ExtractKeywords(text):
 # Load untappd beers
 try:
     beersFile = open('beers.json', 'rb')
-    #beersFile = open('few_beers.json', 'rb')
+    #beersFile = open('beers_sample.json', 'rb')
 except IOError:
     beersFile = open('beers.json', 'wb')
-    #beersFile = open('few_beers.json', 'wb')
+    #beersFile = open('beers_sample.json', 'wb')
 try:
     f = beersFile.read()
     beersList = jpickle.decode(f)
@@ -49,6 +49,7 @@ print 'beers.json LOADED...'
 # List of keywords generation
 keywordsList = {}
 position = 0
+
 for beer in beersList:
     beer[u'keywords']=[]
     beer[u'keywords']=ExtractKeywords(beer[u'description'])
@@ -61,6 +62,10 @@ for beer in beersList:
     position += 1
     if (position % 100)==0:
         print 'Processed ' + str(position) + '/' + str(beersList.__len__()) + ' beers. '
+
+with open('beers_keywords.json','wb') as beersFile:
+    json = jpickle.encode(beersList)
+    beersFile.write(json)
 
 with open('keywords.json', 'wb') as keywordsFile:
     json = jpickle.encode(keywordsList)
