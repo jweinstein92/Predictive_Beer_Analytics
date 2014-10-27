@@ -2,3 +2,7 @@ apiSettings.csv
 *.pkl
 *.txt
 *.csv
+oldFiles/
+privateData/
+.DS_STORE
+venv/
