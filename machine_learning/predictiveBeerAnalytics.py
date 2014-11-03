@@ -1,4 +1,5 @@
 import untappd as UT
+import PBAMap
 import argparse
 import jsonpickle as jpickle
 import cPickle
@@ -257,14 +258,31 @@ def normalizeUsers():
     for uid, user in usersList.iteritems():
         user.uid = str(i)
         user.username = None
+        location = user.location
+        if location != "":
+            if isinstance(location, unicode):
+                location = location.encode('utf-8')
+            mapInfo = PBAMap.getLatLong(location, i)
+            if mapInfo != "":
+                print str(i), location
+                user.location = {
+                    'name': location,
+                    'lat': mapInfo['lat'],
+                    'lng': mapInfo['lng']
+                }
+            else:
+                print str(i), "none"
+                user.location = ""
+        else:
+            print str(i), "none"
         newUsersList[str(i)] = user
         i += 1
 
-    print "User ids and usernames updated\n"
     with open('users.json', 'wb') as usersFile:
         json = jpickle.encode(newUsersList)
         usersFile.write(json)
     usersFile.close()
+    print "User ids, usernames, and locations updated\n"
 
 
 def normalizeBeersAndBreweries():
@@ -310,6 +328,7 @@ def normalizeBeersAndBreweries():
                 ratings[beerIdMap[bid]] = ratings.pop(bid)
             else:
                 ratings.pop(bid)
+        user.ratings = ratings
 
     # store the dictionaries
     with open('users.json', 'wb') as usersFile:
@@ -325,6 +344,7 @@ def normalizeBeersAndBreweries():
         json = jpickle.encode(newBreweryToBeers)
         breweryToBeersFile.write(json)
 
+    print "Beer ids updated\n"
 
 
 # def dataUpload():
