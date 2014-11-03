@@ -1,0 +1,9 @@
+[untappd]
+clientId = KEY
+clientSecret = KEY
+endpoint = https://api.untappd.com/v4
+header = PBA/0.1
+
+[googleMaps]
+apiKey = KEY
+apiKey2 = KEY

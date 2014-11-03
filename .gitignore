@@ -1,3 +1,4 @@
+*.ini
 apiSettings.csv
 *.pkl
 *.txt
