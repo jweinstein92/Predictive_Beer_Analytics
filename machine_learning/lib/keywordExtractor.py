@@ -11,6 +11,7 @@ import nltk
 from nltk.corpus import wordnet as wn
 import re
 import jsonpickle as jpickle
+import untappd as UT
 
 def ExtractKeywords(text):
     keywords = []
@@ -50,20 +51,20 @@ print 'beers.json LOADED...'
 keywordsList = {}
 position = 0
 
-for beer in beersList:
-    beer[u'keywords']=[]
-    beer[u'keywords']=ExtractKeywords(beer[u'description'])
-    for keyword in beer[u'keywords']:
+for id, beer in beersList.iteritems():
+    beer.keywords=[]
+    beer.keywords=ExtractKeywords(beer.description)
+    for keyword in beer.keywords:
         if keyword in keywordsList:
-            keywordsList[keyword][0] += beer[u'rating']
+            keywordsList[keyword][0] += beer.rating
             keywordsList[keyword][1] += 1
         else:
-            keywordsList[keyword]=[beer[u'rating'], 1]
+            keywordsList[keyword]=[beer.rating, 1]
     position += 1
     if (position % 100)==0:
         print 'Processed ' + str(position) + '/' + str(beersList.__len__()) + ' beers. '
 
-with open('beers_keywords.json','wb') as beersFile:
+with open('beers.json','wb') as beersFile:
     json = jpickle.encode(beersList)
     beersFile.write(json)
 
