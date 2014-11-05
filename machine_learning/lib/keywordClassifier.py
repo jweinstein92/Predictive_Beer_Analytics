@@ -1,5 +1,6 @@
-__author__ = 'Marek'
-
+'''
+Shows the usage of keywords in various ways.
+'''
 import nltk
 import jsonpickle as jpickle
 import sys
@@ -12,7 +13,7 @@ import csv
 
 # Load keywords
 try:
-    keywordsFile = open('keywords.json', 'rb')
+    keywordsFile = open('../data/keywords.json', 'rb')
 except:
     print 'Keywords.json not found.'
     sys.exit()
@@ -153,7 +154,7 @@ Plots a graph of most used keywords in the beer description.
     plt.show()
 
 def writeCSV():
-    f = open('sortedByRating.csv', 'wt')
+    f = open('../data/sortedByRating.csv', 'wt')
     writer = csv.writer(f)
     writer.writerow( ('Keyword', 'Rating', 'Usage') )
     for i in range(len(SortedByRating['keywords'])):
@@ -163,7 +164,7 @@ def writeCSV():
             pass
     f.close()
 
-    f = open('sortedByUsage.csv', 'wt')
+    f = open('../data/sortedByUsage.csv', 'wt')
     writer = csv.writer(f)
     writer.writerow( ('Keyword', 'Rating', 'Usage') )
     for i in range(len(SortedByUsage['keywords'])):
