@@ -4,6 +4,9 @@ from ConfigParser import SafeConfigParser
 
 
 class UntappdUser:
+    """
+    Representation of an untappd user
+    """
     def __init__(self, attribs):
         self.uid = attribs['uid']
         self.username = attribs['username']
@@ -12,6 +15,9 @@ class UntappdUser:
 
 
 class UntappdBeer:
+    """
+    Representation of an untappd beer
+    """
     def __init__(self, attribs):
         self.bid = attribs['bid']
         self.name = attribs['name']
@@ -25,6 +31,9 @@ class UntappdBeer:
 
 
 class UntappdBrewery:
+    """
+    Representation of an untappd brewery
+    """
     def __init__(self, attribs):
         self.breweryId = attribs['breweryId']
         self.name = attribs['name']
@@ -34,6 +43,10 @@ class UntappdBrewery:
 
 
 class Untappd:
+    """
+    Untappd object which handles everything related to untappd
+    and the data obtained through untappd's api
+    """
     def __init__(self):
         self.client_id = ''
         self.client_secret = ''

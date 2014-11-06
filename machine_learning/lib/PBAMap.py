@@ -4,7 +4,7 @@ from ConfigParser import SafeConfigParser
 
 config = SafeConfigParser()
 config.read('../apiConfig.ini')
-
+# set the api setting values
 baseUrl = "https://maps.googleapis.com/maps/api/geocode/json?"
 apiKey = config.get('googleMaps', 'apiKey')
 apiKey2 = config.get('googleMaps', 'apiKey2')

@@ -1,9 +1,10 @@
-import untappd as UT
-import PBAMap
 import argparse
 import jsonpickle as jpickle
 import cPickle
 from time import sleep
+import untappd as UT
+import PBAMap
+import keywordExtractor as extract
 
 parser = argparse.ArgumentParser(prog='PBA')
 group = parser.add_mutually_exclusive_group(required=True)
@@ -13,6 +14,8 @@ group.add_argument('--reviews', action='store_true',
                    help='Add to the list of users, beers, and breweries')
 group.add_argument('--normalizeData', action='store_true',
                    help='Alter Untappd data for privacy.')
+group.add_argument('--keywords', action='store_true',
+                   help='Extract keywords from beer descriptions and attach to beer')
 args = parser.parse_args()
 
 # set the api settings and create an Untappd object
@@ -21,7 +24,9 @@ untappd.settings('../apiConfig.ini')
 
 
 def readUsers():
-    # load already processed users UntappdUser
+    """
+    Load already processed users UntappdUser
+    """
     try:
         usersFile = open('../data/users.json', 'rb')
     except IOError:
@@ -37,7 +42,9 @@ def readUsers():
 
 
 def readBeers():
-    # load already processed beers UntappdBeer
+    """
+    Load already processed beers UntappdBeer
+    """
     try:
         beersFile = open('../data/beers.json', 'rb')
     except IOError:
@@ -53,7 +60,9 @@ def readBeers():
 
 
 def readBreweries():
-    # load already processed breweries UntappdBrewery
+    """
+    Load already processed breweries UntappdBrewery
+    """
     try:
         breweriesFile = open('../data/breweries.json', 'rb')
     except IOError:
@@ -69,7 +78,9 @@ def readBreweries():
 
 
 def readBreweryToBeers():
-    # load already processed breweries dictionary
+    """
+    Load already processed breweries dictionary
+    """
     try:
         breweryToBeersFile = open('../data/breweryToBeers.json', 'rb')
     except IOError:
@@ -86,9 +97,10 @@ def readBreweryToBeers():
 
 def usersList():
     """
-    Parses through data from /thepub to get unique usernames and user
-    ids. Stores this information in a csv file to be used in later api
-    requests. Continuously run until user stops script
+    Parses through data from /thepub to get unique usernames, user ids,
+    and locations. Stores this information in a csv file to be used in later api
+    requests. Limited to 100 api calls per hour requiring sleep method.
+    May be run multiple times to retrieve Continuously run until user stops script
     """
 
     usersList = readUsers()
@@ -115,38 +127,36 @@ def usersList():
         with open('../data/users.json', 'wb') as usersFile:
             json = jpickle.encode(usersList)
             usersFile.write(json)
+        userCount = len(usersList)
+        print 'Total Users: ' + str(userCount)
         # Untappd only allows 100 api requests per hour. Sleep for 38
         # seconds between requests
-        sleep(38)
+        sleep(37)
 
 
 def userReviews():
+    """
+    Parses through user reviews /user/beers/{username}
+    Retrieves at most 50 reviews per user, retains review, beer, and
+    brewery information. After querying the api, remove username to
+    lessen privacy concerns with untappd data
+    """
     usersList = readUsers()
     beersList = readBeers()
     breweryList = readBreweries()
     breweryToBeers = readBreweryToBeers()
 
-    try:
-        reviewedFile = open('../data/reviewedUsers.json', 'rb')
-    except IOError:
-        reviewedFile = open('../data/reviewedUsers.json', 'wb')
-
-    try:
-        f = reviewedFile.read()
-        reviewedList = jpickle.decode(f)
-    except:
-        reviewedList = {}
-    reviewedFile.close()
-
     total = 0
+    totalUsersComplete = 0
     for userHash, user in usersList.iteritems():
+        totalUsersComplete += 1
         # if the data has been normalized, old data will not
         # have usernames. Ignore older users which may have
         # already gotten reviews
-        if userHash not in reviewedList and user.username:
-            reviewedList[userHash] = True
+        if user.username:
             userId = user.uid
             username = user.username
+            user.username = None
             userReviewCount = 0
             offsetTotal = 0
             ratings = {}
@@ -208,35 +218,48 @@ def userReviews():
                 userReviewCount += 1
                 user.ratings = ratings
 
-                # store the dictionaries after new data so user doesn't kill process before written
-                with open('../data/users.json', 'wb') as usersFile:
-                    json = jpickle.encode(usersList)
-                    usersFile.write(json)
-                with open('../data/beers.json', 'wb') as beersFile:
-                    json = jpickle.encode(beersList)
-                    beersFile.write(json)
-                with open('../data/breweries.json', 'wb') as breweriesFile:
-                    json = jpickle.encode(breweryList)
-                    breweriesFile.write(json)
-                with open('../data/breweryToBeers.json', 'wb') as breweryToBeersFile:
-                    json = jpickle.encode(breweryToBeers)
-                    breweryToBeersFile.write(json)
-                with open('../data/reviewedUsers.json', 'wb') as reviewedUsersFile:
-                    json = jpickle.encode(reviewedList)
-                    reviewedUsersFile.write(json)
+                # store the dictionaries after new data so user doesn't kill process before writing
+                # with open('../data/users.json', 'wb') as usersFile:
+                #     json = jpickle.encode(usersList)
+                #     usersFile.write(json)
+                # with open('../data/beers.json', 'wb') as beersFile:
+                #     json = jpickle.encode(beersList)
+                #     beersFile.write(json)
+                # with open('../data/breweries.json', 'wb') as breweriesFile:
+                #     json = jpickle.encode(breweryList)
+                #     breweriesFile.write(json)
+                # with open('../data/breweryToBeers.json', 'wb') as breweryToBeersFile:
+                #     json = jpickle.encode(breweryToBeers)
+                #     breweryToBeersFile.write(json)
 
                 # if the offset is less than 25, then there are no more reviews to retrieve
                 if offset < 25:
                     break
+            with open('../data/users.json', 'wb') as usersFile:
+                json = jpickle.encode(usersList)
+                usersFile.write(json)
+            with open('../data/beers.json', 'wb') as beersFile:
+                json = jpickle.encode(beersList)
+                beersFile.write(json)
+            with open('../data/breweries.json', 'wb') as breweriesFile:
+                json = jpickle.encode(breweryList)
+                breweriesFile.write(json)
+            with open('../data/breweryToBeers.json', 'wb') as breweryToBeersFile:
+                json = jpickle.encode(breweryToBeers)
+                breweryToBeersFile.write(json)
             total += len(ratings)
             print str(userId) + ': ' + username + ', Processed: ' + str(len(ratings)) + ' reviews'
-            print 'Total: ' + str(total)
-            sleep(38 * (userReviewCount))
+            print 'Total Reviews: ' + str(total)
+            print 'Total Users Completed: ' + str(totalUsersComplete)
+            sleep(37 * (userReviewCount))
+        else:
+            total += len(user.ratings)
 
 
 def normalizeUsers():
     """
-    Change the user ids and usernames so the information can be made public
+    Change the user ids so the information can be made public and
+    use the googlemaps module to determine the user's location
     """
     usersList = readUsers()
     newUsersList = {}
@@ -246,7 +269,6 @@ def normalizeUsers():
         uid = user.uid
         print hash(uid)
         user.uid = str(i)
-        user.username = None
         location = user.location
         if location['name'] != "" and 'lat' not in location:
             if isinstance(location['name'], unicode):
@@ -293,6 +315,7 @@ def normalizeBeersAndBreweries():
     newBeerList = {}
     newBreweryList = {}
     newBreweryToBeers = {}
+    # change beer ids in beersList and breweryToBeersList
     for hashId, beer in beersList.iteritems():
         bid = beer.bid
         breweryId = beer.brewery
@@ -314,6 +337,7 @@ def normalizeBeersAndBreweries():
 
         newBeerId += 1
 
+    # change beer ids in user reviews
     for uid, user in usersList.iteritems():
         ratings = user.ratings
         for bid in ratings.keys():
@@ -340,6 +364,36 @@ def normalizeBeersAndBreweries():
     print "Beer ids updated\n"
 
 
+def beerKeywords():
+    beersList = readBeers()
+    print 'beers.json LOADED...'
+
+    # List of keywords generation
+    keywordsList = {}
+    position = 0
+
+    for hashId, beer in beersList.iteritems():
+        beer.keywords = []
+        beer.keywords = extract.extractKeywords(beer.description)
+        for keyword in beer.keywords:
+            if keyword in keywordsList:
+                keywordsList[keyword][0] += beer.rating
+                keywordsList[keyword][1] += 1
+            else:
+                keywordsList[keyword] = [beer.rating, 1]
+        position += 1
+        if (position % 100) == 0:
+            print 'Processed ' + str(position) + '/' + str(beersList.__len__()) + ' beers.'
+
+    with open('beers.json', 'wb') as beersFile:
+        json = jpickle.encode(beersList)
+        beersFile.write(json)
+
+    with open('keywords.json', 'wb') as keywordsFile:
+        json = jpickle.encode(keywordsList)
+        keywordsFile.write(json)
+
+
 if args.users:
     usersList()
 elif args.reviews:
@@ -347,3 +401,5 @@ elif args.reviews:
 elif args.normalizeData:
     normalizeUsers()
     normalizeBeersAndBreweries()
+elif args.keywords:
+    beerKeywords()
