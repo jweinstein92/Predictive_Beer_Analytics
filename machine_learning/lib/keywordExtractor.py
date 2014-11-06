@@ -23,21 +23,19 @@ def ExtractKeywords(text):
     #grammar = "NP: {<DT>?<JJ>*<NN>}"
     #cp = nltk.RegexpParser(grammar)
 
-    for i in range(len(words)):
-        for ii in range(len(words[i])):
-            word = words[i][ii]
+    for w in words:
+        for ww in w:
             # Pick conditions based on word types from nltk
-            if (word[1]=='NN' or word[1]=='JJ') and len(word[0])>3:
-                keywords.append(word[0])
-
+            if (ww[1]=='NN' or ww[1]=='JJ') and len(ww[0])>3:
+                keywords.append(ww[0])
     return keywords
 
 # Load untappd beers
 try:
-    beersFile = open('beers.json', 'rb')
+    beersFile = open('../data/beers.json', 'rb')
     #beersFile = open('beers_sample.json', 'rb')
 except IOError:
-    beersFile = open('beers.json', 'wb')
+    beersFile = open('../data/beers.json', 'wb')
     #beersFile = open('beers_sample.json', 'wb')
 try:
     f = beersFile.read()
@@ -64,11 +62,11 @@ for id, beer in beersList.iteritems():
     if (position % 100)==0:
         print 'Processed ' + str(position) + '/' + str(beersList.__len__()) + ' beers. '
 
-with open('beers.json','wb') as beersFile:
+with open('../data/beers.json','wb') as beersFile:
     json = jpickle.encode(beersList)
     beersFile.write(json)
 
-with open('keywords.json', 'wb') as keywordsFile:
+with open('../data/keywords.json', 'wb') as keywordsFile:
     json = jpickle.encode(keywordsList)
     keywordsFile.write(json)
 
