@@ -385,11 +385,11 @@ def beerKeywords():
         if (position % 100) == 0:
             print 'Processed ' + str(position) + '/' + str(beersList.__len__()) + ' beers.'
 
-    with open('beers.json', 'wb') as beersFile:
+    with open('../data/beers.json', 'wb') as beersFile:
         json = jpickle.encode(beersList)
         beersFile.write(json)
 
-    with open('keywords.json', 'wb') as keywordsFile:
+    with open('../data/keywords.json', 'wb') as keywordsFile:
         json = jpickle.encode(keywordsList)
         keywordsFile.write(json)
 
