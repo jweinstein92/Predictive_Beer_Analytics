@@ -5,6 +5,7 @@ from time import sleep
 import untappd as UT
 import PBAMap
 import keywordExtractor as extract
+import dataPoints
 
 parser = argparse.ArgumentParser(prog='PBA')
 group = parser.add_mutually_exclusive_group(required=True)
@@ -16,6 +17,9 @@ group.add_argument('--normalizeData', action='store_true',
                    help='Alter Untappd data for privacy.')
 group.add_argument('--keywords', action='store_true',
                    help='Extract keywords from beer descriptions and attach to beer')
+group.add_argument('--dataPoints', action='store_true',
+                   help='Create list of data points from user locations, ratings, \
+                   and beer alchol content')
 args = parser.parse_args()
 
 # set the api settings and create an Untappd object
@@ -400,6 +404,27 @@ def beerKeywords():
         keywordsFile.write(json)
 
 
+def createDataPoints():
+    usersList = readUsers()
+    beersList = readBeers()
+    points = []
+    i = 1
+    for hashId, user in usersList.iteritems():
+        if 'lat' in user.location and user.ratings:
+            for bid, rating in user.ratings.iteritems():
+                pointAttribs = {'lat': user.location['lat'], 'lng': user.location['lng'],
+                'abv': beersList[str(hash(bid))].abv, 'rating': rating}
+                point = dataPoints.dataPoint(pointAttribs)
+                points.append(point)
+                if i % 1000:
+                    print "Points added: " + str(i)
+                i += 1
+    data = dataPoints.dataPoints(points)
+    with open('../data/dataPoints.json', 'wb') as pointsFile:
+        json = jpickle.encode(data)
+        pointsFile.write(json)
+
+
 if args.users:
     usersList()
 elif args.reviews:
@@ -409,3 +434,6 @@ elif args.normalizeData:
     # normalizeBeersAndBreweries()
 elif args.keywords:
     beerKeywords()
+elif args.dataPoints:
+    createDataPoints()
+
