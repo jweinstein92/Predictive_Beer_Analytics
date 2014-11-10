@@ -13,7 +13,8 @@ import re
 import jsonpickle as jpickle
 import untappd as UT
 
-def ExtractKeywords(text):
+
+def extractKeywords(text):
     keywords = []
     sentences = nltk.sent_tokenize(text)
     words = [nltk.word_tokenize(sent) for sent in sentences]
@@ -26,47 +27,6 @@ def ExtractKeywords(text):
     for w in words:
         for ww in w:
             # Pick conditions based on word types from nltk
-            if (ww[1]=='NN' or ww[1]=='JJ') and len(ww[0])>3:
+            if (ww[1] == 'NN' or ww[1] == 'JJ') and len(ww[0]) > 3:
                 keywords.append(ww[0])
     return keywords
-
-# Load untappd beers
-try:
-    beersFile = open('../data/beers.json', 'rb')
-    #beersFile = open('beers_sample.json', 'rb')
-except IOError:
-    beersFile = open('../data/beers.json', 'wb')
-    #beersFile = open('beers_sample.json', 'wb')
-try:
-    f = beersFile.read()
-    beersList = jpickle.decode(f)
-except:
-    beersList = []
-beersFile.close()
-print 'beers.json LOADED...'
-
-# List of keywords generation
-keywordsList = {}
-position = 0
-
-for id, beer in beersList.iteritems():
-    beer.keywords=[]
-    beer.keywords=ExtractKeywords(beer.description)
-    for keyword in beer.keywords:
-        if keyword in keywordsList:
-            keywordsList[keyword][0] += beer.rating
-            keywordsList[keyword][1] += 1
-        else:
-            keywordsList[keyword]=[beer.rating, 1]
-    position += 1
-    if (position % 100)==0:
-        print 'Processed ' + str(position) + '/' + str(beersList.__len__()) + ' beers. '
-
-with open('../data/beers.json','wb') as beersFile:
-    json = jpickle.encode(beersList)
-    beersFile.write(json)
-
-with open('../data/keywords.json', 'wb') as keywordsFile:
-    json = jpickle.encode(keywordsList)
-    keywordsFile.write(json)
-

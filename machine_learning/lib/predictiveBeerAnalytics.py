@@ -1,6 +1,6 @@
 import argparse
 import jsonpickle as jpickle
-import cPickle
+# import cPickle
 from time import sleep
 import untappd as UT
 import PBAMap
@@ -265,10 +265,10 @@ def normalizeUsers():
     newUsersList = {}
 
     i = 1
+    newUid = 1
     for hashId, user in usersList.iteritems():
         uid = user.uid
-        print hash(uid)
-        user.uid = str(i)
+        user.uid = str(newUid)
         location = user.location
         if location['name'] != "" and 'lat' not in location:
             if isinstance(location['name'], unicode):
@@ -277,7 +277,10 @@ def normalizeUsers():
                 location = location['name']
 
             mapInfo = PBAMap.getLatLong(location, i)
-            if mapInfo != "":
+            i += 1
+            if mapInfo == 'apiLimit':
+                print str(i) + " At daily API limit. Update script and repeat tomorrow"
+            elif mapInfo != '':
                 print str(i), location
                 user.location = {
                     'name': location,
@@ -285,12 +288,10 @@ def normalizeUsers():
                     'lng': mapInfo['lng']
                 }
             else:
-                print str(i), "none"
-                user.location = ""
-        else:
-            print str(i), "none"
+                print str(i), "checked: none"
+                user.location = {'name': ''}
+        newUid += 1
         newUsersList[hash(str(uid))] = user
-        i += 1
 
     with open('../data/users.json', 'wb') as usersFile:
         json = jpickle.encode(newUsersList)
@@ -299,69 +300,74 @@ def normalizeUsers():
     print "User ids, usernames, and locations updated\n"
 
 
-def normalizeBeersAndBreweries():
-    """
-    Change the beer and brewery ids so the information can be made public
-    """
-    usersList = readUsers()
-    beersList = readBeers()
-    breweryList = readBreweries()
+# normalizeBeersAndBreweries isn't really necessary because
+# it only annoynamizes public information as opposed to
+# user specific information. Therefore, beer and brewery ids
+# don't need to be changed.
 
-    newBeerId = 1
-    newBreweryId = 1
-    # create new lists and maps to prevent any id collisions
-    beerIdMap = {}
-    breweryIdMap = {}
-    newBeerList = {}
-    newBreweryList = {}
-    newBreweryToBeers = {}
-    # change beer ids in beersList and breweryToBeersList
-    for hashId, beer in beersList.iteritems():
-        bid = beer.bid
-        breweryId = beer.brewery
-        beerIdMap[bid] = newBeerId
-        if breweryId not in breweryIdMap:
-            breweryIdMap[breweryId] = newBreweryId
-            brewery = cPickle.loads(cPickle.dumps(breweryList[str(hash(breweryId))], -1))
-            brewery.breweryId = newBreweryId
-            newBreweryList[hash(str(breweryId))] = brewery
+# def normalizeBeersAndBreweries():
+#     """
+#     Change the beer and brewery ids so the information can be made public
+#     """
+#     usersList = readUsers()
+#     beersList = readBeers()
+#     breweryList = readBreweries()
 
-            newBreweryToBeers[str(hash(str(breweryId)))] = {str(newBreweryId): [newBeerId]}
-            newBreweryId += 1
-        else:
-            newBreweryToBeers[str(hash(str(breweryId)))][str(breweryIdMap[breweryId])].append(newBeerId)
+#     newBeerId = 1
+#     newBreweryId = 1
+#     # create new lists and maps to prevent any id collisions
+#     beerIdMap = {}
+#     breweryIdMap = {}
+#     newBeerList = {}
+#     newBreweryList = {}
+#     newBreweryToBeers = {}
+#     # change beer ids in beersList and breweryToBeersList
+#     for hashId, beer in beersList.iteritems():
+#         bid = beer.bid
+#         breweryId = beer.brewery
+#         beerIdMap[bid] = newBeerId
+#         if breweryId not in breweryIdMap:
+#             breweryIdMap[breweryId] = newBreweryId
+#             brewery = cPickle.loads(cPickle.dumps(breweryList[str(hash(breweryId))], -1))
+#             brewery.breweryId = newBreweryId
+#             newBreweryList[hash(str(breweryId))] = brewery
 
-        beer.bid = newBeerId
-        beer.brewery = breweryIdMap[breweryId]
-        newBeerList[str(hash(str(bid)))] = beer
+#             newBreweryToBeers[str(hash(str(breweryId)))] = {str(newBreweryId): [newBeerId]}
+#             newBreweryId += 1
+#         else:
+#             newBreweryToBeers[str(hash(str(breweryId)))][str(breweryIdMap[breweryId])].append(newBeerId)
 
-        newBeerId += 1
+#         beer.bid = newBeerId
+#         beer.brewery = breweryIdMap[breweryId]
+#         newBeerList[str(hash(str(bid)))] = beer
 
-    # change beer ids in user reviews
-    for uid, user in usersList.iteritems():
-        ratings = user.ratings
-        for bid in ratings.keys():
-            if bid in beerIdMap:
-                ratings[beerIdMap[bid]] = ratings.pop(bid)
-            else:
-                ratings.pop(bid)
-        user.ratings = ratings
+#         newBeerId += 1
 
-    # store the dictionaries
-    with open('../data/users.json', 'wb') as usersFile:
-        json = jpickle.encode(usersList)
-        usersFile.write(json)
-    with open('../data/beers.json', 'wb') as beersFile:
-        json = jpickle.encode(newBeerList)
-        beersFile.write(json)
-    with open('../data/breweries.json', 'wb') as breweriesFile:
-        json = jpickle.encode(newBreweryList)
-        breweriesFile.write(json)
-    with open('../data/breweryToBeers.json', 'wb') as breweryToBeersFile:
-        json = jpickle.encode(newBreweryToBeers)
-        breweryToBeersFile.write(json)
+#     # change beer ids in user reviews
+#     for uid, user in usersList.iteritems():
+#         ratings = user.ratings
+#         for bid in ratings.keys():
+#             if bid in beerIdMap:
+#                 ratings[beerIdMap[bid]] = ratings.pop(bid)
+#             else:
+#                 ratings.pop(bid)
+#         user.ratings = ratings
 
-    print "Beer ids updated\n"
+#     # store the dictionaries
+#     with open('../data/users.json', 'wb') as usersFile:
+#         json = jpickle.encode(usersList)
+#         usersFile.write(json)
+#     with open('../data/beers.json', 'wb') as beersFile:
+#         json = jpickle.encode(newBeerList)
+#         beersFile.write(json)
+#     with open('../data/breweries.json', 'wb') as breweriesFile:
+#         json = jpickle.encode(newBreweryList)
+#         breweriesFile.write(json)
+#     with open('../data/breweryToBeers.json', 'wb') as breweryToBeersFile:
+#         json = jpickle.encode(newBreweryToBeers)
+#         breweryToBeersFile.write(json)
+
+#     print "Beer ids updated\n"
 
 
 def beerKeywords():
@@ -383,7 +389,7 @@ def beerKeywords():
                 keywordsList[keyword] = [beer.rating, 1]
         position += 1
         if (position % 100) == 0:
-            print 'Processed ' + str(position) + '/' + str(beersList.__len__()) + ' beers.'
+            print 'Processed ' + str(position) + '/' + str(len(beersList)) + ' beers.'
 
     with open('../data/beers.json', 'wb') as beersFile:
         json = jpickle.encode(beersList)
@@ -400,6 +406,6 @@ elif args.reviews:
     userReviews()
 elif args.normalizeData:
     normalizeUsers()
-    normalizeBeersAndBreweries()
+    # normalizeBeersAndBreweries()
 elif args.keywords:
     beerKeywords()
