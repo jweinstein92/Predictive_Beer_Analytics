@@ -8,7 +8,7 @@ setup(
       version="0.1",
       packages=find_packages(),
       scripts={'lib/predictiveBeerAnalytics.py','lib/untappd.py', 'lib/PBAMap.py', 'lib/keywordExtractor.py'},
-      install_requires={"argparse>=1.2", "jsonpickle>=0.8", "nltk>=3.0", "googlemaps>=1.0.2"},
+      install_requires={"argparse>=1.2", "jsonpickle>=0.8", "nltk>=3.0", "googlemaps>=1.0.2", "matplotlib>=1.4.2"},
 
       author="Joshua Weinstein, Jim Sundkvist, Marek Kühn",
       description="",

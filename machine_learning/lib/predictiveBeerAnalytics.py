@@ -5,21 +5,27 @@ from time import sleep
 import untappd as UT
 import PBAMap
 import keywordExtractor as extract
-import dataPoints
+import dataPoints as dp
 
 parser = argparse.ArgumentParser(prog='PBA')
 group = parser.add_mutually_exclusive_group(required=True)
 group.add_argument('--users', action='store_true',
-                   help='Add to the list of users. Filename required')
+                   help='Add to the list of users')
 group.add_argument('--reviews', action='store_true',
                    help='Add to the list of users, beers, and breweries')
 group.add_argument('--normalizeData', action='store_true',
-                   help='Alter Untappd data for privacy.')
+                   help='Alter Untappd data for privacy')
 group.add_argument('--keywords', action='store_true',
                    help='Extract keywords from beer descriptions and attach to beer')
 group.add_argument('--dataPoints', action='store_true',
                    help='Create list of data points from user locations, ratings, \
                    and beer alchol content')
+group.add_argument('--abvMap', type=int, default=5,
+                   help='Create map of ratings using data points on maps \
+                   provided alcohol level. Data is split in abv ranges: \
+                   0, 0.1 - 3.9, 4.0-4.9, 5.0-5.9, 6.0-6.9, 7.0-7.9, 8.0-8.9, \
+                   9.0-9.9, 10.0-10.9, 11.0+ Requires GEOS Library and \
+                   mpl_toolkits.basemap')
 args = parser.parse_args()
 
 # set the api settings and create an Untappd object
@@ -97,6 +103,25 @@ def readBreweryToBeers():
         breweryToBeers = {}
     breweryToBeersFile.close()
     return breweryToBeers
+
+
+def readDataPoints():
+    """
+    Load dataPoints
+    """
+    try:
+        dataPointsFile = open('../data/dataPoints.json', 'rb')
+    except IOError:
+        dataPointsFile = open('../data/dataPoints.json', 'wb')
+
+    try:
+        f = dataPointsFile.read()
+        dataPoints = jpickle.decode(f).points
+    except:
+        dataPoints = []
+    dataPointsFile.close()
+
+    return dataPoints
 
 
 def usersList():
@@ -414,16 +439,15 @@ def createDataPoints():
             for bid, rating in user.ratings.iteritems():
                 pointAttribs = {'lat': user.location['lat'], 'lng': user.location['lng'],
                 'abv': beersList[str(hash(bid))].abv, 'rating': rating}
-                point = dataPoints.dataPoint(pointAttribs)
+                point = dp.dataPoint(pointAttribs)
                 points.append(point)
                 if i % 1000:
                     print "Points added: " + str(i)
                 i += 1
-    data = dataPoints.dataPoints(points)
+    data = dp.dataPoints(points)
     with open('../data/dataPoints.json', 'wb') as pointsFile:
         json = jpickle.encode(data)
         pointsFile.write(json)
-
 
 if args.users:
     usersList()
@@ -436,4 +460,21 @@ elif args.keywords:
     beerKeywords()
 elif args.dataPoints:
     createDataPoints()
+elif args.abvMap >= 0:
+    print "Drawing user rating maps of beers with an alcohol content of " + str(args.abvMap)
+    dataPoints = readDataPoints()
+    if len(dataPoints) > 0:
+        abv = int(args.abvMap)
+        points = []
+        for point in dataPoints:
+            if int(point.abv) == abv:
+                points.append(point)
+            elif (abv in [1, 2, 3]) and (int(point.abv) in [1, 2, 3]):
+                points.append(point)
+            elif (abv > 11 and int(point.abv) > 11):
+                points.append(point)
+        print str(len(points)) + " points of data"
+        PBAMap.abvMap(points, abv)
+    else:
+        print "No data points found"
 
