@@ -1,11 +1,14 @@
 import argparse
 import jsonpickle as jpickle
+import os
 # import cPickle
 from time import sleep
 import untappd as UT
 import PBAMap
 import keywordExtractor as extract
 import dataPoints
+import labels
+import numpy as np
 
 parser = argparse.ArgumentParser(prog='PBA')
 group = parser.add_mutually_exclusive_group(required=True)
@@ -19,13 +22,16 @@ group.add_argument('--keywords', action='store_true',
                    help='Extract keywords from beer descriptions and attach to beer')
 group.add_argument('--dataPoints', action='store_true',
                    help='Create list of data points from user locations, ratings, \
-                   and beer alchol content')
+                   and beer alcohol content')
+group.add_argument('--labels', action='store_true',
+                   help='Download label images, clusterize colors, generate global color rating palette.')
 args = parser.parse_args()
 
 # set the api settings and create an Untappd object
 untappd = UT.Untappd()
 untappd.settings('../apiConfig.ini')
 
+import json
 
 def readUsers():
     """
@@ -98,6 +104,22 @@ def readBreweryToBeers():
     breweryToBeersFile.close()
     return breweryToBeers
 
+def readBeerColors():
+    """
+    Load the dominant label colors.
+    """
+    try:
+        beerColorsFile = open('../data/beerColors.json', 'rb')
+    except IOError:
+        beerColorsFile = open('../data/beerColors.json', 'wb')
+
+    try:
+        f = beerColorsFile.read()
+        beerColorsDict = jpickle.decode(f)
+    except:
+        beerColorsDict = labels.BeerColorsDict()
+    beerColorsFile.close()
+    return beerColorsDict
 
 def usersList():
     """
@@ -424,6 +446,58 @@ def createDataPoints():
         json = jpickle.encode(data)
         pointsFile.write(json)
 
+def processLabels():
+    print 'Loading Beerslist...'
+    beersList = readBeers()
+    beerColorsDict = readBeerColors()
+
+    # Path for saving the images
+    path = "../data/labels/"
+
+    fileList = os.listdir( path )
+    fileList = [item for item in fileList if item.split(".")[-1] in ('jpeg','jpg','png')]
+
+    # Download and save images
+    #labels.download(beersList, path, fileList)
+
+    # Number of colors to cluster
+    nColors = 5
+    i = 0
+    stop = 25100
+
+    # Loop over images in the folder
+    for file in fileList[0:stop]:
+        i += 1
+        bid = unicode(file.split('.')[0])
+        if bid in beerColorsDict:
+            continue
+
+        print "Processing image " + file + " [" + str(i - 1) + "/" + str(stop) + "]"
+        beerLabel = labels.Image(path + file)
+
+        beerLabel.preprocess()
+        beerColor = beerLabel.clusterize(nColors)
+        beerColorsDict[bid] = beerColor
+
+        # Only for presentation
+        beerLabel.quantizeImage()
+        beerLabel.showResults()
+
+    # Generate the color palette with ratings - Clustering again
+    colorPalette = labels.ColorPalette( nPaletteColors = 100 )
+    colorPalette.build(beerColorsDict, beersList)
+
+    # Write the colorsFile - dict{ 'bid': beerColor{RGB,intensity}}
+    with open('../data/beerColors.json', 'wb') as beerColorsFile:
+        string = jpickle.encode(beerColorsDict)
+        beerColorsFile.write(string)
+
+
+    with open('../data/colorPalette.json', 'wb') as colorPaletteFile:
+        json = jpickle.encode(colorPalette.palette)
+        colorPaletteFile.write(json)
+
+    print 'Color palette saved.'
 
 if args.users:
     usersList()
@@ -434,6 +508,8 @@ elif args.normalizeData:
     # normalizeBeersAndBreweries()
 elif args.keywords:
     beerKeywords()
+elif args.labels:
+    processLabels()
 elif args.dataPoints:
     createDataPoints()
 
