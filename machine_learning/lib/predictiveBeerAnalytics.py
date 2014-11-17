@@ -8,7 +8,6 @@ import PBAMap
 import keywordExtractor as extract
 import dataPoints
 import labels
-import numpy as np
 
 parser = argparse.ArgumentParser(prog='PBA')
 group = parser.add_mutually_exclusive_group(required=True)
@@ -23,8 +22,9 @@ group.add_argument('--keywords', action='store_true',
 group.add_argument('--dataPoints', action='store_true',
                    help='Create list of data points from user locations, ratings, \
                    and beer alcohol content')
-group.add_argument('--labels', action='store_true',
-                   help='Download label images, clusterize colors, generate global color rating palette.')
+group.add_argument('--colorPalette', action='store', dest="nPaletteColors", type=int,
+                   help='Download label images, clusterize colors, \
+                   generate global color rating palette of N colors.')
 args = parser.parse_args()
 
 # set the api settings and create an Untappd object
@@ -446,8 +446,9 @@ def createDataPoints():
         json = jpickle.encode(data)
         pointsFile.write(json)
 
-def processLabels():
-    print 'Loading Beerslist...'
+def processLabels(nPaletteColors):
+    """Download beer bottle labels, extract dominant colors, make the color palette."""
+
     beersList = readBeers()
     beerColorsDict = readBeerColors()
 
@@ -480,18 +481,17 @@ def processLabels():
         beerColorsDict[bid] = beerColor
 
         # Only for presentation
-        beerLabel.quantizeImage()
-        beerLabel.showResults()
+        #beerLabel.quantizeImage()
+        #beerLabel.showResults()
 
     # Generate the color palette with ratings - Clustering again
-    colorPalette = labels.ColorPalette( nPaletteColors = 100 )
+    colorPalette = labels.ColorPalette( nPaletteColors )
     colorPalette.build(beerColorsDict, beersList)
 
     # Write the colorsFile - dict{ 'bid': beerColor{RGB,intensity}}
     with open('../data/beerColors.json', 'wb') as beerColorsFile:
         string = jpickle.encode(beerColorsDict)
         beerColorsFile.write(string)
-
 
     with open('../data/colorPalette.json', 'wb') as colorPaletteFile:
         json = jpickle.encode(colorPalette.palette)
@@ -508,8 +508,8 @@ elif args.normalizeData:
     # normalizeBeersAndBreweries()
 elif args.keywords:
     beerKeywords()
-elif args.labels:
-    processLabels()
+elif args.nPaletteColors:
+    processLabels(args.nPaletteColors)
 elif args.dataPoints:
     createDataPoints()
 
