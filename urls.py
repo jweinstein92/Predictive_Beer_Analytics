@@ -7,7 +7,12 @@ urlpatterns = patterns('',
 
 
                        url(r'^$', listEntries),
-                       url(r'^add/', addNewEntry),
+                       url(r'^description/', description),
+                       url(r'^about/', about),
+                       url(r'^map/', map),
+                       url(r'^predictions/', prediction),
+                       url(r'^getPrediction/', getPrediction),
+
                )
 
 # Uncomment the next two lines to enable the admin:

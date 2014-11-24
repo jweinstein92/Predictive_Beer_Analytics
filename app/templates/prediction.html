@@ -1,0 +1,76 @@
+{% extends 'base.html' %}
+{% block title %} PBA - Predictor {% endblock %}
+{% block content %}
+
+    <div class="container">
+        <div class="row">
+
+            <form id="prediction-form" class="form col-md-4" method="post" action="/getPrediction/">
+                {% csrf_token %}
+                <div class="form-group">
+                    <label for="region" class="col-sm-2 control-label">Region</label>
+                    <select id="region" class="form-control">
+                          {% for location in locationList %}
+                                <option>{{ location.location }}</option>
+                          {% endfor %}
+                    </select>
+                </div>
+                <br/>
+                <div class="form-group">
+                    <label for="beerType" class="col-sm-2 control-label">Characteristics</label>
+                    <select id="beerType" class="form-control" placeholder="Type">
+                          {% for beerType in beerTypeList %}
+                            <option>{{ beerType.name }}</option>
+                        {% endfor %}
+                    </select>
+                </div>
+                <div class="form-group">
+                    <select id="alcohol" class="form-control">
+                        {% for avbsrange in avbsRangesList %}
+                            <option>{{ avbsrange.range }}%</option>
+                        {% endfor %}
+                    </select>
+                </div>
+                <div class="form-group">
+                    <input id="Color" class="form-control" type="text" placeholder="hejhopp"/>
+                </div>
+                <div class="input-group">
+                    <input data-role="tagsinput" id="Description" type="text" />
+                </div>
+                <input class="form-control" type="submit" value="calculate"/>
+
+
+
+
+
+                <div id="colorPicker">
+                    <a class="color"><div class="colorInner"></div></a>
+                    <div class="track"></div>
+                    <ul class="dropdown"><li></li></ul>
+                    <input type="hidden" class="colorInput"/>
+                </div>
+
+
+
+
+
+
+
+            </form>
+
+            <div class="col-md-8">
+                <div class="js-loading loading">
+                    <img src="{{STATIC_URL}}images/spiffygif_56x56.gif" />
+                </div>
+                <div id="prediction-result">
+
+                </div>
+            </div>
+
+        </div>
+
+
+
+    </div>
+
+{% endblock %}

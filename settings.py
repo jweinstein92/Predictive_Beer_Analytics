@@ -11,23 +11,23 @@ ADMINS = (
 MANAGERS = ADMINS
 
 DATABASES = {
-    #'default': {
-    #    'ENGINE': 'django.db.backends.mysql', # Add 'postgresql_psycopg2', 'postgresql', 'mysql', 'sqlite3' or 'oracle'.
-    #    'NAME': 'pba',                      # Or path to database file if using sqlite3.
-    #    'USER': 'pbaUser',                      # Not used with sqlite3.
-    #    'PASSWORD': 'pba1',                  # Not used with sqlite3.
-    #    'HOST': '127.0.0.1',                      # Set to empty string for localhost. Not used with sqlite3.
-    #    'PORT': '',                      # Set to empty string for default. Not used with sqlite3.
-    #}
-
     'default': {
         'ENGINE': 'django.db.backends.mysql', # Add 'postgresql_psycopg2', 'postgresql', 'mysql', 'sqlite3' or 'oracle'.
         'NAME': 'pba',                      # Or path to database file if using sqlite3.
-        'USER': 'jimsudket',                      # Not used with sqlite3.
-        'PASSWORD': 'pba17%%ef',                  # Not used with sqlite3.
-        'HOST': 'mysql.server',                      # Set to empty string for localhost. Not used with sqlite3.
+        'USER': 'pbaUser',                      # Not used with sqlite3.
+        'PASSWORD': 'pba1',                  # Not used with sqlite3.
+        'HOST': '127.0.0.1',                      # Set to empty string for localhost. Not used with sqlite3.
         'PORT': '',                      # Set to empty string for default. Not used with sqlite3.
     }
+
+   # 'default': {
+   #     'ENGINE': 'django.db.backends.mysql', # Add 'postgresql_psycopg2', 'postgresql', 'mysql', 'sqlite3' or 'oracle'.
+   ##     'NAME': 'pba',                      # Or path to database file if using sqlite3.
+    #    'USER': 'jimsudket',                      # Not used with sqlite3.
+    #    'PASSWORD': 'pba17%%ef',                  # Not used with sqlite3.
+    #    'HOST': 'mysql.server',                      # Set to empty string for localhost. Not used with sqlite3.
+    #    'PORT': '',                      # Set to empty string for default. Not used with sqlite3.
+   # }
 }
 
 # Hosts/domain names that are valid for this site; required if DEBUG is False
@@ -86,7 +86,7 @@ ADMIN_MEDIA_PREFIX = '/static/admin/'
 
 # Additional locations of static files
 STATICFILES_DIRS = (
-    (os.path.join(os.path.dirname(__file__), "../static")),
+    (os.path.join(os.path.dirname(__file__), "static")),
     # Put strings here, like "/home/html/static" or "C:/www/django/static".
     # Always use forward slashes, even on Windows.
     # Don't forget to use absolute paths, not relative paths.
