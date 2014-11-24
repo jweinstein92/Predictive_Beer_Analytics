@@ -450,6 +450,7 @@ def processLabels(nPaletteColors):
     """Download beer bottle labels, extract dominant colors, make the color palette."""
 
     beersList = readBeers()
+    #beersList = {}
     beerColorsDict = readBeerColors()
 
     # Path for saving the images
@@ -459,12 +460,12 @@ def processLabels(nPaletteColors):
     fileList = [item for item in fileList if item.split(".")[-1] in ('jpeg','jpg','png')]
 
     # Download and save images
-    #labels.download(beersList, path, fileList)
+    labels.download(beersList, path, fileList)
 
-    # Number of colors to cluster
+    # Number of label colors to cluster
     nColors = 5
     i = 0
-    stop = 25100
+    stop = 6
 
     # Loop over images in the folder
     for file in fileList[0:stop]:
@@ -481,10 +482,10 @@ def processLabels(nPaletteColors):
         beerColorsDict[bid] = beerColor
 
         # Only for presentation
-        #beerLabel.quantizeImage()
-        #beerLabel.showResults()
+        beerLabel.quantizeImage()
+        beerLabel.showResults()
 
-    # Generate the color palette with ratings - Clustering again
+    # Generate the color palette with ratings - Classification
     colorPalette = labels.ColorPalette( nPaletteColors )
     colorPalette.build(beerColorsDict, beersList)
 
