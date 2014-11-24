@@ -22,7 +22,7 @@ group.add_argument('--keywords', action='store_true',
 group.add_argument('--dataPoints', action='store_true',
                    help='Create list of data points from user locations, ratings, \
                    and beer alcohol content')
-group.add_argument('--colorPalette', action='store', dest="nPaletteColors", type=int,
+group.add_argument('--colorPalette', action='store_true',
                    help='Download label images, clusterize colors, \
                    generate global color rating palette of N colors.')
 args = parser.parse_args()
@@ -31,7 +31,6 @@ args = parser.parse_args()
 untappd = UT.Untappd()
 untappd.settings('../apiConfig.ini')
 
-import json
 
 def readUsers():
     """
@@ -104,6 +103,7 @@ def readBreweryToBeers():
     breweryToBeersFile.close()
     return breweryToBeers
 
+
 def readBeerColors():
     """
     Load the dominant label colors.
@@ -120,6 +120,7 @@ def readBeerColors():
         beerColorsDict = labels.BeerColorsDict()
     beerColorsFile.close()
     return beerColorsDict
+
 
 def usersList():
     """
@@ -147,7 +148,7 @@ def usersList():
                 if userLocation != '':
                     userNameCountAdditions += 1
                     userAttribs = {'uid': str(userId), 'username': username,
-                            'location': {'name': unicode(userLocation).encode("utf-8")}, 'ratings': {}}
+                                   'location': {'name': unicode(userLocation).encode("utf-8")}, 'ratings': {}}
                     user = UT.UntappdUser(userAttribs)
                     usersList[hash(str(userId))] = user
         with open('../data/users.json', 'wb') as usersFile:
@@ -435,7 +436,7 @@ def createDataPoints():
         if 'lat' in user.location and user.ratings:
             for bid, rating in user.ratings.iteritems():
                 pointAttribs = {'lat': user.location['lat'], 'lng': user.location['lng'],
-                'abv': beersList[str(hash(bid))].abv, 'rating': rating}
+                                'abv': beersList[str(hash(bid))].abv, 'rating': rating}
                 point = dataPoints.dataPoint(pointAttribs)
                 points.append(point)
                 if i % 1000:
@@ -446,35 +447,43 @@ def createDataPoints():
         json = jpickle.encode(data)
         pointsFile.write(json)
 
-def processLabels(nPaletteColors):
-    """Download beer bottle labels, extract dominant colors, make the color palette."""
+
+def processLabels():
+    """
+    Download beer bottle labels, extract n dominant colors,
+    make the color palette, flag each color and calculate
+    average rating of that color.
+    """
 
     beersList = readBeers()
-    #beersList = {}
+    # beersList = {}
     beerColorsDict = readBeerColors()
 
     # Path for saving the images
     path = "../data/labels/"
 
-    fileList = os.listdir( path )
-    fileList = [item for item in fileList if item.split(".")[-1] in ('jpeg','jpg','png')]
+    fileList = os.listdir(path)
+    fileList = [item for item in fileList
+                if item.split(".")[-1] in ('jpeg', 'jpg', 'png')]
 
     # Download and save images
-    labels.download(beersList, path, fileList)
+    # labels.download(beersList, path, fileList)
 
     # Number of label colors to cluster
     nColors = 5
     i = 0
-    stop = 6
+    stop = 6 # Then use the whole list.
 
     # Loop over images in the folder
     for file in fileList[0:stop]:
         i += 1
         bid = unicode(file.split('.')[0])
-        if bid in beerColorsDict:
+        if (bid in beerColorsDict and
+                len(beerColorsDict[bid].colorPaletteFlags) == nColors):
             continue
 
-        print "Processing image " + file + " [" + str(i - 1) + "/" + str(stop) + "]"
+        print ("Processing image " + file +
+               " [" + str(i - 1) + "/" + str(stop) + "]")
         beerLabel = labels.Image(path + file)
 
         beerLabel.preprocess()
@@ -486,7 +495,7 @@ def processLabels(nPaletteColors):
         beerLabel.showResults()
 
     # Generate the color palette with ratings - Classification
-    colorPalette = labels.ColorPalette( nPaletteColors )
+    colorPalette = labels.ColorPalette()
     colorPalette.build(beerColorsDict, beersList)
 
     # Write the colorsFile - dict{ 'bid': beerColor{RGB,intensity}}
@@ -509,8 +518,7 @@ elif args.normalizeData:
     # normalizeBeersAndBreweries()
 elif args.keywords:
     beerKeywords()
-elif args.nPaletteColors:
-    processLabels(args.nPaletteColors)
+elif args.colorPalette:
+    processLabels()
 elif args.dataPoints:
     createDataPoints()
-

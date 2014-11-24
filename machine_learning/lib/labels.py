@@ -172,12 +172,12 @@ class ColorPalette:
     Object to create color palette from already processed
     beer labels.
     """
-    def __init__(self, nPaletteColors):
-        self.nColors = nPaletteColors
+    def __init__(self):
+        # self.nColors = nPaletteColors
         self.palette = dict()
 
     def build(self, beerColorsDict, beersList):
-        print 'Generating ' + str(self.nColors) + '-color palette'
+        print 'Generating the color palette... '
 
         # colorSamples = beerColorsDict.getColors()
         #
@@ -224,6 +224,7 @@ class ColorPalette:
                          [254, 38, 18],
                          [255, 255, 255],
                          [0, 0, 0]]
+
         # Normalize
         webPaletteRGB = (np.array(webPaletteRGB, dtype=np.float64)/255).tolist()
 
@@ -235,25 +236,12 @@ class ColorPalette:
             paletteColor['Occurrences'] = 0
             paletteColor['Rating'] = 0
 
-        progress = Progress(max=len(beerColorsDict), msg="Assigning colors from palette... ")
+        progress = Progress(max=len(beerColorsDict), msg="Rating the  colors from palette... ")
         for bid, beerColor in beerColorsDict.iteritems():
             beer = getBeer(bid, beersList)
             if beer:
                 for colorId, beerColorValue in enumerate(beerColor.colors):
-                    closestDistance = sqrt(3)
-                    closestPaletteId = 0
-                    beerColorYUV = RGBtoYUV(beerColorValue)
-
-                    for paletteColorId, paletteColor in self.palette.iteritems():
-                        # Find maximum Euclidean distance of linear colorspace (YUV) values
-                        paletteColorYUV = RGBtoYUV(paletteColor['RGB'])
-
-                        distance = sqrt((paletteColorYUV[0] - beerColorYUV[0])**2 +
-                                        (paletteColorYUV[1] - beerColorYUV[1])**2 +
-                                        (paletteColorYUV[2] - beerColorYUV[2])**2)
-                        if distance < closestDistance:
-                            closestDistance = distance
-                            closestPaletteColorId = paletteColorId
+                    closestPaletteColorId =  self.classifyColor(beerColorValue)
 
                     # Update classification flags
                     beerColor.colorPaletteFlags[colorId] = closestPaletteColorId
@@ -264,10 +252,10 @@ class ColorPalette:
             else:
                 print 'Not found bid ' + bid
 
-            # # Show the classified color.
+            # Show the classified color.
             # plt.figure(1)
             # plt.title('Palette colors')
-            # color = [beerColor.colors[colorId], self.palette[closestPaletteId]['RGB']]
+            # color = [beerColor.colors[colorId], self.palette[closestPaletteColorId]['RGB']]
             # for i in range(2):
             #     rectangleHeight = 20
             #     rectangleWidth = 20
@@ -282,16 +270,21 @@ class ColorPalette:
             if color['Occurrences'] != 0:
                 color['Rating'] = color['RatingSum']/color['Occurrences']
 
-        # # Show the palette in figure.
-        # plt.figure(1)
-        # plt.title('Cluster colors')
-        # for i, color in enumerate(kmeans.cluster_centers_):
-        #     rectangleHeight = 20
-        #     rectangleWidth = 20
-        #     rectangle = plt.Rectangle((i * rectangleWidth, 0), rectangleWidth, rectangleHeight, fc=color)
-        #     plt.gca().add_patch(rectangle)
-        # plt.axis('scaled')
-        # plt.show()
+
+    def classifyColor(self, inputColor):
+        closestDistance = sqrt(3)
+        inputColorYUV = RGBtoYUV(inputColor)
+        for paletteColorId, paletteColor in self.palette.iteritems():
+            # Find maximum Euclidean distance of linear colorspace (YUV) values
+            paletteColorYUV = RGBtoYUV(paletteColor['RGB'])
+            distance = sqrt((paletteColorYUV[0] - inputColorYUV[0])**2 +
+                            (paletteColorYUV[1] - inputColorYUV[1])**2 +
+                            (paletteColorYUV[2] - inputColorYUV[2])**2)
+            if distance < closestDistance:
+                closestDistance = distance
+                closestPaletteColorId = paletteColorId
+
+        return closestPaletteColorId
 
 
 class BeerColor:
@@ -334,8 +327,7 @@ def download(beersList, imgPath, fileList):
     progress = Progress(max=len(beersList), msg="Downloading images... ")
     for hashId, beer in beersList.iteritems():
         url = beer.label
-        if url and \
-                (url != 'https://d1c8v1qci5en44.cloudfront.net/site/assets/images/temp/badge-beer-default.png'):
+        if url and (url != 'https://d1c8v1qci5en44.cloudfront.net/site/assets/images/temp/badge-beer-default.png'):
             fileType = url.split("/")[-1].split(".")[-1]
             filePath = imgPath + str(beer.bid) + '.' + fileType
             fileName = str(beer.bid) + '.' + fileType
