@@ -14,6 +14,7 @@ from sklearn.cluster import KMeans
 from scipy import misc
 from math import sqrt
 import requests
+import jsonpickle as jpickle
 
 
 class Image:
@@ -179,37 +180,6 @@ class ColorPalette:
     def build(self, beerColorsDict, beersList):
         print 'Generating the color palette... '
 
-        # colorSamples = beerColorsDict.getColors()
-        #
-        # # Calculate the clusters
-        # kmeans = KMeans(init='k-means++', n_clusters=self.nColors, random_state=0).fit(colorSamples)
-        #
-        # # Construct the Palette
-        # for i in range(self.nColors):
-        #     paletteColor = self.palette[i] = dict()
-        #     paletteColor['RGB'] = kmeans.cluster_centers_[i].tolist()
-        #     paletteColor['RatingSum'] = 0
-        #     paletteColor['Occurrences'] = 0
-        #     paletteColor['Rating'] = 0
-        #
-        # # Assign colorPalette flags to the dictionary of beerColors
-        # for bid, beerColor in beerColorsDict.iteritems():
-        #     i = 0
-        #     beer = getBeer(bid, beersList)
-        #     if beer:
-        #         for color in beerColor.colors:
-        #             # Lookup and append the flag
-        #             beerColor.colorPaletteFlags[i] = flag =  kmeans.labels_[np.where(colorSamples == color)[0][0]].tolist()
-        #             self.palette[flag]['Occurrences'] += 1
-        #             self.palette[flag]['RatingSum'] += beer.rating
-        #             i += 1
-        #     else:
-        #         print 'Not found bid ' + bid
-        #
-        # for color in self.palette.values():
-        #     if color['Occurrences'] != 0:
-        #         color['Rating'] = color['RatingSum']/color['Occurrences']
-
         webPaletteRGB = [[254, 82, 9],
                          [251, 153, 2],
                          [247, 189, 1],
@@ -286,6 +256,22 @@ class ColorPalette:
 
         return closestPaletteColorId
 
+    def readFromFile(self, path):
+        try:
+            paletteFile = open(path, 'rb')
+        except IOError:
+            paletteFile = open(path, 'wb')
+
+        try:
+            f = paletteFile.read()
+            loadedColorPalette = jpickle.decode(f)
+        except:
+            print "Palette file corrupted."
+            return 0
+        paletteFile.close()
+
+        self.palette = loadedColorPalette
+        return 1
 
 class BeerColor:
     """Object to save dominant colors of beer along with the color palette flags."""
@@ -364,3 +350,6 @@ def RGBtoYUV(RGB):
     except:
         print "Unable to convert RGB -> YUV."
         return 0
+
+pal = ColorPalette()
+pal.readFromFile('../data/colorPalette.json')
