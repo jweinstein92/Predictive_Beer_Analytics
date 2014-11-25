@@ -1,0 +1,58 @@
+{% load staticfiles %}
+
+<!DOCTYPE html>
+<html>
+<head>
+
+    <title>{% block title %}{% endblock %}</title>
+
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+    <meta name="viewport" content="width=device-width,initial-scale=1"/>
+    <meta name="generator" content="pba"/>
+
+    <link rel="stylesheet" type="text/css" href="//netdna.bootstrapcdn.com/bootstrap/3.0.2/css/bootstrap.min.css"/>
+    <link rel="stylesheet" type="text/css" href="//netdna.bootstrapcdn.com/font-awesome/4.0.2/css/font-awesome.min.css"/>
+    <link rel="stylesheet" type="text/css" href="//timschlechter.github.io/bootstrap-tagsinput/examples/lib/bootstrap-tagsinput/bootstrap-tagsinput.css"/>
+    <link rel="stylesheet" type="text/css" href="{% static "css/main.css" %}"/>
+    <link rel="stylesheet" type="text/css" href="{% static "css/map.css" %}"/>
+    <link rel="stylesheet" type="text/css" href="{% static "css/colorpicker.css" %}"/>
+
+    <script type="text/javascript" src="//ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>
+    <script type="text/javascript" src="//netdna.bootstrapcdn.com/bootstrap/3.0.2/js/bootstrap.min.js"></script>
+    <script type="text/javascript" src="//timschlechter.github.io/bootstrap-tagsinput/examples/lib/bootstrap-tagsinput/bootstrap-tagsinput.js"></script>
+
+    <script src="https://maps.googleapis.com/maps/api/js?v=3.exp&libraries=visualization"></script>
+    <script type="text/javascript" src="{% static "js/map.js" %}"></script>
+    <script type="text/javascript" src="{% static "js/main.js" %}"></script>
+    <script type="text/javascript" src="{% static "js/jquery.tinycolorpicker.min.js" %}"></script>
+
+    <title></title>
+</head>
+<body>
+    <nav class="navbar navbar-default navbar-fixed-top" role="navigation">
+          <div class="container-fluid">
+              <div class="row">
+                <div class="navbar-header col-md-2 col-md-offset-1">
+                  <span class="title title--navbar title--darkaccent">PBA</span>
+                </div>
+                <div class="collapse navbar-collapse col-md-10" id="bs-example-navbar-collapse-1">
+                  <ul class="nav navbar-nav">
+                    <li><a href="/">Home</a></li>
+                    <li><a href="/predictions">Predictions</a></li>
+                    <li><a href="/description">Description</a></li>
+                    <li><a href="/about">About</a></li>
+                    <li><a href="/map">Map</a></li>
+                  </ul>
+                </div>
+              </div>
+          </div>
+    </nav>
+
+    <div class="container-fluid container--base">
+    {% block content %}
+
+    {% endblock %}
+    </div>
+
+</body>
+</html>
