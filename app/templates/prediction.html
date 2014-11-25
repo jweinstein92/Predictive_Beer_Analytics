@@ -8,34 +8,29 @@
             <form id="prediction-form" class="form col-md-4" method="post" action="/getPrediction/">
                 {% csrf_token %}
                 <div class="form-group">
-                    <label for="region" class="col-sm-2 control-label">Region</label>
-                    <select id="region" class="form-control">
+                    <select id="location" name="location" class="form-control">
                           {% for location in locationList %}
-                                <option>{{ location.location }}</option>
+                                <option value="{{ location.location }}">{{ location.location }}</option>
                           {% endfor %}
                     </select>
                 </div>
                 <br/>
                 <div class="form-group">
-                    <label for="beerType" class="col-sm-2 control-label">Characteristics</label>
-                    <select id="beerType" class="form-control" placeholder="Type">
+                    <select id="beerType" name="beerType" class="form-control" placeholder="Type">
                           {% for beerType in beerTypeList %}
-                            <option>{{ beerType.name }}</option>
+                            <option value="{{ beerType.name }}">{{ beerType.name }}</option>
                         {% endfor %}
                     </select>
                 </div>
                 <div class="form-group">
-                    <select id="alcohol" class="form-control">
+                    <select id="avbs" name="avbs" class="form-control">
                         {% for avbsrange in avbsRangesList %}
-                            <option>{{ avbsrange.range }}%</option>
+                            <option value="{{ avbsrange.range}}">{{ avbsrange.range }}%</option>
                         {% endfor %}
                     </select>
-                </div>
-                <div class="form-group">
-                    <input id="Color" class="form-control" type="text" placeholder="hejhopp"/>
                 </div>
                 <div class="input-group">
-                    <input data-role="tagsinput" id="Description" type="text" />
+                    <input data-role="tagsinput" id="description" name="description" type="text" />
                 </div>
                 <input class="form-control" type="submit" value="calculate"/>
 
@@ -47,7 +42,7 @@
                     <a class="color"><div class="colorInner"></div></a>
                     <div class="track"></div>
                     <ul class="dropdown"><li></li></ul>
-                    <input type="hidden" class="colorInput"/>
+                    <input id="color" name="color" type="hidden" class="colorInput"/>
                 </div>
 
 
