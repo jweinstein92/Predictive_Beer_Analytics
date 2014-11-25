@@ -1,0 +1,10 @@
+*.ini
+apiSettings.csv
+*.pkl
+*.txt
+*.csv
+oldFiles/
+privateData/
+.DS_STORE
+venv/
+machine_learning/beers_sample.json
