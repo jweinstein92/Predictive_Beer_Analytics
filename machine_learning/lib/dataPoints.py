@@ -2,6 +2,7 @@ class dataPoint:
     def __init__(self, attribs):
         self.lat = attribs['lat']
         self.lng = attribs['lng']
+        self.country = attribs['country']
         self.abv = attribs['abv']
         self.rating = attribs['rating']
 

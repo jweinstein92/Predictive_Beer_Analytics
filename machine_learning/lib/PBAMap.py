@@ -3,6 +3,7 @@ import json
 from ConfigParser import SafeConfigParser
 from mpl_toolkits.basemap import Basemap
 import matplotlib.pyplot as plt
+import numpy
 
 config = SafeConfigParser()
 config.read('../apiConfig.ini')
@@ -10,6 +11,8 @@ config.read('../apiConfig.ini')
 baseUrl = "https://maps.googleapis.com/maps/api/geocode/json?"
 apiKey = config.get('googleMaps', 'apiKey')
 apiKey2 = config.get('googleMaps', 'apiKey2')
+apiKey3 = config.get('googleMaps', 'apiKey3')
+apiKey4 = config.get('googleMaps', 'apiKey4')
 
 abvMapName = {'0': '0', '1': '.1-3.9', '2': '.1-3.9', '3': '.1-3.9',
                 '4': '4.0-4.9', '5': '5.0-5.9', '6': '6.0-6.9', '7': '7.0-7.9',
@@ -20,15 +23,26 @@ def getLatLong(address, calls):
     # Google Geocoding api only allows 2500 api calls a day
     # Update code to handle number of users and api keys
     url = ''
-    if calls < 2500:
+    if calls < 2450:
         url = baseUrl + "address=%s&sensor=false&key=%s" % (urllib.quote(address.replace(' ', '+')), apiKey)
-    elif calls > 5000:
+    elif calls > 2450 and calls < 4950:
         url = baseUrl + "address=%s&sensor=false&key=%s" % (urllib.quote(address.replace(' ', '+')), apiKey2)
+    elif calls > 4950 and calls < 7450:
+        url = baseUrl + "address=%s&sensor=false&key=%s" % (urllib.quote(address.replace(' ', '+')), apiKey3)
+    elif calls > 7450 and calls < 9950:
+        url = baseUrl + "address=%s&sensor=false&key=%s" % (urllib.quote(address.replace(' ', '+')), apiKey4)
+
     if (url != ''):
         data = urllib.urlopen(url).read()
         info = json.loads(data).get("results")
         if info:
             location = info[0].get("geometry").get("location")
+            address_components = info[0].get("address_components")
+            for component in address_components:
+                if "country" in component["types"]:
+                    country = component["short_name"]
+                    print country
+                    location["country"] = country
         else:
             location = ""
         return location
@@ -56,6 +70,21 @@ def createMap(lats, lngs, parallels, meridians, states=False):
     return m
 
 
+def saveMap(abv, numPoints, filePrefix):
+    if str(abv) in abvMapName:
+        abvRange = abvMapName[str(abv)]
+    else:
+        abvRange += abvMapName['11']
+
+    title = 'Average Beer Ratings of Beer with Alcohol Concentration of ' + \
+        abvRange + '%' + '\n' + str(numPoints) + " Reviews Used"
+    plt.suptitle(title)
+
+    filename = filePrefix + abvRange + '.png'
+    plt.savefig(filename)
+    plt.close()
+
+
 def drawUSMap(points, abv):
     print "Drawing US map with " + str(len(points)) + " data points."
     lats = []
@@ -77,16 +106,12 @@ def drawUSMap(points, abv):
     # create polar stereographic Basemap instance.
     m = createMap(usLat, usLng, parallels, meridians, True)
 
-    # overlay the scatter points to see that the density
-    # is working as expected
-    plt.scatter(*m(lngs, lats), c=ratings)
-    plt.colorbar()
-    filename = '../graphics/USRating'
-    if str(abv) in abvMapName:
-        filename += abvMapName[str(abv)] + '.png'
-    else:
-        filename += abvMapName['11'] + '.png'
-    plt.savefig(filename)
+    xs, ys, average = createHistogram(m, lats, lngs, ratings, True)
+
+    # overlay the averages histogram over map
+    plt.pcolormesh(xs, ys, average)
+    plt.colorbar(orientation='horizontal')
+    saveMap(abv, len(points), '../graphics/USRating')
 
 
 def drawEUMap(points, abv):
@@ -109,17 +134,19 @@ def drawEUMap(points, abv):
 
     # create polar stereographic Basemap instance.
     m = createMap(euLat, euLng, parallels, meridians)
-    
-    # overlay the scatter points to see that the density
-    # is working as expected
-    plt.scatter(*m(lngs, lats), c=ratings, alpha=.5)
-    plt.colorbar()
-    filename = '../graphics/EURating'
-    if str(abv) in abvMapName:
-        filename += abvMapName[str(abv)] + '.png'
-    else:
-        filename += abvMapName['11'] + '.png'
-    plt.savefig(filename)
+    xs, ys, average = createHistogram(m, lats, lngs, ratings)
+    #####################################################
+    # xs, ys, average data will be stored in db as lists. Need to
+    # change back to ndarray later
+    # xs = numpy.array(xs.tolist())
+    # ys = numpy.array(ys.tolist())
+    # average = numpy.array(average.tolist())
+    #####################################################
+
+    # overlay the averages histogram over map
+    plt.pcolormesh(xs, ys, average)
+    plt.colorbar(orientation='horizontal')
+    saveMap(abv, len(points), '../graphics/EURating')
 
 
 def inEU(lat, lng):
@@ -128,6 +155,37 @@ def inEU(lat, lng):
 
 def inUS(lat, lng):
     return lat >= 22 and lat <= 48 and lng >= -125 and lng <= -59
+
+
+def createHistogram(m, lats, lngs, ratings, us=False):
+    nx, ny = 10, 10
+    if us:
+        nx, ny = 20, 20
+    # compute appropriate bins to histogram the data into
+    lng_bins = numpy.linspace(min(lngs), max(lngs), nx + 1)
+    lat_bins = numpy.linspace(min(lats), max(lats), ny + 1)
+
+    # Histogram the lats and lons to produce an array of frequencies in each box.
+    frequency, _, _ = numpy.histogram2d(lats, lngs, [lat_bins, lng_bins])
+
+    # Histogram the lats and lons to produce an array of frequencies weighted by
+    # ratings in each box.
+    weighted, _, _ = numpy.histogram2d(lats, lngs, [lat_bins, lng_bins], weights=ratings)
+
+    # divide the weighted bins by the frequency bins to create bins of average
+    # beer ratings in each bin
+    with numpy.errstate(invalid='ignore'):
+        average = numpy.divide(weighted, frequency)
+        average = numpy.nan_to_num(average)
+
+    # Turn the lng/lat bins into 2 dimensional arrays ready
+    # for conversion into projected coordinates
+    lng_bins_2d, lat_bins_2d = numpy.meshgrid(lng_bins, lat_bins)
+
+    # convert the xs and ys to map coordinates
+    xs, ys = m(lng_bins_2d, lat_bins_2d)
+
+    return xs, ys, average
 
 
 def abvMap(points, abv):
@@ -150,4 +208,4 @@ def abvMap(points, abv):
         elif inEU(point.lat, point.lng):
             euPoints.append(point)
     drawEUMap(euPoints, abv)
-    # drawUSMap(usPoints, abv)
+    drawUSMap(usPoints, abv)

@@ -27,6 +27,7 @@ class UntappdBeer:
         self.style = attribs['style']
         self.description = attribs['description']
         self.rating = attribs['rating']
+        self.numRatings = attribs['numRatings']
         self.brewery = attribs['brewery']
 
 

@@ -20,17 +20,29 @@ group.add_argument('--keywords', action='store_true',
 group.add_argument('--dataPoints', action='store_true',
                    help='Create list of data points from user locations, ratings, \
                    and beer alchol content')
-group.add_argument('--abvMap', type=int, default=5,
+group.add_argument('--abvMap', type=float,
                    help='Create map of ratings using data points on maps \
-                   provided alcohol level. Data is split in abv ranges: \
+                   provided alcohol level. Data is split into abv ranges: \
                    0, 0.1 - 3.9, 4.0-4.9, 5.0-5.9, 6.0-6.9, 7.0-7.9, 8.0-8.9, \
                    9.0-9.9, 10.0-10.9, 11.0+ Requires GEOS Library and \
+                   mpl_toolkits.basemap')
+group.add_argument('--styleMap', type=float,
+                   help='Create map of ratings using data points on maps \
+                   provided beer style. Styles limited to 20 most common \
+                   types of beer - \
+                   Requires GEOS Library and \
                    mpl_toolkits.basemap')
 args = parser.parse_args()
 
 # set the api settings and create an Untappd object
 untappd = UT.Untappd()
 untappd.settings('../apiConfig.ini')
+
+# set allowed beer styles
+beerStyles = [u'Pilsner', u'M\xe4rzen', u'Oktoberfest', u'American Brown Ale',
+u'American Imperial', u'Double Stout', u'Hefeweizen', u'Pumpkin', u'Yam Beer', u'Cider',
+u'Porter', u'Stout', u'Red Ale', u'American Amber', u'Double Ipa', u'Farmhouse Ale', u'Saison',
+u'Imperial', u'American Pale Ale', u'American Ipa']
 
 
 def readUsers():
@@ -124,6 +136,15 @@ def readDataPoints():
     return dataPoints
 
 
+def writeJSONFile(path, data):
+    """
+    Write JSON file
+    """
+    with open(path, 'wb') as jsonFile:
+        json = jpickle.encode(data)
+        jsonFile.write(json)
+
+
 def usersList():
     """
     Parses through data from /thepub to get unique usernames, user ids,
@@ -153,9 +174,7 @@ def usersList():
                             'location': {'name': unicode(userLocation).encode("utf-8")}, 'ratings': {}}
                     user = UT.UntappdUser(userAttribs)
                     usersList[hash(str(userId))] = user
-        with open('../data/users.json', 'wb') as usersFile:
-            json = jpickle.encode(usersList)
-            usersFile.write(json)
+        writeJSONFile('../data/users.json', usersList)
         userCount = len(usersList)
         print 'Total Users: ' + str(userCount)
         # Untappd only allows 100 api requests per hour. Sleep for 38
@@ -264,18 +283,11 @@ def userReviews():
                 # if the offset is less than 25, then there are no more reviews to retrieve
                 if offset < 25:
                     break
-            with open('../data/users.json', 'wb') as usersFile:
-                json = jpickle.encode(usersList)
-                usersFile.write(json)
-            with open('../data/beers.json', 'wb') as beersFile:
-                json = jpickle.encode(beersList)
-                beersFile.write(json)
-            with open('../data/breweries.json', 'wb') as breweriesFile:
-                json = jpickle.encode(breweryList)
-                breweriesFile.write(json)
-            with open('../data/breweryToBeers.json', 'wb') as breweryToBeersFile:
-                json = jpickle.encode(breweryToBeers)
-                breweryToBeersFile.write(json)
+            writeJSONFile('../data/users.json', usersList)
+            writeJSONFile('../data/beers.json', beersList)
+            writeJSONFile('../data/breweries.json', breweryList)
+            writeJSONFile('../data/breweryToBeers.json', breweryToBeers)
+
             total += len(ratings)
             print str(userId) + ': ' + username + ', Processed: ' + str(len(ratings)) + ' reviews'
             print 'Total Reviews: ' + str(total)
@@ -310,93 +322,36 @@ def normalizeUsers():
             if mapInfo == 'apiLimit':
                 print str(i) + " At daily API limit. Update script and repeat tomorrow"
             elif mapInfo != '':
-                print str(i), location
                 user.location = {
                     'name': location,
                     'lat': mapInfo['lat'],
-                    'lng': mapInfo['lng']
+                    'lng': mapInfo['lng'],
                 }
+                if 'country' in mapInfo:
+                    user.location['country'] = mapInfo['country']
+                print str(i), user.location
             else:
                 print str(i), "checked: none"
                 user.location = {'name': ''}
         newUid += 1
         newUsersList[hash(str(uid))] = user
 
-    with open('../data/users.json', 'wb') as usersFile:
-        json = jpickle.encode(newUsersList)
-        usersFile.write(json)
-    usersFile.close()
+    writeJSONFile('../data/users.json', newUsersList)
     print "User ids, usernames, and locations updated\n"
 
 
-# normalizeBeersAndBreweries isn't really necessary because
-# it only annoynamizes public information as opposed to
-# user specific information. Therefore, beer and brewery ids
-# don't need to be changed.
-
-# def normalizeBeersAndBreweries():
-#     """
-#     Change the beer and brewery ids so the information can be made public
-#     """
-#     usersList = readUsers()
-#     beersList = readBeers()
-#     breweryList = readBreweries()
-
-#     newBeerId = 1
-#     newBreweryId = 1
-#     # create new lists and maps to prevent any id collisions
-#     beerIdMap = {}
-#     breweryIdMap = {}
-#     newBeerList = {}
-#     newBreweryList = {}
-#     newBreweryToBeers = {}
-#     # change beer ids in beersList and breweryToBeersList
-#     for hashId, beer in beersList.iteritems():
-#         bid = beer.bid
-#         breweryId = beer.brewery
-#         beerIdMap[bid] = newBeerId
-#         if breweryId not in breweryIdMap:
-#             breweryIdMap[breweryId] = newBreweryId
-#             brewery = cPickle.loads(cPickle.dumps(breweryList[str(hash(breweryId))], -1))
-#             brewery.breweryId = newBreweryId
-#             newBreweryList[hash(str(breweryId))] = brewery
-
-#             newBreweryToBeers[str(hash(str(breweryId)))] = {str(newBreweryId): [newBeerId]}
-#             newBreweryId += 1
-#         else:
-#             newBreweryToBeers[str(hash(str(breweryId)))][str(breweryIdMap[breweryId])].append(newBeerId)
-
-#         beer.bid = newBeerId
-#         beer.brewery = breweryIdMap[breweryId]
-#         newBeerList[str(hash(str(bid)))] = beer
-
-#         newBeerId += 1
-
-#     # change beer ids in user reviews
-#     for uid, user in usersList.iteritems():
-#         ratings = user.ratings
-#         for bid in ratings.keys():
-#             if bid in beerIdMap:
-#                 ratings[beerIdMap[bid]] = ratings.pop(bid)
-#             else:
-#                 ratings.pop(bid)
-#         user.ratings = ratings
-
-#     # store the dictionaries
-#     with open('../data/users.json', 'wb') as usersFile:
-#         json = jpickle.encode(usersList)
-#         usersFile.write(json)
-#     with open('../data/beers.json', 'wb') as beersFile:
-#         json = jpickle.encode(newBeerList)
-#         beersFile.write(json)
-#     with open('../data/breweries.json', 'wb') as breweriesFile:
-#         json = jpickle.encode(newBreweryList)
-#         breweriesFile.write(json)
-#     with open('../data/breweryToBeers.json', 'wb') as breweryToBeersFile:
-#         json = jpickle.encode(newBreweryToBeers)
-#         breweryToBeersFile.write(json)
-
-#     print "Beer ids updated\n"
+def normalizeBeerStyles():
+    print 'Updating Beer Styles'
+    beersList = readBeers()
+    for hashId, beer in beersList.iteritems():
+        stylesList = []
+        styles = beer.style.lower().title().split('/')
+        for style in styles:
+            style = style.strip()
+            stylesList.append(style)
+        beer.style = stylesList
+    writeJSONFile('../data/beers.json', beersList)
+    print 'Beer styles updated'
 
 
 def beerKeywords():
@@ -420,13 +375,8 @@ def beerKeywords():
         if (position % 100) == 0:
             print 'Processed ' + str(position) + '/' + str(len(beersList)) + ' beers.'
 
-    with open('../data/beers.json', 'wb') as beersFile:
-        json = jpickle.encode(beersList)
-        beersFile.write(json)
-
-    with open('../data/keywords.json', 'wb') as keywordsFile:
-        json = jpickle.encode(keywordsList)
-        keywordsFile.write(json)
+    writeJSONFile('../data/beers.json', beersList)
+    writeJSONFile('../data/keywords.json', keywordsList)
 
 
 def createDataPoints():
@@ -437,31 +387,22 @@ def createDataPoints():
     for hashId, user in usersList.iteritems():
         if 'lat' in user.location and user.ratings:
             for bid, rating in user.ratings.iteritems():
+                country = None
+                if 'country' in user.location:
+                    country = user.location['country']
                 pointAttribs = {'lat': user.location['lat'], 'lng': user.location['lng'],
-                'abv': beersList[str(hash(bid))].abv, 'rating': rating}
+                'country': country, 'abv': beersList[str(hash(bid))].abv, 'rating': rating}
                 point = dp.dataPoint(pointAttribs)
                 points.append(point)
-                if i % 1000:
+                if i % 1000 == 0:
                     print "Points added: " + str(i)
                 i += 1
     data = dp.dataPoints(points)
-    with open('../data/dataPoints.json', 'wb') as pointsFile:
-        json = jpickle.encode(data)
-        pointsFile.write(json)
+    writeJSONFile('../data/dataPoints.json', data)
 
-if args.users:
-    usersList()
-elif args.reviews:
-    userReviews()
-elif args.normalizeData:
-    normalizeUsers()
-    # normalizeBeersAndBreweries()
-elif args.keywords:
-    beerKeywords()
-elif args.dataPoints:
-    createDataPoints()
-elif args.abvMap >= 0:
-    print "Drawing user rating maps of beers with an alcohol content of " + str(args.abvMap)
+
+def createABVMap():
+    print "Drawing user rating maps of beers with an alcohol concentration of " + str(args.abvMap) + '%'
     dataPoints = readDataPoints()
     if len(dataPoints) > 0:
         abv = int(args.abvMap)
@@ -478,3 +419,19 @@ elif args.abvMap >= 0:
     else:
         print "No data points found"
 
+
+if args.users:
+    usersList()
+elif args.reviews:
+    userReviews()
+elif args.normalizeData:
+    normalizeUsers()
+    normalizeBeerStyles()
+elif args.keywords:
+    beerKeywords()
+elif args.dataPoints:
+    createDataPoints()
+elif args.abvMap >= 0:
+    createABVMap()
+elif args.styleMap:
+    print beerStyles
