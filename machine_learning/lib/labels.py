@@ -15,6 +15,7 @@ from scipy import misc
 from math import sqrt
 import requests
 import jsonpickle as jpickle
+import csv
 
 
 class Image:
@@ -203,7 +204,7 @@ class ColorPalette:
             paletteColor = self.palette[i] = dict()
             paletteColor['RGB'] = webPaletteRGB[i]
             paletteColor['RatingSum'] = 0
-            paletteColor['Occurrences'] = 0
+            paletteColor['Votes'] = 0
             paletteColor['Rating'] = 0
 
         progress = Progress(max=len(beerColorsDict), msg="Rating the  colors from palette... ")
@@ -218,7 +219,7 @@ class ColorPalette:
 
                     # Update color rating
                     self.palette[closestPaletteColorId]['RatingSum'] += beer.rating
-                    self.palette[closestPaletteColorId]['Occurrences'] += 1
+                    self.palette[closestPaletteColorId]['Votes'] += 1
             else:
                 print 'Not found bid ' + bid
 
@@ -237,8 +238,8 @@ class ColorPalette:
             progress.tick()
 
         for color in self.palette.values():
-            if color['Occurrences'] != 0:
-                color['Rating'] = color['RatingSum']/color['Occurrences']
+            if color['Votes'] != 0:
+                color['Rating'] = color['RatingSum']/color['Votes']
 
 
     def classifyColor(self, inputColor):
@@ -272,6 +273,18 @@ class ColorPalette:
 
         self.palette = loadedColorPalette
         return 1
+
+    def genCSV(self):
+        f = open('../data/colorPalette.csv', 'wt')
+        writer = csv.writer(f)
+        writer.writerow(('id', 'HEX', 'Rating', 'Votes'))
+        for id, item in self.palette.iteritems():
+            try:
+                writer.writerow((id, rgbToHex(tuple(np.array(item['RGB'])*255)), item['Rating'], item['Votes']))
+            except:
+                pass
+        f.close()
+
 
 class BeerColor:
     """Object to save dominant colors of beer along with the color palette flags."""
@@ -351,5 +364,9 @@ def RGBtoYUV(RGB):
         print "Unable to convert RGB -> YUV."
         return 0
 
+def rgbToHex(rgb):
+    return '#%02x%02x%02x' % rgb
+
 pal = ColorPalette()
 pal.readFromFile('../data/colorPalette.json')
+pal.genCSV()

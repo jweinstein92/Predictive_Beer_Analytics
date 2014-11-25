@@ -1,5 +1,6 @@
 '''
-Shows the usage of keywords in various ways.
+Show the usage of keywords in various ways.
+Write sorted csv files. Also for export to database.
 '''
 import nltk
 import jsonpickle as jpickle
@@ -55,7 +56,7 @@ for word in sorted(keywordsDict.items(), key=lambda k: (k[1][1]), reverse=True):
 
 def plotBestKeywords(n=10):
     """
-Plots a graph of keywords associated with the best rated beers.
+    Plot a graph of keywords associated with the best rated beers.
     :param n: Amount of keywords.
     """
 
@@ -78,8 +79,6 @@ Plots a graph of keywords associated with the best rated beers.
                      error_kw=error_config,
                      label='Usage')
 
-    # plt.xlabel('K')
-    #plt.ylabel('Scores')
     plt.title('Beer rating keywords')
     plt.yticks(index + bar_width, SortedByRating['keywords'][0:n])
     plt.legend()
@@ -89,7 +88,7 @@ Plots a graph of keywords associated with the best rated beers.
 
 def plotWorstKeywords(n=10):
     """
-Plots a graph of keywords associated with the worst rated beers.
+    Plot a graph of keywords associated with the worst rated beers.
     :param n: Amount of keywords.
     """
 
@@ -112,8 +111,6 @@ Plots a graph of keywords associated with the worst rated beers.
                      error_kw=error_config,
                      label='Usage')
 
-    # plt.xlabel('K')
-    #plt.ylabel('Scores')
     plt.title('Beer rating keywords')
     plt.yticks(index + bar_width, SortedByRating['keywords'][-n:])
     plt.legend()
@@ -122,7 +119,7 @@ Plots a graph of keywords associated with the worst rated beers.
 
 def plotMostUsed(n=10):
     """
-Plots a graph of most used keywords in the beer description.
+    Plot a graph of most used keywords in the beer description.
     :param n: Amount of keywords.
     """
 
@@ -145,8 +142,6 @@ Plots a graph of most used keywords in the beer description.
                      error_kw=error_config,
                      label='Usage')
 
-    #plt.xlabel('K')
-    #plt.ylabel('Scores')
     plt.title('Beer rating keywords')
     plt.yticks(index + bar_width, SortedByUsage['keywords'][0:n])
     plt.legend()
@@ -154,22 +149,23 @@ Plots a graph of most used keywords in the beer description.
     plt.show()
 
 def writeCSV():
+    """Export CSV file for import to the database."""
     f = open('../data/sortedByRating.csv', 'wt')
     writer = csv.writer(f)
-    writer.writerow( ('Keyword', 'Rating', 'Usage') )
-    for i in range(len(SortedByRating['keywords'])):
+    writer.writerow( ('id', 'Keyword', 'Rating', 'Usage') )
+    for i, word in enumerate(SortedByRating['keywords']):
         try:
-            writer.writerow( (SortedByRating['keywords'][i],SortedByRating['ratings'][i], SortedByRating['usage'][i]))
+            writer.writerow( (str(i), word,SortedByRating['ratings'][i], SortedByRating['usage'][i]))
         except:
             pass
     f.close()
 
     f = open('../data/sortedByUsage.csv', 'wt')
     writer = csv.writer(f)
-    writer.writerow( ('Keyword', 'Rating', 'Usage') )
+    writer.writerow(('id', 'Keyword', 'Rating', 'Usage'))
     for i in range(len(SortedByUsage['keywords'])):
         try:
-            writer.writerow( (SortedByUsage['keywords'][i],SortedByUsage['ratings'][i], SortedByUsage['usage'][i]))
+            writer.writerow((str[i], SortedByUsage['keywords'][i], SortedByUsage['ratings'][i], SortedByUsage['usage'][i]))
         except:
             pass
     f.close()
