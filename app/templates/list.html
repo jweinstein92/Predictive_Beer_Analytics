@@ -1,0 +1,38 @@
+{% extends 'base.html' %}
+{% block title %} PBA - Test List {% endblock %}
+{% block content %}
+    this is an awsome list
+    <ul>
+    {% for comment in commentList %}
+       <li>{{ comment.text }}</li>
+    {% empty %}
+        no comments existed
+    {% endfor %}
+    </ul>
+
+
+    <h3>Add a new comment</h3>
+
+    <form method="post" role="form" class="form-horizontal" action="">
+                {% for field in form.visible_fields %}
+                    <div id="div_{{ field.html_name }}"
+                         class="form-group{% if field.errors %} has-error{% endif %}">
+                        {{ field.label_tag }}
+                        {{ field }}
+                        <div class="text-muted pull-right">
+                            <small>{{ field.help_text }}</small>
+                        </div>
+                        <div class="help-block">
+                            {{ field.errors }}
+                        </div>
+                    </div>
+                {% endfor %}
+                {% for hidden in form.hidden_fields %}
+                    {{ hidden }}
+                {% endfor %}
+                {% csrf_token %}
+            <input type="submit" value="Submit" name="comment"/>
+            </form>
+
+
+{% endblock %}

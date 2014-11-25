@@ -1,4 +1,5 @@
 # Django settings for Predictive_Beer_Analytics project.
+import os
 
 DEBUG = True
 TEMPLATE_DEBUG = DEBUG
@@ -11,13 +12,22 @@ MANAGERS = ADMINS
 
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.', # Add 'postgresql_psycopg2', 'postgresql', 'mysql', 'sqlite3' or 'oracle'.
-        'NAME': '',                      # Or path to database file if using sqlite3.
-        'USER': '',                      # Not used with sqlite3.
-        'PASSWORD': '',                  # Not used with sqlite3.
-        'HOST': '',                      # Set to empty string for localhost. Not used with sqlite3.
+        'ENGINE': 'django.db.backends.mysql', # Add 'postgresql_psycopg2', 'postgresql', 'mysql', 'sqlite3' or 'oracle'.
+        'NAME': 'pba',                      # Or path to database file if using sqlite3.
+        'USER': 'pbaUser',                      # Not used with sqlite3.
+        'PASSWORD': 'pba1',                  # Not used with sqlite3.
+        'HOST': '127.0.0.1',                      # Set to empty string for localhost. Not used with sqlite3.
         'PORT': '',                      # Set to empty string for default. Not used with sqlite3.
     }
+
+   # 'default': {
+   #     'ENGINE': 'django.db.backends.mysql', # Add 'postgresql_psycopg2', 'postgresql', 'mysql', 'sqlite3' or 'oracle'.
+   ##     'NAME': 'pba',                      # Or path to database file if using sqlite3.
+    #    'USER': 'jimsudket',                      # Not used with sqlite3.
+    #    'PASSWORD': 'pba17%%ef',                  # Not used with sqlite3.
+    #    'HOST': 'mysql.server',                      # Set to empty string for localhost. Not used with sqlite3.
+    #    'PORT': '',                      # Set to empty string for default. Not used with sqlite3.
+   # }
 }
 
 # Hosts/domain names that are valid for this site; required if DEBUG is False
@@ -31,7 +41,7 @@ ALLOWED_HOSTS = []
 # timezone as the operating system.
 # If running in a Windows environment this must be set to the same as your
 # system time zone.
-TIME_ZONE = 'America/Chicago'
+TIME_ZONE = 'Europe/Copenhagen'
 
 # Language code for this installation. All choices can be found here:
 # http://www.i18nguy.com/unicode/language-identifiers.html
@@ -47,9 +57,11 @@ USE_I18N = True
 # calendars according to the current locale
 USE_L10N = True
 
+SITE_ROOT = os.path.join(os.path.dirname(os.path.realpath(__file__)), "../")
 # Absolute filesystem path to the directory that will hold user-uploaded files.
 # Example: "/home/media/media.lawrence.com/media/"
-MEDIA_ROOT = '/home/jweinstein92/Predictive_Beer_Analytics/media'
+MEDIA_ROOT = SITE_ROOT + '/media/'
+    #'/home/jweinstein92/Predictive_Beer_Analytics/media'
 
 # URL that handles the media served from MEDIA_ROOT. Make sure to use a
 # trailing slash.
@@ -60,7 +72,8 @@ MEDIA_URL = '/media/'
 # Don't put anything in this directory yourself; store your static files
 # in apps' "static/" subdirectories and in STATICFILES_DIRS.
 # Example: "/home/media/media.lawrence.com/static/"
-STATIC_ROOT = '/home/jweinstein92/Predictive_Beer_Analytics/static'
+STATIC_ROOT = ''
+    #'/home/jweinstein92/Predictive_Beer_Analytics/static'
 
 # URL prefix for static files.
 # Example: "http://media.lawrence.com/static/"
@@ -73,6 +86,7 @@ ADMIN_MEDIA_PREFIX = '/static/admin/'
 
 # Additional locations of static files
 STATICFILES_DIRS = (
+    (os.path.join(os.path.dirname(__file__), "static")),
     # Put strings here, like "/home/html/static" or "C:/www/django/static".
     # Always use forward slashes, even on Windows.
     # Don't forget to use absolute paths, not relative paths.
@@ -104,9 +118,9 @@ MIDDLEWARE_CLASSES = (
     'django.contrib.messages.middleware.MessageMiddleware',
 )
 
-ROOT_URLCONF = 'Predictive_Beer_Analytics.urls'
+ROOT_URLCONF = 'urls'
 
-TEMPLATE_DIRS = (
+TEMPLATE_DIRS = ('app/templates'
     # Put strings here, like "/home/html/django_templates" or "C:/www/django/templates".
     # Always use forward slashes, even on Windows.
     # Don't forget to use absolute paths, not relative paths.
@@ -119,10 +133,14 @@ INSTALLED_APPS = (
     'django.contrib.sites',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'app'
     # Uncomment the next line to enable the admin:
     # 'django.contrib.admin',
     # Uncomment the next line to enable admin documentation:
     # 'django.contrib.admindocs',
+
+
+
 )
 
 # A sample logging configuration. The only tangible logging

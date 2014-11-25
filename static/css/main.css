@@ -1,0 +1,103 @@
+
+/* red
+500 #e51c23
+400 #e84e40
+900 #b0120a
+
+accent
+400 #ffc400
+700 #ffab00
+500 #ffc107
+
+/* navbar */
+.navbar-default {
+    background-color:#e51c23;
+}
+/* title */
+.navbar-default .navbar-brand {
+    color: #777;
+}
+.navbar-default .navbar-brand:hover,
+.navbar-default .navbar-brand:focus {
+    color: #5E5E5E;
+}
+/* link */
+.navbar-default .navbar-nav > li > a {
+    color: #FFFFFF;
+    font-weight: bold;
+    font-size: 18px;
+}
+.navbar-default .navbar-nav > li > a:hover,
+.navbar-default .navbar-nav > li > a:focus {
+    color: #FFFFFF;
+}
+.navbar-default .navbar-nav > .active > a,
+.navbar-default .navbar-nav > .active > a:hover,
+.navbar-default .navbar-nav > .active > a:focus {
+    color: #555;
+    background-color: #E7E7E7;
+}
+.navbar-default .navbar-nav > .open > a,
+.navbar-default .navbar-nav > .open > a:hover,
+.navbar-default .navbar-nav > .open > a:focus {
+    color: #555;
+    background-color: #D5D5D5;
+}
+/* caret */
+.navbar-default .navbar-nav > .dropdown > a .caret {
+    border-top-color: #777;
+    border-bottom-color: #777;
+}
+.navbar-default .navbar-nav > .dropdown > a:hover .caret,
+.navbar-default .navbar-nav > .dropdown > a:focus .caret {
+    border-top-color: #333;
+    border-bottom-color: #333;
+}
+.navbar-default .navbar-nav > .open > a .caret,
+.navbar-default .navbar-nav > .open > a:hover .caret,
+.navbar-default .navbar-nav > .open > a:focus .caret {
+    border-top-color: #555;
+    border-bottom-color: #555;
+}
+/* mobile version */
+.navbar-default .navbar-toggle {
+    border-color: #DDD;
+}
+.navbar-default .navbar-toggle:hover,
+.navbar-default .navbar-toggle:focus {
+    background-color: #DDD;
+}
+.navbar-default .navbar-toggle .icon-bar {
+    background-color: #CCC;
+}
+@media (max-width: 767px) {
+    .navbar-default .navbar-nav .open .dropdown-menu > li > a {
+        color: #777;
+    }
+    .navbar-default .navbar-nav .open .dropdown-menu > li > a:hover,
+    .navbar-default .navbar-nav .open .dropdown-menu > li > a:focus {
+        color: #333;
+    }
+}
+.container--base {margin-top:50px;}
+
+.pba--darkred {background:#ffab00; }
+
+.title {font-weight:bold;font-family: Tahoma; font-size:32px;}
+.title--darkaccent {color:#ffc107;}
+.title--navbar {margin-left:10px;}
+
+.text {color:#000000; opacity:0.87;}
+.text--white {color:#FFFFFF; opacity:1;}
+.text--secondary {opacity:0.54;}
+.text--hint {opacity:0.26;}
+.text--divider {opacity:0.12;}
+
+.loading {display:none;}
+.loading img {}
+
+.histogram {border:2px solid;}
+.histogram-header {}
+.histogram-header-title {}
+.hitogram-header-description {}
+.histogram-result {}
