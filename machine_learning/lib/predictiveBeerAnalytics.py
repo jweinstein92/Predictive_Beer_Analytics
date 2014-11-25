@@ -1,11 +1,14 @@
 import argparse
 import jsonpickle as jpickle
+import os
 # import cPickle
 from time import sleep
 import untappd as UT
 import PBAMap
 import keywordExtractor as extract
 import dataPoints as dp
+import dataPoints
+import labels
 
 parser = argparse.ArgumentParser(prog='PBA')
 group = parser.add_mutually_exclusive_group(required=True)
@@ -32,6 +35,9 @@ group.add_argument('--styleMap', type=float,
                    types of beer - \
                    Requires GEOS Library and \
                    mpl_toolkits.basemap')
+group.add_argument('--colorPalette', action='store_true',
+                   help='Download label images, clusterize colors, \
+                   generate global color rating palette of N colors.')
 args = parser.parse_args()
 
 # set the api settings and create an Untappd object
@@ -145,6 +151,24 @@ def writeJSONFile(path, data):
         jsonFile.write(json)
 
 
+def readBeerColors():
+    """
+    Load the dominant label colors.
+    """
+    try:
+        beerColorsFile = open('../data/beerColors.json', 'rb')
+    except IOError:
+        beerColorsFile = open('../data/beerColors.json', 'wb')
+
+    try:
+        f = beerColorsFile.read()
+        beerColorsDict = jpickle.decode(f)
+    except:
+        beerColorsDict = labels.BeerColorsDict()
+    beerColorsFile.close()
+    return beerColorsDict
+
+
 def usersList():
     """
     Parses through data from /thepub to get unique usernames, user ids,
@@ -171,7 +195,7 @@ def usersList():
                 if userLocation != '':
                     userNameCountAdditions += 1
                     userAttribs = {'uid': str(userId), 'username': username,
-                            'location': {'name': unicode(userLocation).encode("utf-8")}, 'ratings': {}}
+                                   'location': {'name': unicode(userLocation).encode("utf-8")}, 'ratings': {}}
                     user = UT.UntappdUser(userAttribs)
                     usersList[hash(str(userId))] = user
         writeJSONFile('../data/users.json', usersList)
@@ -420,6 +444,67 @@ def createABVMap():
         print "No data points found"
 
 
+def processLabels():
+    """
+    Download beer bottle labels, extract n dominant colors,
+    make the color palette, flag each color and calculate
+    average rating of that color.
+    """
+
+    beersList = readBeers()
+    # beersList = {}
+    beerColorsDict = readBeerColors()
+
+    # Path for saving the images
+    path = "../data/labels/"
+
+    fileList = os.listdir(path)
+    fileList = [item for item in fileList
+                if item.split(".")[-1] in ('jpeg', 'jpg', 'png')]
+
+    # Download and save images
+    # labels.download(beersList, path, fileList)
+
+    # Number of label colors to cluster
+    nColors = 5
+    i = 0
+    stop = 6 # Then use the whole list.
+
+    # Loop over images in the folder
+    for file in fileList[0:stop]:
+        i += 1
+        bid = unicode(file.split('.')[0])
+        if (bid in beerColorsDict and
+                len(beerColorsDict[bid].colorPaletteFlags) == nColors):
+            continue
+
+        print ("Processing image " + file +
+               " [" + str(i - 1) + "/" + str(stop) + "]")
+        beerLabel = labels.Image(path + file)
+
+        beerLabel.preprocess()
+        beerColor = beerLabel.clusterize(nColors)
+        beerColorsDict[bid] = beerColor
+
+        # Only for presentation
+        beerLabel.quantizeImage()
+        beerLabel.showResults()
+
+    # Generate the color palette with ratings - Classification
+    colorPalette = labels.ColorPalette()
+    colorPalette.build(beerColorsDict, beersList)
+
+    # Write the colorsFile - dict{ 'bid': beerColor{RGB,intensity}}
+    with open('../data/beerColors.json', 'wb') as beerColorsFile:
+        string = jpickle.encode(beerColorsDict)
+        beerColorsFile.write(string)
+
+    with open('../data/colorPalette.json', 'wb') as colorPaletteFile:
+        json = jpickle.encode(colorPalette.palette)
+        colorPaletteFile.write(json)
+
+    print 'Color palette saved.'
+
 if args.users:
     usersList()
 elif args.reviews:
@@ -429,6 +514,8 @@ elif args.normalizeData:
     normalizeBeerStyles()
 elif args.keywords:
     beerKeywords()
+elif args.colorPalette:
+    processLabels()
 elif args.dataPoints:
     createDataPoints()
 elif args.abvMap >= 0:
