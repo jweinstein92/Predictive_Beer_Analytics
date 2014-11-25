@@ -5,13 +5,30 @@
     <div class="container">
         <div class="row">
 
-            <br/>
+            <form method="post" role="form" class="form-horizontal" action="">
+            {% csrf_token %}
+            <input type="text" id="qry" name="qry">
+            <input type="submit" value="Submit" name="comment"/>
 
-            <div class="col-md-3 col-md-offset-9">
+            </form>
+
+            <div class="col-md-3">
                 <ul class="list-group">
                     <li class="list-group-item pba--darkred text--white">Top 5</li>
-                {% for comment in topList %}
-                   <li class="list-group-item">{{ comment.text }}</li>
+                {% for word in resultList %}
+                   <li class="list-group-item">{{ word.value }}   {{ word.rating }}</li>
+                {% empty %}
+                    no comments existed
+                {% endfor %}
+                </ul>
+            </div>
+
+
+            <div class="col-md-3 col-md-offset-6">
+                <ul class="list-group">
+                    <li class="list-group-item pba--darkred text--white">Top 5</li>
+                {% for word in topList %}
+                   <li class="list-group-item">{{ word.value }} {{ word.rating }}</li>
                 {% empty %}
                     no comments existed
                 {% endfor %}
@@ -20,11 +37,11 @@
       </div>
 
         <div class="row">
-                <div class="col-md-3 col-md-offset-9">
+                <div class="col-md-3 col-md-offset-6">
                     <ul class="list-group">
                         <li class="list-group-item pba--darkred text--white">Bottom 5</li>
-                    {% for comment in bottomList %}
-                       <li class="list-group-item">{{ comment.text }}</li>
+                    {% for word in bottomList %}
+                       <li class="list-group-item">{{ word.value }} {{ word.rating }}</li>
                     {% empty %}
                         no comments existed
                     {% endfor %}

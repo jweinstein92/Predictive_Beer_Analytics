@@ -1,3 +1,4 @@
+import sys
 from app.models import Comment
 from app.models import Location
 from app.models import AvbsRange
@@ -8,6 +9,8 @@ from app.models import Color
 from django.shortcuts import render_to_response
 from django.template import Context, RequestContext
 from app.forms import CommentForm
+import jsonpickle as jpickle
+from django.db.models import Q
 from django.http import HttpResponse, HttpResponseRedirect, HttpResponseNotFound, HttpResponseForbidden
 
 
@@ -21,10 +24,16 @@ def about(request):
 
 def description(request):
 
-    topList = Comment.objects.all()[:5]
-    bottomList = Comment.objects.all().order_by('-id')[:5]
+    topList = Word.objects.all()[:5]
+    bottomList = Word.objects.all().order_by('rating')[:5]
+    resultList = []
+    if request.method == 'POST' and request.POST.get('qry') != "":
+        query = request.POST.get('qry')
 
-    return render_to_response('description.html',{'topList' : topList, 'bottomList' : bottomList }, context_instance=RequestContext(request))
+        resultList = Word.objects.filter(Q(value__icontains=query)).order_by('-rating')[:5]
+
+
+    return render_to_response('description.html',{'topList' : topList, 'bottomList' : bottomList, 'resultList' : resultList }, context_instance=RequestContext(request))
 
 def listEntries(request):
 
@@ -60,6 +69,43 @@ def prediction(request):
 
 def getPrediction(request):
 
+    if request.method == 'POST':
+        location = request.POST.get('location')
+        beerType = request.POST.get('beerType')
+        avbs = request.POST.get('avbs')
+        description = request.POST.get('description')
+        color = request.POST.get('color')
 
-    return render_to_response('Histogram.html',{'title' : "Title" , 'description' : "Description thi is the juicy part!!!"}, context_instance=RequestContext(request))
+
+
+        #try:
+        #    keywordsFile = open('C:/keywords.json', 'rb')
+       # except:
+        #    print 'Keywords.json not found.'
+        #    sys.exit()
+
+       # try:
+        #    f = keywordsFile.read()
+        ##    keywordsDict = jpickle.decode(f)
+       # except:
+          #  keywordsDict = []
+       #     print 'Keywords list corrupted'
+       #     sys.exit()
+       # keywordsFile.close()
+
+        # Sorted by average rating
+       # SortedByRating = {}
+      #  SortedByRating['keywords'] = []
+      #  SortedByRating['ratings'] = []
+       # SortedByRating['usage'] = []
+       # for word in sorted(keywordsDict.items(), key=lambda k: (k[1][0] / k[1][1]), reverse=True):
+        #    ratingSum = word[1][0]
+        #    usage = word[1][1]
+        #    newWord = Word()
+         #   newWord.rating = ratingSum/usage
+         #   newWord.value = word[0]
+         #   newWord.votes = usage
+         #   newWord.save()
+
+        return render_to_response('Histogram.html',{'location' : location , 'beerType' : beerType , 'avbs' : avbs, 'description' : description , 'color':color}, context_instance=RequestContext(request))
 
