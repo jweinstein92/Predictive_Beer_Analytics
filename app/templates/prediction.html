@@ -16,9 +16,9 @@
                 </div>
                 <br/>
                 <div class="form-group">
-                    <select id="beerType" name="beerType" class="form-control" placeholder="Type">
-                          {% for beerType in beerTypeList %}
-                            <option value="{{ beerType.name }}">{{ beerType.name }}</option>
+                    <select id="beerType" name="beerStyle" class="form-control" placeholder="Type">
+                          {% for beerStyle in beerStyleList %}
+                            <option value="{{ beerStyle.styleName }}">{{ beerStyle.styleName }}</option>
                         {% endfor %}
                     </select>
                 </div>

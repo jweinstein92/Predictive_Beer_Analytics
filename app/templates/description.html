@@ -16,7 +16,7 @@
                 <ul class="list-group">
                     <li class="list-group-item pba--darkred text--white">Top 5</li>
                 {% for word in resultList %}
-                   <li class="list-group-item">{{ word.value }}   {{ word.rating }}</li>
+                   <li class="list-group-item">{{ word.value }}   {{ word.rating }}      {{ word.votes }}</li>
                 {% empty %}
                     no comments existed
                 {% endfor %}
@@ -28,7 +28,7 @@
                 <ul class="list-group">
                     <li class="list-group-item pba--darkred text--white">Top 5</li>
                 {% for word in topList %}
-                   <li class="list-group-item">{{ word.value }} {{ word.rating }}</li>
+                   <li class="list-group-item">{{ word.value }} {{ word.rating }}   {{ word.votes }}</li>
                 {% empty %}
                     no comments existed
                 {% endfor %}
@@ -41,7 +41,7 @@
                     <ul class="list-group">
                         <li class="list-group-item pba--darkred text--white">Bottom 5</li>
                     {% for word in bottomList %}
-                       <li class="list-group-item">{{ word.value }} {{ word.rating }}</li>
+                       <li class="list-group-item">{{ word.value }} {{ word.rating }}     {{ word.votes }}</li>
                     {% empty %}
                         no comments existed
                     {% endfor %}

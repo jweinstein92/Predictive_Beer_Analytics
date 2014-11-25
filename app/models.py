@@ -13,8 +13,9 @@ class Color(models.Model):
     rating = models.DecimalField(max_digits=6,decimal_places=5)
 
 
-class BeerType(models.Model):
-    name = models.CharField(max_length=30)
+class BeerStyle(models.Model):
+    styleName = models.CharField(max_length=30)
+    numRatings = models.BigIntegerField()
 
 class Location(models.Model):
     location = models.CharField(max_length=100)

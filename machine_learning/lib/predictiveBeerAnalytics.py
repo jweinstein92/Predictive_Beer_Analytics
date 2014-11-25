@@ -1,13 +1,14 @@
 import argparse
 import jsonpickle as jpickle
 import os
+import operator
+import csv
 # import cPickle
 from time import sleep
 import untappd as UT
 import PBAMap
 import keywordExtractor as extract
 import dataPoints as dp
-import dataPoints
 import labels
 
 parser = argparse.ArgumentParser(prog='PBA')
@@ -23,6 +24,8 @@ group.add_argument('--keywords', action='store_true',
 group.add_argument('--dataPoints', action='store_true',
                    help='Create list of data points from user locations, ratings, \
                    and beer alchol content')
+group.add_argument('--styles', action='store_true',
+                   help='Create csv file of allowable beer styles to make maps with')
 group.add_argument('--abvMap', type=float,
                    help='Create map of ratings using data points on maps \
                    provided alcohol level. Data is split into abv ranges: \
@@ -44,12 +47,8 @@ args = parser.parse_args()
 untappd = UT.Untappd()
 untappd.settings('../apiConfig.ini')
 
-# set allowed beer styles
-beerStyles = [u'Pilsner', u'M\xe4rzen', u'Oktoberfest', u'American Brown Ale',
-u'American Imperial', u'Double Stout', u'Hefeweizen', u'Pumpkin', u'Yam Beer', u'Cider',
-u'Porter', u'Stout', u'Red Ale', u'American Amber', u'Double Ipa', u'Farmhouse Ale', u'Saison',
-u'Imperial', u'American Pale Ale', u'American Ipa']
-
+# set the allowed styles
+# beerStyles = readBeerStyles()
 
 def readUsers():
     """
@@ -140,6 +139,13 @@ def readDataPoints():
     dataPointsFile.close()
 
     return dataPoints
+
+
+def readBeerStyles():
+    """
+    Load most rated beer styles
+    """
+    return []
 
 
 def writeJSONFile(path, data):
@@ -250,20 +256,28 @@ def userReviews():
                         breweryInfo = review['brewery']
                         # fill in beer information
                         if hash(str(beerInfo['bid'])) not in beersList:
+                            stylesList = []
+                            style = unicode(beerInfo['beer_style']).encode("utf-8")
+                            styles = style.lower().title().split('/')
+                            for style in styles:
+                                style = style.strip()
+                                stylesList.append(style)
                             beerAttribs = {
                                 'bid': str(beerInfo['bid']),
                                 'name': unicode(beerInfo['beer_name']).encode("utf-8"),
                                 'label': beerInfo['beer_label'],
                                 'abv': beerInfo['beer_abv'],
                                 'ibu': beerInfo['beer_ibu'],
-                                'style': unicode(beerInfo['beer_style']).encode("utf-8"),
+                                'style': stylesList,
                                 'description': unicode(beerInfo['beer_description']).encode("utf-8"),
                                 'rating': beerInfo['rating_score'],
+                                'numRatings': 1,
                                 'brewery': str(breweryInfo['brewery_id'])
                             }
                             beer = UT.UntappdBeer(beerAttribs)
                             beersList[hash(beer.bid)] = beer
-
+                        else:
+                            beersList[hash(str(beerInfo['bid']))].numRatings += 1
                         # fill in brewery information
                         if hash(str(breweryInfo['brewery_id'])) not in breweryList:
                             breweryAttribs = {
@@ -364,20 +378,6 @@ def normalizeUsers():
     print "User ids, usernames, and locations updated\n"
 
 
-def normalizeBeerStyles():
-    print 'Updating Beer Styles'
-    beersList = readBeers()
-    for hashId, beer in beersList.iteritems():
-        stylesList = []
-        styles = beer.style.lower().title().split('/')
-        for style in styles:
-            style = style.strip()
-            stylesList.append(style)
-        beer.style = stylesList
-    writeJSONFile('../data/beers.json', beersList)
-    print 'Beer styles updated'
-
-
 def beerKeywords():
     beersList = readBeers()
     print 'beers.json LOADED...'
@@ -444,6 +444,28 @@ def createABVMap():
         print "No data points found"
 
 
+def createCommonStyles():
+    beersList = readBeers()
+    allStyles = {}
+    for hashId, beer in beersList.iteritems():
+        styles = beer.style
+        for style in styles:
+            numRatings = beer.numRatings if (hasattr(beer, 'numRatings')) else 0
+            if style in allStyles:
+                allStyles[style] += numRatings
+            else:
+                allStyles[style] = numRatings
+
+    sorted_styles = sorted(allStyles.items(), key=operator.itemgetter(1))[-20:]
+    with open('../data/styles.csv', 'wb') as stylesCSV:
+        csvwriter = csv.writer(stylesCSV, delimiter=',',
+                            quotechar='"')
+        i = 1
+        for style in sorted_styles:
+            csvwriter.writerow([i, unicode(style[0]).encode("utf-8"), style[1]])
+            i += 1
+
+
 def processLabels():
     """
     Download beer bottle labels, extract n dominant colors,
@@ -468,7 +490,7 @@ def processLabels():
     # Number of label colors to cluster
     nColors = 5
     i = 0
-    stop = 6 # Then use the whole list.
+    stop = 6  # Then use the whole list.
 
     # Loop over images in the folder
     for file in fileList[0:stop]:
@@ -511,14 +533,14 @@ elif args.reviews:
     userReviews()
 elif args.normalizeData:
     normalizeUsers()
-    normalizeBeerStyles()
 elif args.keywords:
     beerKeywords()
+elif args.styles:
+    createCommonStyles()
 elif args.colorPalette:
     processLabels()
 elif args.dataPoints:
     createDataPoints()
 elif args.abvMap >= 0:
     createABVMap()
-elif args.styleMap:
-    print beerStyles
+
