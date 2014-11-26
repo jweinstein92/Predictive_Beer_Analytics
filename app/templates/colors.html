@@ -1,0 +1,11 @@
+{% extends 'base.html' %}
+{% block title %} Colors {% endblock %}
+{% block content %}
+
+    <ul class="list-group">
+    {% for color in colorList %}
+
+       <li class="list-group-item"> <span style="color:{{ color.value }}">Color</span>{{ color.rating  }}  {{ color.votes }} </li>
+    {% endfor %}
+    </ul>
+{% endblock %}

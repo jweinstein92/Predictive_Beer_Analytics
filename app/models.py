@@ -9,8 +9,9 @@ class Word(models.Model):
     votes = models.IntegerField()
 
 class Color(models.Model):
-    name = models.CharField(max_length=20)
+    value = models.CharField(max_length=20)
     rating = models.DecimalField(max_digits=6,decimal_places=5)
+    votes = models.IntegerField()
 
 class Location(models.Model):
     location = models.CharField(max_length=100)

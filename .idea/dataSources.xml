@@ -3,7 +3,7 @@
   <component name="DataSourceManagerImpl" format="xml" hash="1634969419">
     <data-source source="LOCAL" name="Django default" product="" version="" jdbc-version="" driver-name="" driver-version="" uuid="0ec15c32-f7d3-407e-a8b0-7eabbfb2a43d">
       <jdbc-driver>com.mysql.jdbc.Driver</jdbc-driver>
-      <jdbc-url>jdbc:mysql://127.0.0.1/pba</jdbc-url>
+      <jdbc-url>jdbc:mysql:///</jdbc-url>
       <user-name>pbaUser</user-name>
       <user-password>dfdadfc8dfcbdf9b</user-password>
       <libraries>

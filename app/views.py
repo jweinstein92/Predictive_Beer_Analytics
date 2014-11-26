@@ -59,6 +59,12 @@ def map(request):
 
     return render_to_response('map.html',{}, context_instance=RequestContext(request))
 
+def colors(request):
+
+    colorList = Color.objects.all().order_by('-rating')
+
+    return render_to_response('colors.html',{'colorList' : colorList}, context_instance=RequestContext(request))
+
 def prediction(request):
 
     locations = Location.objects.all()
