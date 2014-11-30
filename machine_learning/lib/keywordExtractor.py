@@ -1,10 +1,6 @@
 '''
-Extracts keywords from beer descriptions obtained from Untappd.
-Assigns average weight based on beer ratings.
-
-The dict of keywords is saved to keywords.json in form of:
-    beerList['keyword'] = [sumOfRatings, nAppearances]
-
+Extract keywords from beer descriptions obtained from Untappd.
+Use NLTK natural language processing tool.
 '''
 
 import nltk
@@ -20,9 +16,9 @@ def extractKeywords(text):
     words = [nltk.word_tokenize(sent) for sent in sentences]
     words = [nltk.pos_tag(sent) for sent in words]
 
-    # Regex for more precise extraction (?)
-    #grammar = "NP: {<DT>?<JJ>*<NN>}"
-    #cp = nltk.RegexpParser(grammar)
+    # Regex for more precise extraction
+    # grammar = "NP: {<DT>?<JJ>*<NN>}"
+    # cp = nltk.RegexpParser(grammar)
 
     for w in words:
         for ww in w:
