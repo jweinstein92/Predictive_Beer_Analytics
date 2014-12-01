@@ -1,3 +1,9 @@
+"""
+This is the main script for Predictive Beer Analytics project.
+
+Use it to mine and process new data.
+"""
+
 import argparse
 import jsonpickle as jpickle
 import os
@@ -51,9 +57,7 @@ untappd.settings('../apiConfig.ini')
 # beerStyles = readBeerStyles()
 
 def readUsers():
-    """
-    Load already processed users UntappdUser
-    """
+    """Load already processed users UntappdUser."""
     try:
         usersFile = open('../data/users.json', 'rb')
     except IOError:
@@ -69,9 +73,7 @@ def readUsers():
 
 
 def readBeers():
-    """
-    Load already processed beers UntappdBeer
-    """
+    """Load already processed beers UntappdBeer."""
     try:
         beersFile = open('../data/beers.json', 'rb')
     except IOError:
@@ -87,9 +89,7 @@ def readBeers():
 
 
 def readBreweries():
-    """
-    Load already processed breweries UntappdBrewery
-    """
+    """Load already processed breweries UntappdBrewery."""
     try:
         breweriesFile = open('../data/breweries.json', 'rb')
     except IOError:
@@ -105,9 +105,7 @@ def readBreweries():
 
 
 def readBreweryToBeers():
-    """
-    Load already processed breweries dictionary
-    """
+    """Load already processed breweries dictionary."""
     try:
         breweryToBeersFile = open('../data/breweryToBeers.json', 'rb')
     except IOError:
@@ -123,9 +121,7 @@ def readBreweryToBeers():
 
 
 def readDataPoints():
-    """
-    Load dataPoints
-    """
+    """Load dataPoints."""
     try:
         dataPointsFile = open('../data/dataPoints.json', 'rb')
     except IOError:
@@ -142,25 +138,19 @@ def readDataPoints():
 
 
 def readBeerStyles():
-    """
-    Load most rated beer styles
-    """
+    """Load most rated beer styles."""
     return []
 
 
 def writeJSONFile(path, data):
-    """
-    Write JSON file
-    """
+    """Write JSON file."""
     with open(path, 'wb') as jsonFile:
         json = jpickle.encode(data)
         jsonFile.write(json)
 
 
 def readBeerColors():
-    """
-    Load the dominant label colors.
-    """
+    """Load the dominant label colors."""
     try:
         beerColorsFile = open('../data/beerColors.json', 'rb')
     except IOError:
@@ -177,10 +167,10 @@ def readBeerColors():
 
 def usersList():
     """
-    Parses through data from /thepub to get unique usernames, user ids,
+    Parse through data from /thepub to get unique usernames, user ids,
     and locations. Stores this information in a csv file to be used in later api
     requests. Limited to 100 api calls per hour requiring sleep method.
-    May be run multiple times to retrieve Continuously run until user stops script
+    May be run multiple times to retrieve Continuously run until user stops script.
     """
 
     usersList = readUsers()
@@ -214,10 +204,10 @@ def usersList():
 
 def userReviews():
     """
-    Parses through user reviews /user/beers/{username}
+    Parse through user reviews /user/beers/{username}
     Retrieves at most 50 reviews per user, retains review, beer, and
     brewery information. After querying the api, remove username to
-    lessen privacy concerns with untappd data
+    lessen privacy concerns with untappd data.
     """
     usersList = readUsers()
     beersList = readBeers()
@@ -338,7 +328,7 @@ def userReviews():
 def normalizeUsers():
     """
     Change the user ids so the information can be made public and
-    use the googlemaps module to determine the user's location
+    use the googlemaps module to determine the user's location.
     """
     usersList = readUsers()
     newUsersList = {}
@@ -379,6 +369,7 @@ def normalizeUsers():
 
 
 def beerKeywords():
+    """Extract keywords from beer descriptions and rate it."""
     beersList = readBeers()
     print 'beers.json LOADED...'
 
@@ -404,6 +395,7 @@ def beerKeywords():
 
 
 def createDataPoints():
+    """Make the data points of user locations for the map generation."""
     usersList = readUsers()
     beersList = readBeers()
     points = []
@@ -426,6 +418,7 @@ def createDataPoints():
 
 
 def createABVMap():
+    """Make a color map of specific alcohol by volume."""
     print "Drawing user rating maps of beers with an alcohol concentration of " + str(args.abvMap) + '%'
     dataPoints = readDataPoints()
     if len(dataPoints) > 0:
@@ -445,6 +438,7 @@ def createABVMap():
 
 
 def createCommonStyles():
+    """Generate common beer styles and save it to csv file."""
     beersList = readBeers()
     allStyles = {}
     for hashId, beer in beersList.iteritems():
@@ -468,11 +462,12 @@ def createCommonStyles():
 
 def processLabels():
     """
+    Prediction of how dominant label color affects the beer rating.
+
     Download beer bottle labels, extract n dominant colors,
     make the color palette, flag each color and calculate
     average rating of that color.
     """
-
     beersList = readBeers()
     # beersList = {}
     beerColorsDict = readBeerColors()
