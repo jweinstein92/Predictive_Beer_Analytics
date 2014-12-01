@@ -1,9 +1,9 @@
 """
 Download, process label images for all beers.
 
-Assign N most used colors based on K-Means clustering algorithm
-Create a custom color palette with ratings based on previously
-downloaded UNTAPPD beer ratings.
+* Assign N most used colors based on K-Means clustering algorithm
+* Classify these colors to fit the palette
+* Rate these palette colors based on previously downloaded UNTAPPD beer ratings.
 """
 
 import os
