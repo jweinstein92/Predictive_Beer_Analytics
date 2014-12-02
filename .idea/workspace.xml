@@ -4,13 +4,13 @@
     <list default="true" id="12b18c03-2408-49d4-95e2-6b590f737ccb" name="Default" comment="" />
     <ignored path="Predictive_Beer_Analytics.iws" />
     <ignored path=".idea/workspace.xml" />
-    <file path="/Dummy.txt" changelist="12b18c03-2408-49d4-95e2-6b590f737ccb" time="1417041556335" ignored="false" />
+    <file path="/Dummy.txt" changelist="12b18c03-2408-49d4-95e2-6b590f737ccb" time="1417529252022" ignored="false" />
     <file path="/settings.py" changelist="12b18c03-2408-49d4-95e2-6b590f737ccb" time="1413803786182" ignored="false" />
-    <file path="/models.py" changelist="12b18c03-2408-49d4-95e2-6b590f737ccb" time="1417041594306" ignored="false" />
+    <file path="/models.py" changelist="12b18c03-2408-49d4-95e2-6b590f737ccb" time="1417530577599" ignored="false" />
     <file path="/List.html" changelist="12b18c03-2408-49d4-95e2-6b590f737ccb" time="1412553749165" ignored="false" />
     <file path="/forms.py" changelist="12b18c03-2408-49d4-95e2-6b590f737ccb" time="1412583827407" ignored="false" />
     <file path="/urls.py" changelist="12b18c03-2408-49d4-95e2-6b590f737ccb" time="1417042086980" ignored="false" />
-    <file path="/views.py" changelist="12b18c03-2408-49d4-95e2-6b590f737ccb" time="1417042507587" ignored="false" />
+    <file path="/views.py" changelist="12b18c03-2408-49d4-95e2-6b590f737ccb" time="1417529982246" ignored="false" />
     <file path="$PROJECT_DIR$/../votune/votune/apps/voter/urls.py" changelist="12b18c03-2408-49d4-95e2-6b590f737ccb" time="1412556088620" ignored="false" />
     <file path="/base.html" changelist="12b18c03-2408-49d4-95e2-6b590f737ccb" time="1417041925004" ignored="false" />
     <file path="/list.html" changelist="12b18c03-2408-49d4-95e2-6b590f737ccb" time="1412597214556" ignored="false" />
@@ -55,7 +55,7 @@
       <file leaf-file-name="base.html" pinned="false" current="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/app/templates/base.html">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="42" column="47" selection-start="2401" selection-end="2401" vertical-scroll-proportion="-5.230769">
+            <state line="42" column="47" selection-start="2401" selection-end="2401" vertical-scroll-proportion="0.0">
               <folding />
             </state>
           </provider>
@@ -65,9 +65,7 @@
         <entry file="file://$PROJECT_DIR$/urls.py">
           <provider selected="true" editor-type-id="text-editor">
             <state line="10" column="45" selection-start="312" selection-end="312" vertical-scroll-proportion="0.0">
-              <folding>
-                <element signature="e#0#51#0" expanded="true" />
-              </folding>
+              <folding />
             </state>
           </provider>
         </entry>
@@ -81,31 +79,29 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="list.html" pinned="false" current="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/app/templates/list.html">
-          <provider selected="true" editor-type-id="text-editor">
-            <state line="33" column="64" selection-start="1131" selection-end="1212" vertical-scroll-proportion="0.0">
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
       <file leaf-file-name="views.py" pinned="false" current="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/app/views.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="65" column="68" selection-start="1989" selection-end="1989" vertical-scroll-proportion="0.0">
+            <state line="84" column="0" selection-start="2660" selection-end="2660" vertical-scroll-proportion="0.0">
               <folding />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="colors.html" pinned="false" current="true" current-in-tab="true">
+      <file leaf-file-name="models.py" pinned="false" current="true" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/app/models.py">
+          <provider selected="true" editor-type-id="text-editor">
+            <state line="36" column="7" selection-start="1082" selection-end="1082" vertical-scroll-proportion="0.4610951">
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="colors.html" pinned="false" current="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/app/templates/colors.html">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="7" column="121" selection-start="270" selection-end="270" vertical-scroll-proportion="0.38636363">
-              <folding>
-                <element signature="e#191#222#0" expanded="true" />
-              </folding>
+            <state line="7" column="121" selection-start="270" selection-end="270" vertical-scroll-proportion="-4.576923">
+              <folding />
             </state>
           </provider>
         </entry>
@@ -113,7 +109,7 @@
       <file leaf-file-name="predictiveBeerAnalytics.py" pinned="false" current="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/machine_learning/lib/predictiveBeerAnalytics.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="12" column="0" selection-start="230" selection-end="230" vertical-scroll-proportion="0.0">
+            <state line="19" column="0" selection-start="367" selection-end="367" vertical-scroll-proportion="0.0">
               <folding />
             </state>
           </provider>
@@ -122,7 +118,7 @@
       <file leaf-file-name="description.html" pinned="false" current="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/app/templates/description.html">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="17" column="44" selection-start="570" selection-end="598" vertical-scroll-proportion="-5.230769">
+            <state line="17" column="44" selection-start="570" selection-end="598" vertical-scroll-proportion="0.0">
               <folding />
             </state>
           </provider>
@@ -140,7 +136,7 @@
       <file leaf-file-name="histogram.html" pinned="false" current="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/app/templates/histogram.html">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="6" column="30" selection-start="266" selection-end="266" vertical-scroll-proportion="-2.5384614">
+            <state line="6" column="30" selection-start="266" selection-end="266" vertical-scroll-proportion="0.0">
               <folding />
             </state>
           </provider>
@@ -175,18 +171,18 @@
         <option value="$PROJECT_DIR$/app/jsonDbParser.py" />
         <option value="$PROJECT_DIR$/app/templates/histogram.html" />
         <option value="$PROJECT_DIR$/app/templates/prediction.html" />
-        <option value="$PROJECT_DIR$/app/models.py" />
         <option value="$PROJECT_DIR$/app/templates/base.html" />
         <option value="$PROJECT_DIR$/urls.py" />
-        <option value="$PROJECT_DIR$/app/views.py" />
         <option value="$PROJECT_DIR$/app/templates/colors.html" />
+        <option value="$PROJECT_DIR$/app/views.py" />
+        <option value="$PROJECT_DIR$/app/models.py" />
       </list>
     </option>
   </component>
   <component name="ProjectFrameBounds">
     <option name="x" value="-8" />
     <option name="y" value="-8" />
-    <option name="width" value="1382" />
+    <option name="width" value="1378" />
     <option name="height" value="744" />
   </component>
   <component name="ProjectLevelVcsManager" settingsEditedManually="false">
@@ -215,6 +211,7 @@
       <sortByType />
     </navigator>
     <panes>
+      <pane id="Scope" />
       <pane id="ProjectPane">
         <subPane>
           <PATH>
@@ -261,40 +258,21 @@
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
           </PATH>
-          <PATH>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="Predictive_Beer_Analytics" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="Predictive_Beer_Analytics" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="app" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="templates" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-          </PATH>
         </subPane>
       </pane>
-      <pane id="Scope" />
     </panes>
   </component>
   <component name="PropertiesComponent">
     <property name="options.splitter.main.proportions" value="0.3" />
     <property name="WebServerToolWindowFactoryState" value="false" />
-    <property name="recentsLimit" value="5" />
     <property name="options.lastSelected" value="vcs.Git" />
+    <property name="recentsLimit" value="5" />
     <property name="last_opened_file_path" value="$PROJECT_DIR$/../votune" />
     <property name="FullScreen" value="false" />
     <property name="DefaultHtmlFileTemplate" value="Html5" />
-    <property name="options.searchVisible" value="true" />
-    <property name="options.splitter.details.proportions" value="0.2" />
     <property name="dynamic.classpath" value="false" />
+    <property name="options.splitter.details.proportions" value="0.2" />
+    <property name="options.searchVisible" value="true" />
   </component>
   <component name="PyConsoleOptionsProvider">
     <option name="myPythonConsoleState">
@@ -347,29 +325,6 @@
       <option name="PARAMETERS" value="" />
       <method />
     </configuration>
-    <configuration default="true" type="Python.DjangoServer" factoryName="Django server">
-      <option name="INTERPRETER_OPTIONS" value="" />
-      <option name="PARENT_ENVS" value="true" />
-      <envs>
-        <env name="PYTHONUNBUFFERED" value="1" />
-      </envs>
-      <option name="SDK_HOME" value="" />
-      <option name="WORKING_DIRECTORY" value="" />
-      <option name="IS_MODULE_SDK" value="false" />
-      <option name="ADD_CONTENT_ROOTS" value="true" />
-      <option name="ADD_SOURCE_ROOTS" value="true" />
-      <module name="Predictive_Beer_Analytics" />
-      <option name="launchJavascriptDebuger" value="false" />
-      <option name="port" value="8000" />
-      <option name="host" value="" />
-      <option name="additionalOptions" value="" />
-      <option name="browserUrl" value="" />
-      <option name="runTestServer" value="false" />
-      <option name="runNoReload" value="false" />
-      <option name="useCustomRunCommand" value="false" />
-      <option name="customRunCommand" value="" />
-      <method />
-    </configuration>
     <configuration default="true" type="tests" factoryName="Unittests">
       <option name="INTERPRETER_OPTIONS" value="" />
       <option name="PARENT_ENVS" value="true" />
@@ -391,6 +346,29 @@
       <option name="PUREUNITTEST" value="true" />
       <option name="PARAMS" value="" />
       <option name="USE_PARAM" value="false" />
+      <method />
+    </configuration>
+    <configuration default="true" type="Python.DjangoServer" factoryName="Django server">
+      <option name="INTERPRETER_OPTIONS" value="" />
+      <option name="PARENT_ENVS" value="true" />
+      <envs>
+        <env name="PYTHONUNBUFFERED" value="1" />
+      </envs>
+      <option name="SDK_HOME" value="" />
+      <option name="WORKING_DIRECTORY" value="" />
+      <option name="IS_MODULE_SDK" value="false" />
+      <option name="ADD_CONTENT_ROOTS" value="true" />
+      <option name="ADD_SOURCE_ROOTS" value="true" />
+      <module name="Predictive_Beer_Analytics" />
+      <option name="launchJavascriptDebuger" value="false" />
+      <option name="port" value="8000" />
+      <option name="host" value="" />
+      <option name="additionalOptions" value="" />
+      <option name="browserUrl" value="" />
+      <option name="runTestServer" value="false" />
+      <option name="runNoReload" value="false" />
+      <option name="useCustomRunCommand" value="false" />
+      <option name="customRunCommand" value="" />
       <method />
     </configuration>
     <configuration default="true" type="tests" factoryName="Doctests">
@@ -462,8 +440,8 @@
       <method />
     </configuration>
     <list size="2">
-      <item index="0" class="java.lang.String" itemvalue="Django server.Predictive_Beer_Analytics" />
-      <item index="1" class="java.lang.String" itemvalue="Python.jsonDbParser" />
+      <item index="0" class="java.lang.String" itemvalue="Python.jsonDbParser" />
+      <item index="1" class="java.lang.String" itemvalue="Django server.Predictive_Beer_Analytics" />
     </list>
     <recent_temporary>
       <list size="1">
@@ -498,18 +476,18 @@
     <servers />
   </component>
   <component name="ToolWindowManager">
-    <frame x="-8" y="-8" width="1382" height="744" extended-state="0" />
-    <editor active="true" />
+    <frame x="-8" y="-8" width="1378" height="744" extended-state="0" />
+    <editor active="false" />
     <layout>
       <window_info id="Changes" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
       <window_info id="Database" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Structure" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
-      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.27424243" sideWeight="0.6746575" order="0" side_tool="false" content_ui="combo" />
+      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.27887538" sideWeight="0.6746575" order="0" side_tool="false" content_ui="combo" />
       <window_info id="Debug" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.3989726" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Favorites" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="2" side_tool="true" content_ui="tabs" />
-      <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.32534248" sideWeight="0.34242424" order="7" side_tool="true" content_ui="tabs" />
-      <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.32534248" sideWeight="0.6575758" order="2" side_tool="false" content_ui="tabs" />
+      <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.32534248" sideWeight="0.34270516" order="7" side_tool="true" content_ui="tabs" />
+      <window_info id="Run" active="true" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.32534248" sideWeight="0.6572948" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Cvs" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
       <window_info id="Message" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
@@ -604,16 +582,12 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/static/js/main.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="30" column="3" selection-start="737" selection-end="737" vertical-scroll-proportion="0.0">
-          <folding />
-        </state>
+        <state line="30" column="3" selection-start="737" selection-end="737" vertical-scroll-proportion="0.0" />
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/app/templates/home.html">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="0" column="0" selection-start="0" selection-end="0" vertical-scroll-proportion="0.0">
-          <folding />
-        </state>
+        <state line="0" column="0" selection-start="0" selection-end="0" vertical-scroll-proportion="0.0" />
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/app/templates/list.html">
@@ -632,7 +606,7 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/machine_learning/lib/predictiveBeerAnalytics.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="12" column="0" selection-start="230" selection-end="230" vertical-scroll-proportion="0.0">
+        <state line="19" column="0" selection-start="367" selection-end="367" vertical-scroll-proportion="0.0">
           <folding />
         </state>
       </provider>
@@ -644,56 +618,52 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/app/models.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="9" column="0" selection-start="272" selection-end="272" vertical-scroll-proportion="0.4409222">
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/urls.py">
       <provider selected="true" editor-type-id="text-editor">
         <state line="10" column="45" selection-start="312" selection-end="312" vertical-scroll-proportion="0.0">
-          <folding>
-            <element signature="e#0#51#0" expanded="true" />
-          </folding>
+          <folding />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/app/templates/base.html">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="42" column="47" selection-start="2401" selection-end="2401" vertical-scroll-proportion="-5.230769">
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app/views.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="65" column="68" selection-start="1989" selection-end="1989" vertical-scroll-proportion="0.0">
+        <state line="42" column="47" selection-start="2401" selection-end="2401" vertical-scroll-proportion="0.0">
           <folding />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/app/templates/histogram.html">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="6" column="30" selection-start="266" selection-end="266" vertical-scroll-proportion="-2.5384614">
+        <state line="6" column="30" selection-start="266" selection-end="266" vertical-scroll-proportion="0.0">
           <folding />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/app/templates/description.html">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="17" column="44" selection-start="570" selection-end="598" vertical-scroll-proportion="-5.230769">
+        <state line="17" column="44" selection-start="570" selection-end="598" vertical-scroll-proportion="0.0">
           <folding />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/app/templates/colors.html">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="7" column="121" selection-start="270" selection-end="270" vertical-scroll-proportion="0.38636363">
-          <folding>
-            <element signature="e#191#222#0" expanded="true" />
-          </folding>
+        <state line="7" column="121" selection-start="270" selection-end="270" vertical-scroll-proportion="-4.576923">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/views.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="84" column="0" selection-start="2660" selection-end="2660" vertical-scroll-proportion="0.0">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/models.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="36" column="7" selection-start="1082" selection-end="1082" vertical-scroll-proportion="0.4610951">
+          <folding />
         </state>
       </provider>
     </entry>
