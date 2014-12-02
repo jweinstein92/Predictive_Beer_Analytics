@@ -34,9 +34,6 @@
           <a href="genindex.html" title="General Index"
              accesskey="I">index</a></li>
         <li class="right" >
-          <a href="py-modindex.html" title="Python Module Index"
-             >modules</a> |</li>
-        <li class="right" >
           <a href="overview.html" title="Project overview"
              accesskey="P">previous</a> |</li>
         <li><a href="index.html">Predictive beer analytics 1.0 documentation</a> &raquo;</li> 
@@ -50,30 +47,76 @@
             
   <div class="section" id="getting-new-data">
 <h1>Getting new data<a class="headerlink" href="#getting-new-data" title="Permalink to this headline">¶</a></h1>
+<p>All data used by this module is mined from the beer review website <a class="reference external" href="http://www.untappd.com">Untappd</a></p>
+<p>To obtain the neccessary data, you must first acquire a <strong>Client Id</strong> and <strong>Client Secrect</strong> key from
+<a class="reference external" href="http://untappd.com/api/docs">Untappd API</a>. Also, a <a class="reference external" href="https://developers.google.com/maps/documentation/geocoding/">Google Geocoding API</a> key is required. However, the Google Geocoding API limits their keys to 2500 calls a day. If you have more than 2500 users, you will either need multiple keys or will need to change PBAMap.py to handle the usage. These keys must then be placed in the apiConfig.ini located in /machine_learning.</p>
 <p>To easily obtain new data, we provided the control script <strong>predictiveBeerAnalytics.py</strong></p>
 <p>Execute:</p>
 <div class="highlight-python"><div class="highlight"><pre>$ predictiveBeerAnalytics.py [--users | --reviews | --normalizeData | --keywords |
     --dataPoints | --styles | --abvMap | --styleMap | --colorPalette]
 </pre></div>
 </div>
-<p>Each step adds more to already stored data. It can take up to few hours to get the task it done,
+<p>Each step adds more to already stored data. It can take hours to collect and analyze the data,
 so we invoke each task separately by choosing one of the arguments.</p>
-<div class="section" id="untappd-module">
-<h2>Untappd module<a class="headerlink" href="#untappd-module" title="Permalink to this headline">¶</a></h2>
+<p>It is reccommended to run the scripts in the following order:</p>
+<div class="highlight-python"><div class="highlight"><pre>$ predicitiveBeerAnalytics.py --users
+$ predicitiveBeerAnalytics.py --reviews
+$ predicitiveBeerAnalytics.py --normalizeData
+$ predicitiveBeerAnalytics.py --keywords
+$ predicitiveBeerAnalytics.py --styles
+$ predicitiveBeerAnalytics.py --abvMap &lt;abvAmount&gt;
+$ predicitiveBeerAnalytics.py --styleMap &lt;beerStyle&gt;
+$ predicitiveBeerAnalytics.py --colorPalette
+</pre></div>
+</div>
+<div class="section" id="user-data-users">
+<h2>User Data (<tt class="docutils literal"><span class="pre">--users</span></tt>)<a class="headerlink" href="#user-data-users" title="Permalink to this headline">¶</a></h2>
+<p>In order to effectively use the module, large amounts of data are required. A variety of users from many different places who drink various kinds of beer are ideal. To obtain a useful array of data, lots must be obtained. However, Untappd API limits its developers to only make calls 100 times per hour. To handle this, <strong>predictiveBeerAnalytics.py</strong> pauses the program after every call to ensure that no more than 100 calls are made. It is recommended to leave the script running for long periods of time to obtain data. The script can be run multiple times without losing or duplicating user information, so it can be stopped at any point until a later point.</p>
+<p>To mine user data - usernames, locations, and ids:</p>
+<div class="highlight-python"><div class="highlight"><pre>$ predictiveBeerAnalytics.py --users
+</pre></div>
+</div>
 <div class="admonition warning">
 <p class="first admonition-title">Warning</p>
-<p class="last">Josh please!</p>
+<p class="last">This is a never ending for loop. User information will continue to be queried until user kills the process with ctrl+C</p>
 </div>
 </div>
-<div class="section" id="keywords-module">
-<h2>Keywords module<a class="headerlink" href="#keywords-module" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="beer-data-reviews">
+<h2>Beer Data (<tt class="docutils literal"><span class="pre">--reviews</span></tt>)<a class="headerlink" href="#beer-data-reviews" title="Permalink to this headline">¶</a></h2>
+<p>This may only be run if <tt class="docutils literal"><span class="pre">--users</span></tt> has been previously run as it uses the usernames you have already mined. Each user has their beer ratings queried and returns a maximum of 50 reviews per user. This may be less depending on if they reviewed the same beer multiple times or have not reviewed more than 50 beers. Like <tt class="docutils literal"><span class="pre">--users</span></tt> it is recommended to leave this script running for long periods of time to obtain data. The more reviews retreived, the better the results will be. This script may be interrupted and restarted.</p>
+<p>To mine beer data - user reviews, beer information (name, rating, alcohol content, label, style, description), and brewery information (name, location, beers brewed):</p>
+<div class="highlight-python"><div class="highlight"><pre>$ predictiveBeerAnalytics.py --reviews
+</pre></div>
+</div>
+<div class="admonition warning">
+<p class="first admonition-title">Warning</p>
+<p class="last">This is a never ending for loop. Beer information will continue to be queried until user kills the process with ctrl+C</p>
+</div>
+</div>
+<div class="section" id="normalizing-data-normalizedata">
+<h2>Normalizing Data (<tt class="docutils literal"><span class="pre">--normalizeData</span></tt>)<a class="headerlink" href="#normalizing-data-normalizedata" title="Permalink to this headline">¶</a></h2>
+<p>Normalizing the data removes the usernames of users who you have already gathered reviews from. All users with locations are then put through the <a class="reference external" href="https://developers.google.com/maps/documentation/geocoding/">Google Geocoding API</a> to obtain the longitude and latitude of the users for later use. Due to the daily limit of 2500 calls to the API, it is suggested to get multiple API keys and only have to run this once, opposed to changing code and needing to rerun.</p>
+<p>To normalize the data:</p>
+<div class="highlight-python"><div class="highlight"><pre>$ predictiveBeerAnalytics.py --normalizeData
+</pre></div>
+</div>
+</div>
+<div class="section" id="retreiving-description-keywords-keywords">
+<h2>Retreiving Description Keywords (<tt class="docutils literal"><span class="pre">--keywords</span></tt>)<a class="headerlink" href="#retreiving-description-keywords-keywords" title="Permalink to this headline">¶</a></h2>
 <div class="admonition warning">
 <p class="first admonition-title">Warning</p>
 <p class="last">Marek please!</p>
 </div>
 </div>
-<div class="section" id="maps-module">
-<h2>Maps module<a class="headerlink" href="#maps-module" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="reading-beer-styles-styles">
+<h2>Reading Beer Styles (<tt class="docutils literal"><span class="pre">--styles</span></tt>)<a class="headerlink" href="#reading-beer-styles-styles" title="Permalink to this headline">¶</a></h2>
+<div class="admonition warning">
+<p class="first admonition-title">Warning</p>
+<p class="last">Josh please!</p>
+</div>
+</div>
+<div class="section" id="creating-maps-abvmap-or-stylemap">
+<h2>Creating Maps (<tt class="docutils literal"><span class="pre">--abvMap</span></tt> or <tt class="docutils literal"><span class="pre">--styleMap</span></tt>)<a class="headerlink" href="#creating-maps-abvmap-or-stylemap" title="Permalink to this headline">¶</a></h2>
 <div class="admonition warning">
 <p class="first admonition-title">Warning</p>
 <p class="last">Josh please!</p>
@@ -100,9 +143,12 @@ so we invoke each task separately by choosing one of the arguments.</p>
   <h3><a href="index.html">Table Of Contents</a></h3>
   <ul>
 <li><a class="reference internal" href="#">Getting new data</a><ul>
-<li><a class="reference internal" href="#untappd-module">Untappd module</a></li>
-<li><a class="reference internal" href="#keywords-module">Keywords module</a></li>
-<li><a class="reference internal" href="#maps-module">Maps module</a></li>
+<li><a class="reference internal" href="#user-data-users">User Data (<tt class="docutils literal"><span class="pre">--users</span></tt>)</a></li>
+<li><a class="reference internal" href="#beer-data-reviews">Beer Data (<tt class="docutils literal"><span class="pre">--reviews</span></tt>)</a></li>
+<li><a class="reference internal" href="#normalizing-data-normalizedata">Normalizing Data (<tt class="docutils literal"><span class="pre">--normalizeData</span></tt>)</a></li>
+<li><a class="reference internal" href="#retreiving-description-keywords-keywords">Retreiving Description Keywords (<tt class="docutils literal"><span class="pre">--keywords</span></tt>)</a></li>
+<li><a class="reference internal" href="#reading-beer-styles-styles">Reading Beer Styles (<tt class="docutils literal"><span class="pre">--styles</span></tt>)</a></li>
+<li><a class="reference internal" href="#creating-maps-abvmap-or-stylemap">Creating Maps (<tt class="docutils literal"><span class="pre">--abvMap</span></tt> or <tt class="docutils literal"><span class="pre">--styleMap</span></tt>)</a></li>
 <li><a class="reference internal" href="#colorpalette-module">ColorPalette module</a></li>
 </ul>
 </li>
@@ -139,9 +185,6 @@ so we invoke each task separately by choosing one of the arguments.</p>
         <li class="right" style="margin-right: 10px">
           <a href="genindex.html" title="General Index"
              >index</a></li>
-        <li class="right" >
-          <a href="py-modindex.html" title="Python Module Index"
-             >modules</a> |</li>
         <li class="right" >
           <a href="overview.html" title="Project overview"
              >previous</a> |</li>
