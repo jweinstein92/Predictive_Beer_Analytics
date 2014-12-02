@@ -3,7 +3,7 @@
    You can adapt this file completely to your liking, but it should at least
    contain the root `toctree` directive.
 
-Getting new data
+Getting and Using Data
 =====================================================
 All data used by this module is mined from the beer review website `Untappd <http://www.untappd.com>`_
 
@@ -73,9 +73,12 @@ Retreiving Description Keywords (``--keywords``)
 	
 Reading Beer Styles (``--styles``)
 --------------
-.. warning::
+This looks at all the beers and creates a file of the 20 most reviewed beer styles and stores them in the file styles.csv. This file is then used in ``-stylesMap`` to allow you to create maps based on user reviews and the style of the beer. Other styles may be added to this file, however there probably won't be enough reviews to accurately describe the desirablity of that style in a region.
 
-	Josh please!
+To create a list of the most rated beer styles::
+
+    $ predictiveBeerAnalytics.py --styles
+
 
 Creating Maps (``--abvMap`` or ``--styleMap``)
 --------------

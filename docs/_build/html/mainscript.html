@@ -6,7 +6,7 @@
   <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     
-    <title>Getting new data &mdash; Predictive beer analytics 1.0 documentation</title>
+    <title>Getting and Using Data &mdash; Predictive beer analytics 1.0 documentation</title>
     
     <link rel="stylesheet" href="_static/default.css" type="text/css" />
     <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
@@ -45,8 +45,8 @@
         <div class="bodywrapper">
           <div class="body">
             
-  <div class="section" id="getting-new-data">
-<h1>Getting new data<a class="headerlink" href="#getting-new-data" title="Permalink to this headline">¶</a></h1>
+  <div class="section" id="getting-and-using-data">
+<h1>Getting and Using Data<a class="headerlink" href="#getting-and-using-data" title="Permalink to this headline">¶</a></h1>
 <p>All data used by this module is mined from the beer review website <a class="reference external" href="http://www.untappd.com">Untappd</a></p>
 <p>To obtain the neccessary data, you must first acquire a <strong>Client Id</strong> and <strong>Client Secrect</strong> key from
 <a class="reference external" href="http://untappd.com/api/docs">Untappd API</a>. Also, a <a class="reference external" href="https://developers.google.com/maps/documentation/geocoding/">Google Geocoding API</a> key is required. However, the Google Geocoding API limits their keys to 2500 calls a day. If you have more than 2500 users, you will either need multiple keys or will need to change PBAMap.py to handle the usage. These keys must then be placed in the apiConfig.ini located in /machine_learning.</p>
@@ -110,9 +110,10 @@ $ predicitiveBeerAnalytics.py --colorPalette
 </div>
 <div class="section" id="reading-beer-styles-styles">
 <h2>Reading Beer Styles (<tt class="docutils literal"><span class="pre">--styles</span></tt>)<a class="headerlink" href="#reading-beer-styles-styles" title="Permalink to this headline">¶</a></h2>
-<div class="admonition warning">
-<p class="first admonition-title">Warning</p>
-<p class="last">Josh please!</p>
+<p>This looks at all the beers and creates a file of the 20 most reviewed beer styles and stores them in the file styles.csv. This file is then used in <tt class="docutils literal"><span class="pre">-stylesMap</span></tt> to allow you to create maps based on user reviews and the style of the beer. Other styles may be added to this file, however there probably won&#8217;t be enough reviews to accurately describe the desirablity of that style in a region.</p>
+<p>To create a list of the most rated beer styles:</p>
+<div class="highlight-python"><div class="highlight"><pre>$ predictiveBeerAnalytics.py --styles
+</pre></div>
 </div>
 </div>
 <div class="section" id="creating-maps-abvmap-or-stylemap">
@@ -142,7 +143,7 @@ $ predicitiveBeerAnalytics.py --colorPalette
         <div class="sphinxsidebarwrapper">
   <h3><a href="index.html">Table Of Contents</a></h3>
   <ul>
-<li><a class="reference internal" href="#">Getting new data</a><ul>
+<li><a class="reference internal" href="#">Getting and Using Data</a><ul>
 <li><a class="reference internal" href="#user-data-users">User Data (<tt class="docutils literal"><span class="pre">--users</span></tt>)</a></li>
 <li><a class="reference internal" href="#beer-data-reviews">Beer Data (<tt class="docutils literal"><span class="pre">--reviews</span></tt>)</a></li>
 <li><a class="reference internal" href="#normalizing-data-normalizedata">Normalizing Data (<tt class="docutils literal"><span class="pre">--normalizeData</span></tt>)</a></li>
