@@ -3,11 +3,13 @@
    You can adapt this file completely to your liking, but it should at least
    contain the root `toctree` directive.
 
-Predictive beer analytics
+Predictive Beer Analytics
 =====================================================
 
-Welcome to Predictive beer analytics's documentation!
-(last updated on 01.12.2014)
+Welcome to Predictive Beer Analytics's documentation!
+Our module and base data can be found on our `GitHub account <https://github.com/jweinstein92/Predictive_Beer_Analytics/>`_
+
+(last updated on 02.12.2014)
 
 Contents:
 
