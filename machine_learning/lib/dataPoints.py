@@ -5,6 +5,7 @@ class dataPoint:
         self.country = attribs['country']
         self.abv = attribs['abv']
         self.rating = attribs['rating']
+        self.style = attribs['style']
 
 
 class dataPoints:

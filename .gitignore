@@ -4,8 +4,7 @@ apiSettings.csv
 *.txt
 *.pyc
 oldFiles/
+oldData/
 privateData/
 newerData/
 .DS_STORE
-venv/
-machine_learning/beers_sample.json

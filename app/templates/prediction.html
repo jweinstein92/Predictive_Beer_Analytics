@@ -10,7 +10,7 @@
                 <div class="form-group">
                     <select id="location" name="location" class="form-control">
                           {% for location in locationList %}
-                                <option value="{{ location.location }}">{{ location.location }}</option>
+                                <option value="{{ location.id }}">{{ location.location }}</option>
                           {% endfor %}
                     </select>
                 </div>
@@ -18,14 +18,14 @@
                 <div class="form-group">
                     <select id="beerType" name="beerStyle" class="form-control" placeholder="Type">
                           {% for beerStyle in beerStyleList %}
-                            <option value="{{ beerStyle.styleName }}">{{ beerStyle.styleName }}</option>
+                            <option value="{{ beerStyle.id }}">{{ beerStyle.styleName }}</option>
                         {% endfor %}
                     </select>
                 </div>
                 <div class="form-group">
-                    <select id="avbs" name="avbs" class="form-control">
-                        {% for avbsrange in avbsRangesList %}
-                            <option value="{{ avbsrange.range}}">{{ avbsrange.range }}%</option>
+                    <select id="abvs" name="abvs" class="form-control">
+                        {% for abvsrange in abvsRangesList %}
+                            <option value="{{ abvsrange.id}}">{{ abvsrange.range }}%</option>
                         {% endfor %}
                     </select>
                 </div>

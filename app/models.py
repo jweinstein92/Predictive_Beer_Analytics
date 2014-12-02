@@ -21,7 +21,7 @@ class BeerStyle(models.Model):
     numRatings = models.BigIntegerField()
 
 
-class AvbsRange(models.Model):
+class AbvsRange(models.Model):
     range = models.CharField(max_length=100)
 
 class StyleData(models.Model):
@@ -34,7 +34,7 @@ class StyleData(models.Model):
 
 class Abvs(models.Model):
     location = models.ForeignKey(Location)
-    avbsrange = models.ForeignKey(AvbsRange)
+    abvsrange = models.ForeignKey(AbvsRange)
     latcoord = models.TextField(null=True, blank=True)
     lngcoord = models.TextField(null=True, blank=True)
     rating = models.TextField(null=True, blank=True)

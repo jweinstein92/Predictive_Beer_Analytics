@@ -5,7 +5,9 @@ To do: Make this general.
 """
 
 import jsonpickle as jpickle
+import csv
 import labels
+
 
 def readUsers():
     """Load already processed users UntappdUser."""
@@ -90,7 +92,13 @@ def readDataPoints():
 
 def readBeerStyles():
     """Load most rated beer styles."""
-    return []
+    styles = []
+    with open('../data/styles.csv') as stylesFile:
+        reader = csv.DictReader(stylesFile)
+        for row in reader:
+            if row['style'] not in styles:
+                styles.append(row['style'])
+    return styles
 
 
 def readBeerColors():
@@ -107,4 +115,3 @@ def readBeerColors():
         beerColorsDict = labels.BeerColorsDict()
     beerColorsFile.close()
     return beerColorsDict
-
