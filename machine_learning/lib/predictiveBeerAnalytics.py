@@ -23,7 +23,7 @@ group.add_argument('--keywords', action='store_true',
                    help='Extract keywords from beer descriptions and attach to beer')
 group.add_argument('--dataPoints', action='store_true',
                    help='Create list of data points from user locations, ratings, \
-                   and beer alchol content')
+                   beer alchol content, and beer style')
 group.add_argument('--styles', action='store_true',
                    help='Create csv file of allowable beer styles to make maps with')
 group.add_argument('--abvMap', type=float,
@@ -32,7 +32,7 @@ group.add_argument('--abvMap', type=float,
                    0, 0.1 - 3.9, 4.0-4.9, 5.0-5.9, 6.0-6.9, 7.0-7.9, 8.0-8.9, \
                    9.0-9.9, 10.0-10.9, 11.0+ Requires GEOS Library and \
                    mpl_toolkits.basemap')
-group.add_argument('--styleMap', type=float,
+group.add_argument('--styleMap', type=str,
                    help='Create map of ratings using data points on maps \
                    provided beer style. Styles limited to 20 most common \
                    types of beer - \
@@ -47,8 +47,6 @@ args = parser.parse_args()
 untappd = UT.Untappd()
 untappd.settings('../apiConfig.ini')
 
-# set the allowed styles
-# beerStyles = readBeerStyles()
 
 def readUsers():
     """
@@ -145,7 +143,13 @@ def readBeerStyles():
     """
     Load most rated beer styles
     """
-    return []
+    styles = []
+    with open('../data/styles.csv') as stylesFile:
+        reader = csv.DictReader(stylesFile)
+        for row in reader:
+            if row['style'] not in styles:
+                styles.append(row['style'])
+    return styles
 
 
 def writeJSONFile(path, data):
@@ -415,7 +419,8 @@ def createDataPoints():
                 if 'country' in user.location:
                     country = user.location['country']
                 pointAttribs = {'lat': user.location['lat'], 'lng': user.location['lng'],
-                'country': country, 'abv': beersList[str(hash(bid))].abv, 'rating': rating}
+                'country': country, 'abv': beersList[str(hash(bid))].abv, 'rating': rating,
+                'style': beersList[str(hash(bid))].style}
                 point = dp.dataPoint(pointAttribs)
                 points.append(point)
                 if i % 1000 == 0:
@@ -439,7 +444,22 @@ def createABVMap():
             elif (abv > 11 and int(point.abv) > 11):
                 points.append(point)
         print str(len(points)) + " points of data"
-        PBAMap.abvMap(points, abv)
+        PBAMap.drawMap(points, abv)
+    else:
+        print "No data points found"
+
+
+def createStyleMap():
+    print "Drawing user rating maps of beers with a style of " + str(args.styleMap)
+    dataPoints = readDataPoints()
+    if len(dataPoints) > 0:
+        style = args.styleMap
+        points = []
+        for point in dataPoints:
+            if style in point.style:
+                points.append(point)
+        print str(len(points)) + " points of data"
+        PBAMap.drawMap(points, style)
     else:
         print "No data points found"
 
@@ -460,6 +480,7 @@ def createCommonStyles():
     with open('../data/styles.csv', 'wb') as stylesCSV:
         csvwriter = csv.writer(stylesCSV, delimiter=',',
                             quotechar='"')
+        csvwriter.writerow(["id", "style", "numRatings"])
         i = 1
         for style in sorted_styles:
             csvwriter.writerow([i, unicode(style[0]).encode("utf-8"), style[1]])
@@ -543,4 +564,8 @@ elif args.dataPoints:
     createDataPoints()
 elif args.abvMap >= 0:
     createABVMap()
-
+elif args.styleMap:
+    if args.styleMap in readBeerStyles():
+        createStyleMap()
+    else:
+        print "No support for style: " + args.styleMap

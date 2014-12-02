@@ -70,22 +70,27 @@ def createMap(lats, lngs, parallels, meridians, states=False):
     return m
 
 
-def saveMap(abv, numPoints, filePrefix):
-    if str(abv) in abvMapName:
-        abvRange = abvMapName[str(abv)]
+def saveMap(param, numPoints, filePrefix):
+    if type(param) is int:
+        if str(param) in abvMapName:
+            abvRange = abvMapName[str(param)]
+        else:
+            abvRange += abvMapName['11']
+
+        title = 'Average Beer Ratings of Beer with Alcohol Concentration of ' + \
+            abvRange + '%' + '\n' + str(numPoints) + " Reviews Used"
+
+        filename = filePrefix + 'ABV' + abvRange + '.png'
     else:
-        abvRange += abvMapName['11']
-
-    title = 'Average Beer Ratings of Beer with Alcohol Concentration of ' + \
-        abvRange + '%' + '\n' + str(numPoints) + " Reviews Used"
+        title = 'Average Beer Ratings of Beer with a Style of ' + param + '\n' + \
+            str(numPoints) + " Reviews Used"
+        filename = filePrefix + 'Style' + param.replace(' ', '') + '.png'
     plt.suptitle(title)
-
-    filename = filePrefix + abvRange + '.png'
     plt.savefig(filename)
     plt.close()
 
 
-def drawUSMap(points, abv):
+def drawUSMap(points, param):
     print "Drawing US map with " + str(len(points)) + " data points."
     lats = []
     lngs = []
@@ -109,12 +114,12 @@ def drawUSMap(points, abv):
     xs, ys, average = createHistogram(m, lats, lngs, ratings, True)
 
     # overlay the averages histogram over map
-    plt.pcolormesh(xs, ys, average)
+    plt.pcolormesh(xs, ys, average, vmin=0, vmax=5)
     plt.colorbar(orientation='horizontal')
-    saveMap(abv, len(points), '../graphics/USRating')
+    saveMap(param, len(points), '../graphics/US')
 
 
-def drawEUMap(points, abv):
+def drawEUMap(points, param):
     print "Drawing EU map with " + str(len(points)) + " data points."
     lats = []
     lngs = []
@@ -144,9 +149,9 @@ def drawEUMap(points, abv):
     #####################################################
 
     # overlay the averages histogram over map
-    plt.pcolormesh(xs, ys, average)
+    plt.pcolormesh(xs, ys, average, vmin=0, vmax=5)
     plt.colorbar(orientation='horizontal')
-    saveMap(abv, len(points), '../graphics/EURating')
+    saveMap(param, len(points), '../graphics/EU')
 
 
 def inEU(lat, lng):
@@ -188,17 +193,7 @@ def createHistogram(m, lats, lngs, ratings, us=False):
     return xs, ys, average
 
 
-def abvMap(points, abv):
-    # lat = []
-    # lng = []
-    # ratings = []
-    # for point in points:
-    #     lat.append(point.lat)
-    #     lng.append(point.lng)
-    #     ratings.append(point.rating)
-    # plt.scatter(lng, lat, c=ratings)
-    # plt.colorbar()
-    # plt.savefig('ratings.png')
+def drawMap(points, param):
     euPoints = []
     usPoints = []
 
@@ -207,5 +202,5 @@ def abvMap(points, abv):
             usPoints.append(point)
         elif inEU(point.lat, point.lng):
             euPoints.append(point)
-    drawEUMap(euPoints, abv)
-    drawUSMap(usPoints, abv)
+    drawEUMap(euPoints, param)
+    drawUSMap(usPoints, param)

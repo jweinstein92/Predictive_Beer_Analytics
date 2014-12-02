@@ -3,6 +3,7 @@ apiSettings.csv
 *.pkl
 *.txt
 *.csv
+*.pyc
 oldFiles/
 privateData/
 newerData/
