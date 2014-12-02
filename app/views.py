@@ -1,7 +1,7 @@
 import sys
 from app.models import Comment
 from app.models import Location
-from app.models import AvbsRange
+from app.models import AbvsRange
 from app.models import BeerStyle
 from app.models import Abvs
 from app.models import Word
@@ -68,17 +68,17 @@ def colors(request):
 def prediction(request):
 
     locations = Location.objects.all()
-    avbsRanges = AvbsRange.objects.all()
+    abvsRanges = AbvsRange.objects.all()
     beerStyle = BeerStyle.objects.all()
 
-    return render_to_response('prediction.html',{'locationList': locations , 'avbsRangesList': avbsRanges , 'beerStyleList' : beerStyle}, context_instance=RequestContext(request))
+    return render_to_response('prediction.html',{'locationList': locations , 'abvsRangesList': abvsRanges , 'beerStyleList' : beerStyle}, context_instance=RequestContext(request))
 
 def getPrediction(request):
 
     if request.method == 'POST':
         location = request.POST.get('location')
         beerStyle = request.POST.get('beerStyle')
-        avbs = request.POST.get('avbs')
+        abvs = request.POST.get('abvs')
         description = request.POST.get('description')
         color = request.POST.get('color')
 
@@ -89,7 +89,7 @@ def getPrediction(request):
 
 
 
-        return render_to_response('Histogram.html',{'location' : location , 'beerStyle' : beerStyle , 'avbs' : avbs, 'description' : description , 'color':color}, context_instance=RequestContext(request))
+        return render_to_response('Histogram.html',{'location' : location , 'beerStyle' : beerStyle , 'abvs' : abvs, 'description' : description , 'color':color}, context_instance=RequestContext(request))
 
 
 
