@@ -4,21 +4,21 @@
     <list default="true" id="12b18c03-2408-49d4-95e2-6b590f737ccb" name="Default" comment="" />
     <ignored path="Predictive_Beer_Analytics.iws" />
     <ignored path=".idea/workspace.xml" />
-    <file path="/Dummy.txt" changelist="12b18c03-2408-49d4-95e2-6b590f737ccb" time="1416745666953" ignored="false" />
+    <file path="/Dummy.txt" changelist="12b18c03-2408-49d4-95e2-6b590f737ccb" time="1417041556335" ignored="false" />
     <file path="/settings.py" changelist="12b18c03-2408-49d4-95e2-6b590f737ccb" time="1413803786182" ignored="false" />
-    <file path="/models.py" changelist="12b18c03-2408-49d4-95e2-6b590f737ccb" time="1416419540806" ignored="false" />
+    <file path="/models.py" changelist="12b18c03-2408-49d4-95e2-6b590f737ccb" time="1417041594306" ignored="false" />
     <file path="/List.html" changelist="12b18c03-2408-49d4-95e2-6b590f737ccb" time="1412553749165" ignored="false" />
     <file path="/forms.py" changelist="12b18c03-2408-49d4-95e2-6b590f737ccb" time="1412583827407" ignored="false" />
-    <file path="/urls.py" changelist="12b18c03-2408-49d4-95e2-6b590f737ccb" time="1416235968863" ignored="false" />
-    <file path="/views.py" changelist="12b18c03-2408-49d4-95e2-6b590f737ccb" time="1416565890250" ignored="false" />
+    <file path="/urls.py" changelist="12b18c03-2408-49d4-95e2-6b590f737ccb" time="1417042086980" ignored="false" />
+    <file path="/views.py" changelist="12b18c03-2408-49d4-95e2-6b590f737ccb" time="1417042507587" ignored="false" />
     <file path="$PROJECT_DIR$/../votune/votune/apps/voter/urls.py" changelist="12b18c03-2408-49d4-95e2-6b590f737ccb" time="1412556088620" ignored="false" />
-    <file path="/base.html" changelist="12b18c03-2408-49d4-95e2-6b590f737ccb" time="1416413743666" ignored="false" />
+    <file path="/base.html" changelist="12b18c03-2408-49d4-95e2-6b590f737ccb" time="1417041925004" ignored="false" />
     <file path="/list.html" changelist="12b18c03-2408-49d4-95e2-6b590f737ccb" time="1412597214556" ignored="false" />
     <file path="$USER_HOME$/PycharmProjects/TestProject/TestProject/settings.py" changelist="12b18c03-2408-49d4-95e2-6b590f737ccb" time="1412579816874" ignored="false" />
     <file path="/about.html" changelist="12b18c03-2408-49d4-95e2-6b590f737ccb" time="1413929988282" ignored="false" />
     <file path="/main.css" changelist="12b18c03-2408-49d4-95e2-6b590f737ccb" time="1416271622630" ignored="false" />
     <file path="/Description.html" changelist="12b18c03-2408-49d4-95e2-6b590f737ccb" time="1414412628907" ignored="false" />
-    <file path="/description.html" changelist="12b18c03-2408-49d4-95e2-6b590f737ccb" time="1414415474961" ignored="false" />
+    <file path="/description.html" changelist="12b18c03-2408-49d4-95e2-6b590f737ccb" time="1416935555537" ignored="false" />
     <file path="$USER_HOME$/PycharmProjects/PBAsklearn/learn.py" changelist="12b18c03-2408-49d4-95e2-6b590f737ccb" time="1415027175239" ignored="false" />
     <file path="/SBase.html" changelist="12b18c03-2408-49d4-95e2-6b590f737ccb" time="1415191762187" ignored="false" />
     <file path="/dashboard.html" changelist="12b18c03-2408-49d4-95e2-6b590f737ccb" time="1415104882068" ignored="false" />
@@ -29,8 +29,10 @@
     <file path="/map.css" changelist="12b18c03-2408-49d4-95e2-6b590f737ccb" time="1415633490893" ignored="false" />
     <file path="/map.html" changelist="12b18c03-2408-49d4-95e2-6b590f737ccb" time="1415633540900" ignored="false" />
     <file path="/predictor.html" changelist="12b18c03-2408-49d4-95e2-6b590f737ccb" time="1416233846799" ignored="false" />
-    <file path="/histogram.html" changelist="12b18c03-2408-49d4-95e2-6b590f737ccb" time="1416230214807" ignored="false" />
-    <file path="/prediction.html" changelist="12b18c03-2408-49d4-95e2-6b590f737ccb" time="1416419916712" ignored="false" />
+    <file path="/histogram.html" changelist="12b18c03-2408-49d4-95e2-6b590f737ccb" time="1416940217582" ignored="false" />
+    <file path="/prediction.html" changelist="12b18c03-2408-49d4-95e2-6b590f737ccb" time="1416941251776" ignored="false" />
+    <file path="/GetWords.py" changelist="12b18c03-2408-49d4-95e2-6b590f737ccb" time="1416937705897" ignored="false" />
+    <file path="/colors.html" changelist="12b18c03-2408-49d4-95e2-6b590f737ccb" time="1417042861595" ignored="false" />
     <option name="TRACKING_ENABLED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -53,8 +55,19 @@
       <file leaf-file-name="base.html" pinned="false" current="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/app/templates/base.html">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="29" column="7" selection-start="1695" selection-end="1695" vertical-scroll-proportion="0.0">
+            <state line="42" column="47" selection-start="2401" selection-end="2401" vertical-scroll-proportion="-5.230769">
               <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="urls.py" pinned="false" current="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/urls.py">
+          <provider selected="true" editor-type-id="text-editor">
+            <state line="10" column="45" selection-start="312" selection-end="312" vertical-scroll-proportion="0.0">
+              <folding>
+                <element signature="e#0#51#0" expanded="true" />
+              </folding>
             </state>
           </provider>
         </entry>
@@ -62,30 +75,8 @@
       <file leaf-file-name="prediction.html" pinned="false" current="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/app/templates/prediction.html">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="36" column="41" selection-start="1683" selection-end="1683" vertical-scroll-proportion="-5.230769">
+            <state line="20" column="92" selection-start="982" selection-end="982" vertical-scroll-proportion="0.0">
               <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="main.js" pinned="false" current="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/static/js/main.js">
-          <provider selected="true" editor-type-id="text-editor">
-            <state line="21" column="38" selection-start="532" selection-end="548" vertical-scroll-proportion="0.0">
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="home.html" pinned="false" current="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/app/templates/home.html">
-          <provider selected="true" editor-type-id="text-editor">
-            <state line="0" column="0" selection-start="0" selection-end="0" vertical-scroll-proportion="0.0">
-              <folding>
-                <marker date="1416226604204" expanded="true" signature="21:80" placeholder="..." />
-                <marker date="1416226604204" expanded="true" signature="28:56" placeholder="..." />
-                <marker date="1416226604204" expanded="true" signature="63:72" placeholder="..." />
-              </folding>
             </state>
           </provider>
         </entry>
@@ -93,25 +84,45 @@
       <file leaf-file-name="list.html" pinned="false" current="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/app/templates/list.html">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="15" column="49" selection-start="357" selection-end="357" vertical-scroll-proportion="0.0">
+            <state line="33" column="64" selection-start="1131" selection-end="1212" vertical-scroll-proportion="0.0">
               <folding />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="colorpicker.css" pinned="false" current="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/static/css/colorpicker.css">
+      <file leaf-file-name="views.py" pinned="false" current="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/app/views.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="14" column="25" selection-start="345" selection-end="345" vertical-scroll-proportion="0.0">
+            <state line="65" column="68" selection-start="1989" selection-end="1989" vertical-scroll-proportion="0.0">
               <folding />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="settings.py" pinned="false" current="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/settings.py">
+      <file leaf-file-name="colors.html" pinned="false" current="true" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/app/templates/colors.html">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="20" column="5" selection-start="783" selection-end="783" vertical-scroll-proportion="0.0">
+            <state line="7" column="121" selection-start="270" selection-end="270" vertical-scroll-proportion="0.38636363">
+              <folding>
+                <element signature="e#191#222#0" expanded="true" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="predictiveBeerAnalytics.py" pinned="false" current="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/machine_learning/lib/predictiveBeerAnalytics.py">
+          <provider selected="true" editor-type-id="text-editor">
+            <state line="12" column="0" selection-start="230" selection-end="230" vertical-scroll-proportion="0.0">
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="description.html" pinned="false" current="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/app/templates/description.html">
+          <provider selected="true" editor-type-id="text-editor">
+            <state line="17" column="44" selection-start="570" selection-end="598" vertical-scroll-proportion="-5.230769">
               <folding />
             </state>
           </provider>
@@ -126,19 +137,10 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="models.py" pinned="false" current="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/app/models.py">
+      <file leaf-file-name="histogram.html" pinned="false" current="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/app/templates/histogram.html">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="12" column="63" selection-start="406" selection-end="406" vertical-scroll-proportion="0.0">
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="views.py" pinned="false" current="true" current-in-tab="true">
-        <entry file="file://$PROJECT_DIR$/app/views.py">
-          <provider selected="true" editor-type-id="text-editor">
-            <state line="38" column="24" selection-start="1239" selection-end="1239" vertical-scroll-proportion="0.8468468">
+            <state line="6" column="30" selection-start="266" selection-end="266" vertical-scroll-proportion="-2.5384614">
               <folding />
             </state>
           </provider>
@@ -162,22 +164,22 @@
   <component name="IdeDocumentHistory">
     <option name="changedFiles">
       <list>
-        <option value="$PROJECT_DIR$/static/css/map.html" />
-        <option value="$PROJECT_DIR$/app/templates/maptest.html" />
-        <option value="$PROJECT_DIR$/static/css/map.css" />
-        <option value="$PROJECT_DIR$/app/templates/map.html" />
         <option value="$PROJECT_DIR$/app/templates/home.html" />
         <option value="$PROJECT_DIR$/app/templates/Histogram.html" />
-        <option value="$PROJECT_DIR$/app/templates/histogram.html" />
         <option value="$PROJECT_DIR$/app/templates/predictor.html" />
-        <option value="$PROJECT_DIR$/urls.py" />
         <option value="$PROJECT_DIR$/static/css/main.css" />
-        <option value="$PROJECT_DIR$/app/templates/base.html" />
         <option value="$PROJECT_DIR$/static/css/colorpicker.css" />
         <option value="$PROJECT_DIR$/static/js/main.js" />
-        <option value="$PROJECT_DIR$/app/models.py" />
+        <option value="$PROJECT_DIR$/app/templates/description.html" />
+        <option value="$PROJECT_DIR$/app/GetWords.py" />
+        <option value="$PROJECT_DIR$/app/jsonDbParser.py" />
+        <option value="$PROJECT_DIR$/app/templates/histogram.html" />
         <option value="$PROJECT_DIR$/app/templates/prediction.html" />
+        <option value="$PROJECT_DIR$/app/models.py" />
+        <option value="$PROJECT_DIR$/app/templates/base.html" />
+        <option value="$PROJECT_DIR$/urls.py" />
         <option value="$PROJECT_DIR$/app/views.py" />
+        <option value="$PROJECT_DIR$/app/templates/colors.html" />
       </list>
     </option>
   </component>
@@ -213,7 +215,6 @@
       <sortByType />
     </navigator>
     <panes>
-      <pane id="Scope" />
       <pane id="ProjectPane">
         <subPane>
           <PATH>
@@ -242,47 +243,7 @@
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
             <PATH_ELEMENT>
-              <option name="myItemId" value="static" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="js" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-          </PATH>
-          <PATH>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="Predictive_Beer_Analytics" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="Predictive_Beer_Analytics" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="static" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="images" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-          </PATH>
-          <PATH>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="Predictive_Beer_Analytics" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="Predictive_Beer_Analytics" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="static" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="css" />
+              <option name="myItemId" value="machine_learning" />
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
           </PATH>
@@ -320,19 +281,20 @@
           </PATH>
         </subPane>
       </pane>
+      <pane id="Scope" />
     </panes>
   </component>
   <component name="PropertiesComponent">
     <property name="options.splitter.main.proportions" value="0.3" />
     <property name="WebServerToolWindowFactoryState" value="false" />
-    <property name="options.lastSelected" value="vcs.Git" />
     <property name="recentsLimit" value="5" />
-    <property name="last_opened_file_path" value="$PROJECT_DIR$" />
+    <property name="options.lastSelected" value="vcs.Git" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$/../votune" />
     <property name="FullScreen" value="false" />
     <property name="DefaultHtmlFileTemplate" value="Html5" />
-    <property name="dynamic.classpath" value="false" />
-    <property name="options.splitter.details.proportions" value="0.2" />
     <property name="options.searchVisible" value="true" />
+    <property name="options.splitter.details.proportions" value="0.2" />
+    <property name="dynamic.classpath" value="false" />
   </component>
   <component name="PyConsoleOptionsProvider">
     <option name="myPythonConsoleState">
@@ -349,6 +311,25 @@
     </key>
   </component>
   <component name="RunManager" selected="Django server.Predictive_Beer_Analytics">
+    <configuration default="false" name="jsonDbParser" type="PythonConfigurationType" factoryName="Python" temporary="true">
+      <option name="INTERPRETER_OPTIONS" value="" />
+      <option name="PARENT_ENVS" value="true" />
+      <envs>
+        <env name="PYTHONUNBUFFERED" value="1" />
+      </envs>
+      <option name="SDK_HOME" value="" />
+      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$/app" />
+      <option name="IS_MODULE_SDK" value="true" />
+      <option name="ADD_CONTENT_ROOTS" value="true" />
+      <option name="ADD_SOURCE_ROOTS" value="true" />
+      <module name="Predictive_Beer_Analytics" />
+      <EXTENSION ID="PythonCoverageRunConfigurationExtension" enabled="false" sample_coverage="true" runner="coverage.py" />
+      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/app/jsonDbParser.py" />
+      <option name="PARAMETERS" value="" />
+      <RunnerSettings RunnerId="PythonRunner" />
+      <ConfigurationWrapper RunnerId="PythonRunner" />
+      <method />
+    </configuration>
     <configuration default="true" type="PythonConfigurationType" factoryName="Python">
       <option name="INTERPRETER_OPTIONS" value="" />
       <option name="PARENT_ENVS" value="true" />
@@ -364,29 +345,6 @@
       <EXTENSION ID="PythonCoverageRunConfigurationExtension" enabled="false" sample_coverage="true" runner="coverage.py" />
       <option name="SCRIPT_NAME" value="" />
       <option name="PARAMETERS" value="" />
-      <method />
-    </configuration>
-    <configuration default="true" type="tests" factoryName="Unittests">
-      <option name="INTERPRETER_OPTIONS" value="" />
-      <option name="PARENT_ENVS" value="true" />
-      <envs />
-      <option name="SDK_HOME" value="" />
-      <option name="WORKING_DIRECTORY" value="" />
-      <option name="IS_MODULE_SDK" value="false" />
-      <option name="ADD_CONTENT_ROOTS" value="true" />
-      <option name="ADD_SOURCE_ROOTS" value="true" />
-      <module name="Predictive_Beer_Analytics" />
-      <EXTENSION ID="PythonCoverageRunConfigurationExtension" enabled="false" sample_coverage="true" runner="coverage.py" />
-      <option name="SCRIPT_NAME" value="" />
-      <option name="CLASS_NAME" value="" />
-      <option name="METHOD_NAME" value="" />
-      <option name="FOLDER_NAME" value="" />
-      <option name="TEST_TYPE" value="TEST_SCRIPT" />
-      <option name="PATTERN" value="" />
-      <option name="USE_PATTERN" value="false" />
-      <option name="PUREUNITTEST" value="true" />
-      <option name="PARAMS" value="" />
-      <option name="USE_PARAM" value="false" />
       <method />
     </configuration>
     <configuration default="true" type="Python.DjangoServer" factoryName="Django server">
@@ -410,6 +368,29 @@
       <option name="runNoReload" value="false" />
       <option name="useCustomRunCommand" value="false" />
       <option name="customRunCommand" value="" />
+      <method />
+    </configuration>
+    <configuration default="true" type="tests" factoryName="Unittests">
+      <option name="INTERPRETER_OPTIONS" value="" />
+      <option name="PARENT_ENVS" value="true" />
+      <envs />
+      <option name="SDK_HOME" value="" />
+      <option name="WORKING_DIRECTORY" value="" />
+      <option name="IS_MODULE_SDK" value="false" />
+      <option name="ADD_CONTENT_ROOTS" value="true" />
+      <option name="ADD_SOURCE_ROOTS" value="true" />
+      <module name="Predictive_Beer_Analytics" />
+      <EXTENSION ID="PythonCoverageRunConfigurationExtension" enabled="false" sample_coverage="true" runner="coverage.py" />
+      <option name="SCRIPT_NAME" value="" />
+      <option name="CLASS_NAME" value="" />
+      <option name="METHOD_NAME" value="" />
+      <option name="FOLDER_NAME" value="" />
+      <option name="TEST_TYPE" value="TEST_SCRIPT" />
+      <option name="PATTERN" value="" />
+      <option name="USE_PATTERN" value="false" />
+      <option name="PUREUNITTEST" value="true" />
+      <option name="PARAMS" value="" />
+      <option name="USE_PARAM" value="false" />
       <method />
     </configuration>
     <configuration default="true" type="tests" factoryName="Doctests">
@@ -480,9 +461,15 @@
       <ConfigurationWrapper RunnerId="PythonRunner" />
       <method />
     </configuration>
-    <list size="1">
+    <list size="2">
       <item index="0" class="java.lang.String" itemvalue="Django server.Predictive_Beer_Analytics" />
+      <item index="1" class="java.lang.String" itemvalue="Python.jsonDbParser" />
     </list>
+    <recent_temporary>
+      <list size="1">
+        <item index="0" class="java.lang.String" itemvalue="Python.jsonDbParser" />
+      </list>
+    </recent_temporary>
   </component>
   <component name="ShelveChangesManager" show_recycled="false" />
   <component name="SvnConfiguration" maxAnnotateRevisions="500" myUseAcceleration="nothing" myAutoUpdateAfterCommit="false" cleanupOnStartRun="false" SSL_PROTOCOLS="all">
@@ -512,17 +499,17 @@
   </component>
   <component name="ToolWindowManager">
     <frame x="-8" y="-8" width="1382" height="744" extended-state="0" />
-    <editor active="false" />
+    <editor active="true" />
     <layout>
       <window_info id="Changes" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
       <window_info id="Database" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Structure" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
-      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.3060606" sideWeight="0.6729452" order="0" side_tool="false" content_ui="combo" />
+      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.27424243" sideWeight="0.6746575" order="0" side_tool="false" content_ui="combo" />
       <window_info id="Debug" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.3989726" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Favorites" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="2" side_tool="true" content_ui="tabs" />
-      <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.3270548" sideWeight="0.34242424" order="7" side_tool="true" content_ui="tabs" />
-      <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.3270548" sideWeight="0.6575758" order="2" side_tool="false" content_ui="tabs" />
+      <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.32534248" sideWeight="0.34242424" order="7" side_tool="true" content_ui="tabs" />
+      <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.32534248" sideWeight="0.6575758" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Cvs" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
       <window_info id="Message" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
@@ -596,50 +583,9 @@
     </breakpoint-manager>
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://$PROJECT_DIR$/static/js/security.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="0" column="0" selection-start="0" selection-end="502" vertical-scroll-proportion="0.0" />
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/urls.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="13" column="48" selection-start="463" selection-end="463" vertical-scroll-proportion="0.0">
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/static/js/map.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="9" column="25" selection-start="251" selection-end="251" vertical-scroll-proportion="0.049132947" />
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app/templates/histogram.html">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="8" column="6" selection-start="306" selection-end="306" vertical-scroll-proportion="-5.230769" />
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/static/images/spiffygif_56x56.gif">
-      <provider selected="true" editor-type-id="images">
-        <state />
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/static/css/map.css">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="0" column="0" selection-start="0" selection-end="0" vertical-scroll-proportion="0.0" />
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/static/css/main.css">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="99" column="20" selection-start="2460" selection-end="2460" vertical-scroll-proportion="0.0">
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/static/css/colorpicker.css">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="14" column="25" selection-start="345" selection-end="345" vertical-scroll-proportion="0.0">
-          <folding />
-        </state>
+        <state line="14" column="25" selection-start="345" selection-end="345" vertical-scroll-proportion="0.0" />
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/settings.py">
@@ -649,9 +595,16 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/app/templates/base.html">
+    <entry file="file://$PROJECT_DIR$/app/templates/about.html">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="29" column="7" selection-start="1695" selection-end="1695" vertical-scroll-proportion="0.0">
+        <state line="0" column="0" selection-start="0" selection-end="0" vertical-scroll-proportion="0.0">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/static/js/main.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="30" column="3" selection-start="737" selection-end="737" vertical-scroll-proportion="0.0">
           <folding />
         </state>
       </provider>
@@ -659,46 +612,88 @@
     <entry file="file://$PROJECT_DIR$/app/templates/home.html">
       <provider selected="true" editor-type-id="text-editor">
         <state line="0" column="0" selection-start="0" selection-end="0" vertical-scroll-proportion="0.0">
-          <folding>
-            <marker date="1416226604204" expanded="true" signature="21:80" placeholder="..." />
-            <marker date="1416226604204" expanded="true" signature="28:56" placeholder="..." />
-            <marker date="1416226604204" expanded="true" signature="63:72" placeholder="..." />
-          </folding>
+          <folding />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/app/templates/list.html">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="15" column="49" selection-start="357" selection-end="357" vertical-scroll-proportion="0.0">
+        <state line="33" column="64" selection-start="1131" selection-end="1212" vertical-scroll-proportion="0.0">
           <folding />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/app/models.py">
+    <entry file="file://$PROJECT_DIR$/static/css/main.css">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="12" column="63" selection-start="406" selection-end="406" vertical-scroll-proportion="0.0">
+        <state line="99" column="20" selection-start="2460" selection-end="2460" vertical-scroll-proportion="0.0">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/machine_learning/lib/predictiveBeerAnalytics.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="12" column="0" selection-start="230" selection-end="230" vertical-scroll-proportion="0.0">
           <folding />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/app/templates/prediction.html">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="36" column="41" selection-start="1683" selection-end="1683" vertical-scroll-proportion="-5.230769">
+        <state line="20" column="92" selection-start="982" selection-end="982" vertical-scroll-proportion="0.0">
           <folding />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/static/js/main.js">
+    <entry file="file://$PROJECT_DIR$/app/models.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="21" column="38" selection-start="532" selection-end="548" vertical-scroll-proportion="0.0">
+        <state line="9" column="0" selection-start="272" selection-end="272" vertical-scroll-proportion="0.4409222">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/urls.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="10" column="45" selection-start="312" selection-end="312" vertical-scroll-proportion="0.0">
+          <folding>
+            <element signature="e#0#51#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/templates/base.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="42" column="47" selection-start="2401" selection-end="2401" vertical-scroll-proportion="-5.230769">
           <folding />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/app/views.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="38" column="24" selection-start="1239" selection-end="1239" vertical-scroll-proportion="0.8468468">
+        <state line="65" column="68" selection-start="1989" selection-end="1989" vertical-scroll-proportion="0.0">
           <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/templates/histogram.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="6" column="30" selection-start="266" selection-end="266" vertical-scroll-proportion="-2.5384614">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/templates/description.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="17" column="44" selection-start="570" selection-end="598" vertical-scroll-proportion="-5.230769">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/templates/colors.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="7" column="121" selection-start="270" selection-end="270" vertical-scroll-proportion="0.38636363">
+          <folding>
+            <element signature="e#191#222#0" expanded="true" />
+          </folding>
         </state>
       </provider>
     </entry>

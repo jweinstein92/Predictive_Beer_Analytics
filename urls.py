@@ -8,6 +8,7 @@ urlpatterns = patterns('',
 
                        url(r'^$', listEntries),
                        url(r'^description/', description),
+                       url(r'^color/', colors),
                        url(r'^about/', about),
                        url(r'^map/', map),
                        url(r'^predictions/', prediction),

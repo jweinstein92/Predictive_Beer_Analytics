@@ -2,11 +2,9 @@
 apiSettings.csv
 *.pkl
 *.txt
-*.csv
 *.pyc
 oldFiles/
+oldData/
 privateData/
 newerData/
 .DS_STORE
-venv/
-machine_learning/beers_sample.json

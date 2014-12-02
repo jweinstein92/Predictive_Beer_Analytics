@@ -1,9 +1,10 @@
-'''
-    Download, process label images for all beers.
-    i.e. Assign N most used colors based on K-Means clustering algorithm
+"""
+Download, process label images for all beers.
 
-    Create a custom color palette with ratings.
-'''
+* Assign N most used colors based on K-Means clustering algorithm
+* Classify these colors to fit the palette
+* Rate these palette colors based on previously downloaded UNTAPPD beer ratings.
+"""
 
 import os
 import numpy as np
@@ -15,12 +16,12 @@ from scipy import misc
 from math import sqrt
 import requests
 import jsonpickle as jpickle
+import csv
 
 
 class Image:
-    """
-    Object to manipulate image data and cluster the colors.
-    """
+
+    """Object to manipulate image data and cluster the colors."""
 
     def __init__(self, imgFilePath):
         self.filePath = imgFilePath
@@ -51,7 +52,6 @@ class Image:
 
     def preprocess(self):
         """Prepare image for the clustering."""
-
         # Check if the picture has white background [sample 5x5], otherwise do not crop
         offsetFromWhite = sqrt(sum(np.array([x * x for x in (1 - self.original_data[0:5, 0:5])]).flatten()))
         if offsetFromWhite > 0.05:
@@ -101,7 +101,6 @@ class Image:
 
     def quantizeImage(self):
         """Plot the image using only clustered colors."""
-
         codeBook = self.kmeans.cluster_centers_
 
         # Determine to which cluster the pixel belongs
@@ -116,7 +115,7 @@ class Image:
         self.pixels = newImage
 
     def showResults(self):
-        """Plot the original picture, processed picture and clustered colors"""
+        """Plot the original picture, processed picture and clustered colors."""
         plt.figure(1)
         plt.clf()
 
@@ -148,13 +147,16 @@ class Image:
 
 
 class Mask:
+
     """Object to handle non-rectangular color-difference based cropping."""
+
     def __init__(self, img):
         self.w, self.h, self.d = self.shape = img.shape
         self.boundaries = np.zeros(self.shape)
         self.matrix = np.zeros(self.shape)
 
     def genMatrix(self):
+        """ Generate Numpy matrix mask matrix based on the boundaries."""
         for r, row in enumerate(self.boundaries):
             # From the left
             c = 0
@@ -169,15 +171,19 @@ class Mask:
 
 
 class ColorPalette:
-    """
-    Object to create color palette from already processed
-    beer labels.
-    """
+
+    """Object to create color palette from already processed beer labels."""
+
     def __init__(self):
         # self.nColors = nPaletteColors
         self.palette = dict()
 
     def build(self, beerColorsDict, beersList):
+        """
+        Generate color rating palette based on beer ratings.
+
+        Palette colors correspond to those on the web colorPicker.
+        """
         print 'Generating the color palette... '
 
         webPaletteRGB = [[254, 82, 9],
@@ -203,7 +209,7 @@ class ColorPalette:
             paletteColor = self.palette[i] = dict()
             paletteColor['RGB'] = webPaletteRGB[i]
             paletteColor['RatingSum'] = 0
-            paletteColor['Occurrences'] = 0
+            paletteColor['Votes'] = 0
             paletteColor['Rating'] = 0
 
         progress = Progress(max=len(beerColorsDict), msg="Rating the  colors from palette... ")
@@ -218,7 +224,7 @@ class ColorPalette:
 
                     # Update color rating
                     self.palette[closestPaletteColorId]['RatingSum'] += beer.rating
-                    self.palette[closestPaletteColorId]['Occurrences'] += 1
+                    self.palette[closestPaletteColorId]['Votes'] += 1
             else:
                 print 'Not found bid ' + bid
 
@@ -237,11 +243,12 @@ class ColorPalette:
             progress.tick()
 
         for color in self.palette.values():
-            if color['Occurrences'] != 0:
-                color['Rating'] = color['RatingSum']/color['Occurrences']
+            if color['Votes'] != 0:
+                color['Rating'] = color['RatingSum']/color['Votes']
 
 
     def classifyColor(self, inputColor):
+        """Custom classification of colors to fit the palette."""
         closestDistance = sqrt(3)
         inputColorYUV = RGBtoYUV(inputColor)
         for paletteColorId, paletteColor in self.palette.iteritems():
@@ -257,6 +264,7 @@ class ColorPalette:
         return closestPaletteColorId
 
     def readFromFile(self, path):
+        """Get the palette from file instead of building it again."""
         try:
             paletteFile = open(path, 'rb')
         except IOError:
@@ -273,8 +281,23 @@ class ColorPalette:
         self.palette = loadedColorPalette
         return 1
 
+    def genCSV(self):
+        """Save the csv file of the color palette."""
+        f = open('../data/colorPalette.csv', 'wt')
+        writer = csv.writer(f)
+        writer.writerow(('id', 'HEX', 'Rating', 'Votes'))
+        for id, item in self.palette.iteritems():
+            try:
+                writer.writerow((id, rgbToHex(tuple(np.array(item['RGB'])*255)), item['Rating'], item['Votes']))
+            except:
+                pass
+        f.close()
+
+
 class BeerColor:
+
     """Object to save dominant colors of beer along with the color palette flags."""
+
     def __init__(self, kmeans):
         self.colors = kmeans.cluster_centers_.tolist()  # array of RGB values
         self.presence = [(float(sum(kmeans.labels_ == i)) / kmeans.labels_.size)
@@ -283,6 +306,9 @@ class BeerColor:
 
 
 class BeerColorsDict(dict):
+
+    """Container to hold colors of each beer."""
+
     def __init__(self, *arg, **kw):
         super(BeerColorsDict, self).__init__(*arg, **kw)
 
@@ -292,8 +318,11 @@ class BeerColorsDict(dict):
 
 
 class Progress:
+
     """Print percentage of done work."""
+
     def __init__(self, max, msg="Processing... ", freq=100):
+        """Construct the object, determine frequency of printing."""
         self.max = max
         self.msg = msg
         self.printFrequency = max/freq   # Each percent
@@ -309,7 +338,7 @@ class Progress:
 
 
 def download(beersList, imgPath, fileList):
-    """Gets the beer Labels based on the  Untapped beer list."""
+    """Get the beer labels based on the  Untapped beer list."""
     progress = Progress(max=len(beersList), msg="Downloading images... ")
     for hashId, beer in beersList.iteritems():
         url = beer.label
@@ -327,21 +356,15 @@ def download(beersList, imgPath, fileList):
 
 
 def getBeer(bid, beersList):
-    """Search for beer based on bid"""
+    """Search for beer based on bid."""
     for beer in beersList.values():
         if beer.bid == bid:
             return beer
     return None
 
 
-def unique_rows(a):
-    a = np.ascontiguousarray(a)
-    unique_a = np.unique(a.view([('', a.dtype)]*a.shape[1]))
-    return unique_a.view(a.dtype).reshape((unique_a.shape[0], a.shape[1]))
-
-
 def RGBtoYUV(RGB):
-    '''Convert array of RGB values to YUV colorspace.'''
+    """Convert array of RGB values to YUV colorspace."""
     T = np.matrix('0.299 0.587 0.114;'
                   '-0.14713 -0.28886 0.436;'
                   '0.615 -0.51499 -0.10001')
@@ -351,5 +374,11 @@ def RGBtoYUV(RGB):
         print "Unable to convert RGB -> YUV."
         return 0
 
-pal = ColorPalette()
-pal.readFromFile('../data/colorPalette.json')
+def rgbToHex(rgb):
+    """Convert RGB values (in list) to its HEX equivalent."""
+    return '#%02x%02x%02x' % rgb
+
+# For database export
+# pal = ColorPalette()
+# pal.readFromFile('../data/colorPalette.json')
+# pal.genCSV()

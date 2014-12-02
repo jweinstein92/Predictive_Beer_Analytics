@@ -1,3 +1,9 @@
+"""
+This is the main script for Predictive Beer Analytics project.
+
+Use it to mine and process new data.
+"""
+
 import argparse
 import jsonpickle as jpickle
 import os
@@ -10,6 +16,7 @@ import PBAMap
 import keywordExtractor as extract
 import dataPoints as dp
 import labels
+import fileReader as files
 
 parser = argparse.ArgumentParser(prog='PBA')
 group = parser.add_mutually_exclusive_group(required=True)
@@ -34,10 +41,8 @@ group.add_argument('--abvMap', type=float,
                    mpl_toolkits.basemap')
 group.add_argument('--styleMap', type=str,
                    help='Create map of ratings using data points on maps \
-                   provided beer style. Styles limited to 20 most common \
-                   types of beer - \
-                   Requires GEOS Library and \
-                   mpl_toolkits.basemap')
+                   provided beer style. Styles limited to those listed in \
+                   styles.csv. Requires GEOS Library and mpl_toolkits.basemap')
 group.add_argument('--colorPalette', action='store_true',
                    help='Download label images, clusterize colors, \
                    generate global color rating palette of N colors.')
@@ -48,146 +53,23 @@ untappd = UT.Untappd()
 untappd.settings('../apiConfig.ini')
 
 
-def readUsers():
-    """
-    Load already processed users UntappdUser
-    """
-    try:
-        usersFile = open('../data/users.json', 'rb')
-    except IOError:
-        usersFile = open('../data/users.json', 'wb')
-
-    try:
-        f = usersFile.read()
-        usersList = jpickle.decode(f)
-    except:
-        usersList = {}
-    usersFile.close()
-    return usersList
-
-
-def readBeers():
-    """
-    Load already processed beers UntappdBeer
-    """
-    try:
-        beersFile = open('../data/beers.json', 'rb')
-    except IOError:
-        beersFile = open('../data/beers.json', 'wb')
-
-    try:
-        f = beersFile.read()
-        beersList = jpickle.decode(f)
-    except:
-        beersList = {}
-    beersFile.close()
-    return beersList
-
-
-def readBreweries():
-    """
-    Load already processed breweries UntappdBrewery
-    """
-    try:
-        breweriesFile = open('../data/breweries.json', 'rb')
-    except IOError:
-        breweriesFile = open('../data/breweries.json', 'wb')
-
-    try:
-        f = breweriesFile.read()
-        breweryList = jpickle.decode(f)
-    except:
-        breweryList = {}
-    breweriesFile.close()
-    return breweryList
-
-
-def readBreweryToBeers():
-    """
-    Load already processed breweries dictionary
-    """
-    try:
-        breweryToBeersFile = open('../data/breweryToBeers.json', 'rb')
-    except IOError:
-        breweryToBeersFile = open('../data/breweryToBeers.json', 'wb')
-
-    try:
-        f = breweryToBeersFile.read()
-        breweryToBeers = jpickle.decode(f)
-    except:
-        breweryToBeers = {}
-    breweryToBeersFile.close()
-    return breweryToBeers
-
-
-def readDataPoints():
-    """
-    Load dataPoints
-    """
-    try:
-        dataPointsFile = open('../data/dataPoints.json', 'rb')
-    except IOError:
-        dataPointsFile = open('../data/dataPoints.json', 'wb')
-
-    try:
-        f = dataPointsFile.read()
-        dataPoints = jpickle.decode(f).points
-    except:
-        dataPoints = []
-    dataPointsFile.close()
-
-    return dataPoints
-
-
-def readBeerStyles():
-    """
-    Load most rated beer styles
-    """
-    styles = []
-    with open('../data/styles.csv') as stylesFile:
-        reader = csv.DictReader(stylesFile)
-        for row in reader:
-            if row['style'] not in styles:
-                styles.append(row['style'])
-    return styles
-
 
 def writeJSONFile(path, data):
-    """
-    Write JSON file
-    """
+    """Write JSON file."""
     with open(path, 'wb') as jsonFile:
         json = jpickle.encode(data)
         jsonFile.write(json)
 
 
-def readBeerColors():
-    """
-    Load the dominant label colors.
-    """
-    try:
-        beerColorsFile = open('../data/beerColors.json', 'rb')
-    except IOError:
-        beerColorsFile = open('../data/beerColors.json', 'wb')
-
-    try:
-        f = beerColorsFile.read()
-        beerColorsDict = jpickle.decode(f)
-    except:
-        beerColorsDict = labels.BeerColorsDict()
-    beerColorsFile.close()
-    return beerColorsDict
-
-
 def usersList():
     """
-    Parses through data from /thepub to get unique usernames, user ids,
+    Parse through data from /thepub to get unique usernames, user ids,
     and locations. Stores this information in a csv file to be used in later api
     requests. Limited to 100 api calls per hour requiring sleep method.
-    May be run multiple times to retrieve Continuously run until user stops script
+    May be run multiple times to retrieve Continuously run until user stops script.
     """
 
-    usersList = readUsers()
+    usersList = files.readUsers()
     apiCount = 0
     userNameCountAdditions = 0
     while (True):
@@ -218,15 +100,15 @@ def usersList():
 
 def userReviews():
     """
-    Parses through user reviews /user/beers/{username}
+    Parse through user reviews /user/beers/{username}
     Retrieves at most 50 reviews per user, retains review, beer, and
     brewery information. After querying the api, remove username to
-    lessen privacy concerns with untappd data
+    lessen privacy concerns with untappd data.
     """
-    usersList = readUsers()
-    beersList = readBeers()
-    breweryList = readBreweries()
-    breweryToBeers = readBreweryToBeers()
+    usersList = files.readUsers()
+    beersList = files.readBeers()
+    breweryList = files.readBreweries()
+    breweryToBeers = files.readBreweryToBeers()
 
     total = 0
     totalUsersComplete = 0
@@ -342,9 +224,9 @@ def userReviews():
 def normalizeUsers():
     """
     Change the user ids so the information can be made public and
-    use the googlemaps module to determine the user's location
+    use the googlemaps module to determine the user's location.
     """
-    usersList = readUsers()
+    usersList = files.readUsers()
     newUsersList = {}
 
     i = 1
@@ -383,8 +265,9 @@ def normalizeUsers():
 
 
 def beerKeywords():
-    beersList = readBeers()
-    print 'beers.json LOADED...'
+    """Extract keywords from beer descriptions and rate it."""
+    beersList = files.readBeers()
+    print 'beers.json loaded...'
 
     # List of keywords generation
     keywordsList = {}
@@ -408,8 +291,9 @@ def beerKeywords():
 
 
 def createDataPoints():
-    usersList = readUsers()
-    beersList = readBeers()
+    """Make the data points of user locations for the map generation."""
+    usersList = files.readUsers()
+    beersList = files.readBeers()
     points = []
     i = 1
     for hashId, user in usersList.iteritems():
@@ -431,8 +315,9 @@ def createDataPoints():
 
 
 def createABVMap():
+    """Make a color map of specific alcohol by volume."""
     print "Drawing user rating maps of beers with an alcohol concentration of " + str(args.abvMap) + '%'
-    dataPoints = readDataPoints()
+    dataPoints = files.readDataPoints()
     if len(dataPoints) > 0:
         abv = int(args.abvMap)
         points = []
@@ -451,7 +336,7 @@ def createABVMap():
 
 def createStyleMap():
     print "Drawing user rating maps of beers with a style of " + str(args.styleMap)
-    dataPoints = readDataPoints()
+    dataPoints = files.readDataPoints()
     if len(dataPoints) > 0:
         style = args.styleMap
         points = []
@@ -465,7 +350,8 @@ def createStyleMap():
 
 
 def createCommonStyles():
-    beersList = readBeers()
+    """Generate common beer styles and save it to csv file."""
+    beersList = files.readBeers()
     allStyles = {}
     for hashId, beer in beersList.iteritems():
         styles = beer.style
@@ -489,14 +375,14 @@ def createCommonStyles():
 
 def processLabels():
     """
+    Prediction of how dominant label color affects the beer rating.
+
     Download beer bottle labels, extract n dominant colors,
     make the color palette, flag each color and calculate
     average rating of that color.
     """
-
-    beersList = readBeers()
-    # beersList = {}
-    beerColorsDict = readBeerColors()
+    beersList = files.readBeers()
+    beerColorsDict = files.readBeerColors()
 
     # Path for saving the images
     path = "../data/labels/"
@@ -506,15 +392,15 @@ def processLabels():
                 if item.split(".")[-1] in ('jpeg', 'jpg', 'png')]
 
     # Download and save images
-    # labels.download(beersList, path, fileList)
+    labels.download(beersList, path, fileList)
 
     # Number of label colors to cluster
     nColors = 5
     i = 0
-    stop = 6  # Then use the whole list.
+    # stop = 6  # Then use the whole list.
 
     # Loop over images in the folder
-    for file in fileList[0:stop]:
+    for file in fileList:
         i += 1
         bid = unicode(file.split('.')[0])
         if (bid in beerColorsDict and
@@ -530,21 +416,16 @@ def processLabels():
         beerColorsDict[bid] = beerColor
 
         # Only for presentation
-        beerLabel.quantizeImage()
-        beerLabel.showResults()
+        # beerLabel.quantizeImage()
+        # beerLabel.showResults()
 
     # Generate the color palette with ratings - Classification
     colorPalette = labels.ColorPalette()
     colorPalette.build(beerColorsDict, beersList)
 
     # Write the colorsFile - dict{ 'bid': beerColor{RGB,intensity}}
-    with open('../data/beerColors.json', 'wb') as beerColorsFile:
-        string = jpickle.encode(beerColorsDict)
-        beerColorsFile.write(string)
-
-    with open('../data/colorPalette.json', 'wb') as colorPaletteFile:
-        json = jpickle.encode(colorPalette.palette)
-        colorPaletteFile.write(json)
+    writeJSONFile('../data/beerColors.json', beerColorsDict)
+    writeJSONFile('../data/colorPalette.json', colorPalette.palette)
 
     print 'Color palette saved.'
 
@@ -565,7 +446,8 @@ elif args.dataPoints:
 elif args.abvMap >= 0:
     createABVMap()
 elif args.styleMap:
-    if args.styleMap in readBeerStyles():
+    if args.styleMap in files.readBeerStyles():
         createStyleMap()
     else:
         print "No support for style: " + args.styleMap
+        print "See styles.csv for supported styles."

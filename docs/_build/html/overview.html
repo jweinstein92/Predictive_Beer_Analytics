@@ -1,0 +1,170 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>Project overview &mdash; Predictive beer analytics 1.0 documentation</title>
+    
+    <link rel="stylesheet" href="_static/default.css" type="text/css" />
+    <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    './',
+        VERSION:     '1.0',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="_static/jquery.js"></script>
+    <script type="text/javascript" src="_static/underscore.js"></script>
+    <script type="text/javascript" src="_static/doctools.js"></script>
+    <link rel="top" title="Predictive beer analytics 1.0 documentation" href="index.html" />
+    <link rel="next" title="Getting new data" href="mainscript.html" />
+    <link rel="prev" title="Predictive beer analytics" href="index.html" /> 
+  </head>
+  <body>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="right" >
+          <a href="mainscript.html" title="Getting new data"
+             accesskey="N">next</a> |</li>
+        <li class="right" >
+          <a href="index.html" title="Predictive beer analytics"
+             accesskey="P">previous</a> |</li>
+        <li><a href="index.html">Predictive beer analytics 1.0 documentation</a> &raquo;</li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body">
+            
+  <div class="section" id="project-overview">
+<h1>Project overview<a class="headerlink" href="#project-overview" title="Permalink to this headline">¶</a></h1>
+<p>The purpose of this project is to <strong>illustrate various techniques of data mining and machine learning
+using Python</strong> as being taught in course 02819 Data mining using Python at DTU.</p>
+<p>By analyzing more than 235.000 user reviews of beers, we managed to create an <strong>algorithm to anticipate the desirability of certain user-defined beer in the specific location</strong>. By doing that, we can for example
+suggest a specific improvement of the beer characteristics to the brewery based on where they want to sell it.</p>
+<p>The results are presented in the <strong>interactive web application</strong> along with useful prediction algorithm
+with user-defined parameters.</p>
+<p><strong>Beer characteristics</strong> that matters:</p>
+<ul class="simple">
+<li>Beer style</li>
+<li>Alcohol by volume</li>
+<li>Description keywords</li>
+<li>Label colors</li>
+</ul>
+<div class="section" id="data-sources">
+<h2>Data sources<a class="headerlink" href="#data-sources" title="Permalink to this headline">¶</a></h2>
+<p><strong>UNTAPPD</strong> - social networking service that <em>&#8220;allows its users to check into beers as they drink them, and share these check-ins and their locations with their friends.&#8221;</em> (see <a class="reference external" href="https://untappd.com/">here</a>)</p>
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<p class="last">For <em>beer styles, description, label images, Reviews, Location data</em></p>
+</div>
+<p><strong>Google API</strong> - to work with location data.</p>
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<p class="last"><em>Location lookup, state classification, lattitude/longitude lookup.</em></p>
+</div>
+<p><strong>Quantity of data</strong></p>
+<div class="figure align-center">
+<a class="reference internal image-reference" href="_images/quantity.png"><img alt="Quantity of mined data" src="_images/quantity.png" style="height: 400px;" /></a>
+</div>
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<p class="last">[made Dec 1, 2014] This will increase over time, the api calls are limited.</p>
+</div>
+<p><em>For easy data update use the main script.</em></p>
+</div>
+<div class="section" id="technologies-used">
+<h2>Technologies used<a class="headerlink" href="#technologies-used" title="Permalink to this headline">¶</a></h2>
+<ul class="simple">
+<li>Web Framework: <strong>Django</strong> (<a class="reference external" href="https://www.djangoproject.com/">djangoproject.com</a>)</li>
+<li>Database: <strong>mySQL</strong> (<a class="reference external" href="http://www.mysql.com/">mysql.com</a>)</li>
+<li>Machine learning: <strong>scikit-learn, Numpy, Scipy, Image-processing</strong> (<a class="reference external" href="http://www.scipy.org/">scipy.org</a>)</li>
+<li>Documentation, code style: <strong>Sphinx, pep8, pep257</strong></li>
+</ul>
+<a class="reference internal image-reference" href="_images/logos.png"><img alt="_images/logos.png" class="align-center" src="_images/logos.png" style="height: 245px;" /></a>
+</div>
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar">
+        <div class="sphinxsidebarwrapper">
+  <h3><a href="index.html">Table Of Contents</a></h3>
+  <ul>
+<li><a class="reference internal" href="#">Project overview</a><ul>
+<li><a class="reference internal" href="#data-sources">Data sources</a></li>
+<li><a class="reference internal" href="#technologies-used">Technologies used</a></li>
+</ul>
+</li>
+</ul>
+
+  <h4>Previous topic</h4>
+  <p class="topless"><a href="index.html"
+                        title="previous chapter">Predictive beer analytics</a></p>
+  <h4>Next topic</h4>
+  <p class="topless"><a href="mainscript.html"
+                        title="next chapter">Getting new data</a></p>
+  <h3>This Page</h3>
+  <ul class="this-page-menu">
+    <li><a href="_sources/overview.txt"
+           rel="nofollow">Show Source</a></li>
+  </ul>
+<div id="searchbox" style="display: none">
+  <h3>Quick search</h3>
+    <form class="search" action="search.html" method="get">
+      <input type="text" name="q" />
+      <input type="submit" value="Go" />
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+    <p class="searchtip" style="font-size: 90%">
+    Enter search terms or a module, class or function name.
+    </p>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="genindex.html" title="General Index"
+             >index</a></li>
+        <li class="right" >
+          <a href="py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="right" >
+          <a href="mainscript.html" title="Getting new data"
+             >next</a> |</li>
+        <li class="right" >
+          <a href="index.html" title="Predictive beer analytics"
+             >previous</a> |</li>
+        <li><a href="index.html">Predictive beer analytics 1.0 documentation</a> &raquo;</li> 
+      </ul>
+    </div>
+    <div class="footer">
+        &copy; Copyright 2014, Marek Kuhn.
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.2.3.
+    </div>
+  </body>
+</html>
