@@ -30,7 +30,7 @@
     <file path="/map.html" changelist="12b18c03-2408-49d4-95e2-6b590f737ccb" time="1415633540900" ignored="false" />
     <file path="/predictor.html" changelist="12b18c03-2408-49d4-95e2-6b590f737ccb" time="1416233846799" ignored="false" />
     <file path="/histogram.html" changelist="12b18c03-2408-49d4-95e2-6b590f737ccb" time="1416940217582" ignored="false" />
-    <file path="/prediction.html" changelist="12b18c03-2408-49d4-95e2-6b590f737ccb" time="1417532270407" ignored="false" />
+    <file path="/prediction.html" changelist="12b18c03-2408-49d4-95e2-6b590f737ccb" time="1417532785808" ignored="false" />
     <file path="/GetWords.py" changelist="12b18c03-2408-49d4-95e2-6b590f737ccb" time="1416937705897" ignored="false" />
     <file path="/colors.html" changelist="12b18c03-2408-49d4-95e2-6b590f737ccb" time="1417042861595" ignored="false" />
     <option name="TRACKING_ENABLED" value="true" />
@@ -73,7 +73,7 @@
       <file leaf-file-name="prediction.html" pinned="false" current="true" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/app/templates/prediction.html">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="26" column="58" selection-start="1256" selection-end="1256" vertical-scroll-proportion="0.93532336">
+            <state line="12" column="55" selection-start="522" selection-end="522" vertical-scroll-proportion="0.45132744">
               <folding />
             </state>
           </provider>
@@ -503,11 +503,11 @@
       <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
       <window_info id="Database" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Structure" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
-      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.27887538" sideWeight="0.55479455" order="0" side_tool="false" content_ui="combo" />
+      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.27887538" sideWeight="0.89897263" order="0" side_tool="false" content_ui="combo" />
       <window_info id="Debug" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.3989726" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Favorites" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="2" side_tool="true" content_ui="tabs" />
-      <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.44520548" sideWeight="0.34270516" order="7" side_tool="true" content_ui="tabs" />
-      <window_info id="Run" active="true" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.44520548" sideWeight="0.6572948" order="2" side_tool="false" content_ui="tabs" />
+      <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.1010274" sideWeight="0.34270516" order="7" side_tool="true" content_ui="tabs" />
+      <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.1010274" sideWeight="0.6572948" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Cvs" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
       <window_info id="Message" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
@@ -684,7 +684,7 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/app/templates/prediction.html">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="26" column="58" selection-start="1256" selection-end="1256" vertical-scroll-proportion="0.93532336">
+        <state line="12" column="55" selection-start="522" selection-end="522" vertical-scroll-proportion="0.45132744">
           <folding />
         </state>
       </provider>

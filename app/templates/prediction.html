@@ -10,7 +10,7 @@
                 <div class="form-group">
                     <select id="location" name="location" class="form-control">
                           {% for location in locationList %}
-                                <option value="{{ location.location }}">{{ location.location }}</option>
+                                <option value="{{ location.id }}">{{ location.location }}</option>
                           {% endfor %}
                     </select>
                 </div>
