@@ -12,8 +12,6 @@ from app.forms import CommentForm
 import jsonpickle as jpickle
 from django.db.models import Q
 from django.http import HttpResponse, HttpResponseRedirect, HttpResponseNotFound, HttpResponseForbidden
-
-
 from pylab import figure, axes, pie, title
 from matplotlib.backends.backend_agg import FigureCanvasAgg
 import matplotlib.pyplot
@@ -21,6 +19,7 @@ import matplotlib.pyplot
 
 def about(request):
     return render_to_response('about.html', context_instance=RequestContext(request))
+
 
 def description(request):
 
@@ -32,8 +31,8 @@ def description(request):
 
         resultList = Word.objects.filter(Q(value__icontains=query)).order_by('-rating')[:5]
 
-
     return render_to_response('description.html',{'topList' : topList, 'bottomList' : bottomList, 'resultList' : resultList }, context_instance=RequestContext(request))
+
 
 def listEntries(request):
 
@@ -48,22 +47,18 @@ def listEntries(request):
     form = CommentForm()
     commentList = Comment.objects.all()
 
-
-
-
-    return render_to_response('list.html',{'commentList' : commentList, 'form' : form }, context_instance=RequestContext(request))
-
+    return render_to_response('list.html', {'commentList' : commentList, 'form' : form }, context_instance=RequestContext(request))
 
 
 def map(request):
-
     return render_to_response('map.html',{}, context_instance=RequestContext(request))
 
-def colors(request):
 
+def colors(request):
     colorList = Color.objects.all().order_by('-rating')
 
     return render_to_response('colors.html',{'colorList' : colorList}, context_instance=RequestContext(request))
+
 
 def prediction(request):
 
@@ -73,26 +68,22 @@ def prediction(request):
 
     return render_to_response('prediction.html',{'locationList': locations , 'abvsRangesList': abvsRanges , 'beerStyleList' : beerStyle}, context_instance=RequestContext(request))
 
+
 def getPrediction(request):
 
     if request.method == 'POST':
         location = request.POST.get('location')
         beerStyle = request.POST.get('beerStyle')
-        abvs = request.POST.get('abvs')
+        abvRangeId = request.POST.get('abvs')
         description = request.POST.get('description')
         color = request.POST.get('color')
 
-
+        abvData = Abvs.objects.get(location__exact=location, abvsrange__exact=abvRangeId)
+        styleData = StyleData.objects.get(location__exact=location, beerStyle__exact=beerStyle)
 
         #getWords()
 
-
-
-
         return render_to_response('Histogram.html',{'location' : location , 'beerStyle' : beerStyle , 'abvs' : abvs, 'description' : description , 'color':color}, context_instance=RequestContext(request))
-
-
-
 
 
 def getWords():
