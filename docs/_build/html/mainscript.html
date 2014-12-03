@@ -34,6 +34,9 @@
           <a href="genindex.html" title="General Index"
              accesskey="I">index</a></li>
         <li class="right" >
+          <a href="py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="right" >
           <a href="overview.html" title="Project overview"
              accesskey="P">previous</a> |</li>
         <li><a href="index.html">Predictive beer analytics 1.0 documentation</a> &raquo;</li> 
@@ -58,7 +61,7 @@
 </div>
 <p>Each step adds more to already stored data. It can take hours to collect and analyze the data,
 so we invoke each task separately by choosing one of the arguments.</p>
-<p>It is reccommended to run the scripts in the following order:</p>
+<p>It is recommended to run the scripts in the following order:</p>
 <div class="highlight-python"><div class="highlight"><pre>$ predicitiveBeerAnalytics.py --users
 $ predicitiveBeerAnalytics.py --reviews
 $ predicitiveBeerAnalytics.py --normalizeData
@@ -101,11 +104,29 @@ $ predicitiveBeerAnalytics.py --colorPalette
 </pre></div>
 </div>
 </div>
-<div class="section" id="retreiving-description-keywords-keywords">
-<h2>Retreiving Description Keywords (<tt class="docutils literal"><span class="pre">--keywords</span></tt>)<a class="headerlink" href="#retreiving-description-keywords-keywords" title="Permalink to this headline">¶</a></h2>
-<div class="admonition warning">
-<p class="first admonition-title">Warning</p>
-<p class="last">Marek please!</p>
+<div class="section" id="retrieving-description-keywords-keywords">
+<h2>Retrieving Description Keywords (<tt class="docutils literal"><span class="pre">--keywords</span></tt>)<a class="headerlink" href="#retrieving-description-keywords-keywords" title="Permalink to this headline">¶</a></h2>
+<p>Having the batch of beers downloaded, this loops over the list, extracts the keywords from each description and attaches it to the dictionary of beers. Tokenized words are then categorized and tagged according to its type using <tt class="docutils literal"><span class="pre">nltk</span></tt> language processing tool. Primal goal here is to capture the beer characteristics like taste or ingredients. Currently it returns nouns and adjective. The extraction itself is covered by the function located in <strong>keywordExtractor.py</strong></p>
+<dl class="function">
+<dt id="extractKeywords">
+<tt class="descname">extractKeywords</tt><big>(</big><em>text</em><big>)</big><a class="headerlink" href="#extractKeywords" title="Permalink to this definition">¶</a></dt>
+<dd><p>Extract the keywords from any given text.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>text</strong> (<em>str</em>) &#8211; Text subjected to extract from.</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body">Array of keywords</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<p>Each keyword is then associated with rating. The rating is calculated as an average of beer ratings possessing this specific keyword. The separate list of keywords is then generated along with the average of ratings of the beers .</p>
+<p>To extract keywords and update their ratings:</p>
+<div class="highlight-python"><div class="highlight"><pre>$ predictiveBeerAnalytics.py --keywords
+</pre></div>
 </div>
 </div>
 <div class="section" id="reading-beer-styles-styles">
@@ -125,6 +146,17 @@ $ predicitiveBeerAnalytics.py --colorPalette
 </div>
 <div class="section" id="colorpalette-module">
 <h2>ColorPalette module<a class="headerlink" href="#colorpalette-module" title="Permalink to this headline">¶</a></h2>
+<p>addfas</p>
+<dl class="class">
+<dt id="Foo">
+<em class="property">class </em><tt class="descname">Foo</tt><a class="headerlink" href="#Foo" title="Permalink to this definition">¶</a></dt>
+<dd><dl class="method">
+<dt id="Foo.quux">
+<tt class="descname">quux</tt><big>(</big><big>)</big><a class="headerlink" href="#Foo.quux" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
 <div class="admonition warning">
 <p class="first admonition-title">Warning</p>
 <p class="last">Marek please!</p>
@@ -147,7 +179,7 @@ $ predicitiveBeerAnalytics.py --colorPalette
 <li><a class="reference internal" href="#user-data-users">User Data (<tt class="docutils literal"><span class="pre">--users</span></tt>)</a></li>
 <li><a class="reference internal" href="#beer-data-reviews">Beer Data (<tt class="docutils literal"><span class="pre">--reviews</span></tt>)</a></li>
 <li><a class="reference internal" href="#normalizing-data-normalizedata">Normalizing Data (<tt class="docutils literal"><span class="pre">--normalizeData</span></tt>)</a></li>
-<li><a class="reference internal" href="#retreiving-description-keywords-keywords">Retreiving Description Keywords (<tt class="docutils literal"><span class="pre">--keywords</span></tt>)</a></li>
+<li><a class="reference internal" href="#retrieving-description-keywords-keywords">Retrieving Description Keywords (<tt class="docutils literal"><span class="pre">--keywords</span></tt>)</a></li>
 <li><a class="reference internal" href="#reading-beer-styles-styles">Reading Beer Styles (<tt class="docutils literal"><span class="pre">--styles</span></tt>)</a></li>
 <li><a class="reference internal" href="#creating-maps-abvmap-or-stylemap">Creating Maps (<tt class="docutils literal"><span class="pre">--abvMap</span></tt> or <tt class="docutils literal"><span class="pre">--styleMap</span></tt>)</a></li>
 <li><a class="reference internal" href="#colorpalette-module">ColorPalette module</a></li>
@@ -186,6 +218,9 @@ $ predicitiveBeerAnalytics.py --colorPalette
         <li class="right" style="margin-right: 10px">
           <a href="genindex.html" title="General Index"
              >index</a></li>
+        <li class="right" >
+          <a href="py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
         <li class="right" >
           <a href="overview.html" title="Project overview"
              >previous</a> |</li>

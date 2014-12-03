@@ -11,6 +11,7 @@ import untappd as UT
 
 
 def extractKeywords(text):
+    """Extract the keywords from the given the text."""
     keywords = []
     sentences = nltk.sent_tokenize(text)
     words = [nltk.word_tokenize(sent) for sent in sentences]
