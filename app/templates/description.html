@@ -6,16 +6,19 @@
 
             <div class="description-searcher col-md-7">
                 <div class="description-searcher-title">
-                    <div class="description-searcher-title-img"><span class="glyphicon glyphicon-tags"></span></div>
+                    <div class="description-searcher-title-img text text--secondary"><span class="glyphicon glyphicon-tags"></span></div>
                     <div class="description-searcher-title-main text">Search for the rating for your words!</div>
-                    <div class="description-searcher-title-secondary text text--secondary">Simply add your word or part of it in the box below</div>
+                    <div class="description-searcher-title-secondary text text--secondary">Simply add your word or part of it in the box to the right</div>
+                    <form method="post" role="form" class="description-searcher-form" action="">
+                        {% csrf_token %}
+                        <div class="form-group">
+                        <input type="text" class="form-control" id="qry" name="qry">
+                            <button class="btn btn-warning pba--darkred"><span class="glyphicon glyphicon-search"></span></button>
+                            <!--<input type="submit" value="Submit" name="comment"/>-->
+                        </div>
+                    </form>
                 </div>
-                <form method="post" role="form" class="description-searcher-form" action="">
-                {% csrf_token %}
-                <input type="text" id="qry" name="qry">
-                <input type="submit" value="Submit" name="comment"/>
-                </form>
-
+                <hr class="text"/>
                 <div class="description-searcher-result"></div>
                 <div class="description-searcher-placeholder">
                     <img src="{{STATIC_URL}}images/description.png">

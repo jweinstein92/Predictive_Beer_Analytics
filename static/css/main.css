@@ -2,6 +2,8 @@
 body{
     background:#F4F4F4;
 }
+
+.navbar-pba { border-width: 0px;}
 /* red
 500 #e51c23
 400 #e84e40
@@ -82,9 +84,9 @@ accent
         color: #333;
     }
 }
-.container--base {margin-top:50px;}
+.container--base {margin-top:49px;}
 
-.pba--darkred {background:#ffab00; }
+.pba--darkred {background:#ffab00;}
 
 .title {font-weight:bold;font-family: Tahoma; font-size:32px;}
 .title--darkaccent {color:#ffc107;}
@@ -121,11 +123,11 @@ accent
 .featurette-header {}
 .featurette-header-img { display:inline-block; width:18%; font-size:40px;}
 .featurette-header-title { display:inline-block; width:65%; font-size:30px; margin-top:5px;}
-.featurette-content {margin-top:5px;}
+.featurette-content {margin-top:5px; font-size:16px;}
 .featurette-link {}
 
 .banner img{width:100%;}
-.banner-container{padding:30px;padding-bottom: 50px;}
+.banner-container{padding:40px;padding-bottom: 90px;}
 .banner {border-radius:8px;padding: 5px;background: rgb(255,255,255); /* for IE */background: rgba(255,255,255,1);}
 
 /*prediction*/
