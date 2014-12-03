@@ -88,6 +88,18 @@ def getPrediction(request):
 
         abvData = Abvs.objects.get(location=location, abvsrange=abvRangeId)
         styleData = StyleData.objects.get(location=location, beerStyle=beerStyle)
+        # retreive the descriptor ratings to include in map creation
+        wordsArray = description.lower().split(',')
+        wordsRatings = Word.objects.filter(value__in = wordsArray)
+        wordDifference = 0
+        if (len(wordsRatings) > 0):
+            wordsTotal = 0
+            for word in wordsRatings:
+                wordsTotal += float(word.rating)
+            wordsAverage = wordsTotal / len(wordsRatings)
+            wordDifference = (wordsAverage - 3.5) * .6
+
+
 
         # The data stored in the database returns as unicode. must make into string
         # and then into ndarray
@@ -101,11 +113,19 @@ def getPrediction(request):
 
         avgLng = (abvLng + styleLng) / 2
         avgLat = (abvLat + styleLat) / 2
-        avgRatings = (abvRatings + styleRatings) / 2
+        combinedRatings = abvRatings + styleRatings
+        if (wordDifference != 0):
+            for i in range(0, len(combinedRatings)):
+                for n in range(0, len(combinedRatings[i])):
+                    if combinedRatings[i][n] != 0:
+                        combinedRatings[i][n] += wordDifference
+        avgRatings = combinedRatings / 2
         if (location == '1'):
             map = createUSMap(avgLat, avgLng, avgRatings)
         else:
             map = createEUMap(avgLat, avgLng, avgRatings)
+        title = 'Average Beer Ratings with Composite Attributes'
+        plt.suptitle(title)
         # Encode image to png in base64
         io = cStringIO.StringIO()
         plt.savefig(io, format='png')
