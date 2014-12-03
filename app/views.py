@@ -82,19 +82,6 @@ def getPrediction(request):
         description = request.POST.get('description')
         color = request.POST.get('color')
 
-        abvData = Abvs.objects.get(location__exact=location, abvsrange__exact=abvRangeId)
-        abvLng = numpy.array(abvData.lngcoord, dtype=str)
-        abvLat = numpy.array(abvData.latcoord, dtype=object)
-        abvRatings = numpy.array(abvData.rating, dtype=object)
-        styleData = StyleData.objects.get(location__exact=location, beerStyle__exact=beerStyle)
-        styleLng = numpy.array(styleData.lngcoord, dtype=object)
-        #styleLng = styleLng.view(numpy.float64)
-        styleLat = numpy.array(styleData.latcoord, dtype=object)
-        styleRatings = numpy.array(styleData.rating, dtype=object)
-
-        print abvLng[0]
-        print type(abvLng)
-
 
 
 
