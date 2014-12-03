@@ -1,8 +1,10 @@
 import sys
+import cStringIO
 from app.models import Comment
 from app.models import Location
 from app.models import AbvsRange
 from app.models import BeerStyle
+from app.models import StyleData
 from app.models import Abvs
 from app.models import Word
 from app.models import Color
@@ -10,6 +12,9 @@ from django.shortcuts import render_to_response
 from django.template import Context, RequestContext
 from app.forms import CommentForm
 import jsonpickle as jpickle
+from mpl_toolkits.basemap import Basemap
+import matplotlib.pyplot as plt
+import numpy as np
 from django.db.models import Q
 from django.http import HttpResponse, HttpResponseRedirect, HttpResponseNotFound, HttpResponseForbidden
 from pylab import figure, axes, pie, title
@@ -83,9 +88,103 @@ def getPrediction(request):
         abvData = Abvs.objects.get(location__exact=location, abvsrange__exact=abvRangeId)
         styleData = StyleData.objects.get(location__exact=location, beerStyle__exact=beerStyle)
 
+        # The data stored in the database returns as unicode. must make into string
+        # and then into ndarray
+        abvLng = createNdArray(abvData.lngcoord.encode('utf8'))
+        abvLat = createNdArray(abvData.latcoord.encode('utf8'))
+        abvRatings = createNdArray(abvData.rating.encode('utf8'))
+
+        styleLng = createNdArray(styleData.lngcoord.encode('utf8'))
+        styleLat = createNdArray(styleData.latcoord.encode('utf8'))
+        styleRatings = createNdArray(styleData.rating.encode('utf8'))
+
+        avgLng = (abvLng + styleLng) / 2
+        avgLat = (abvLat + styleLat) / 2
+        avgRatings = (abvRatings + styleRatings) / 2
+        if (location == '1'):
+            map = createUSMap(avgLat, avgLng, avgRatings)
+        else:
+            map = createEUMap(avgLat, avgLng, avgRatings)
+        # Encode image to png in base64
+        io = cStringIO.StringIO()
+        plt.savefig(io, format='png')
+        plt.close()
+        data = io.getvalue().encode('base64')
         #getWords()
 
-        return render_to_response('Histogram.html',{'location' : location , 'beerStyle' : beerStyle , 'abvs' : abvs, 'description' : description , 'color':color}, context_instance=RequestContext(request))
+        # print sio.getvalue().encode("base64").strip()
+        return render_to_response('Histogram.html',{'location' : location , 'beerStyle' : beerStyle , 'abvs' : abvRangeId, 'description' : description , 'color':color, 'map':data}, context_instance=RequestContext(request))
+
+
+def createNdArray(arrayString):
+    arrayString = arrayString[1:len(arrayString)-1]
+    arrayString = arrayString.split(',')
+    nd = []
+    for num in arrayString:
+        num = num.strip()
+        if num[0] == '[':
+            num = num[1:]
+            newArray = [float(num)]
+        elif num[len(num)-1] == ']':
+            num = num[:len(num)-1]
+            newArray.append(float(num))
+            nd.append(newArray)
+            newArray = []
+        else:
+            newArray.append(float(num))
+    ndArray = np.array(nd)
+    return ndArray
+
+
+def createUSMap(lats, lngs, ratings):
+    usLat = [38, 22, 48]
+    usLng = [-97, -125, -59]
+    parallels = [30, 40]
+    meridians = [280, 270, 260, 250, 240]
+    # create polar stereographic Basemap instance.
+    m = Basemap(projection='stere', lat_0=usLat[0], lon_0=usLng[0],
+            llcrnrlat=usLat[1], urcrnrlat=usLat[2],
+            llcrnrlon=usLng[1], urcrnrlon=usLng[2],
+            rsphere=6371200, resolution='l', area_thresh=10000)
+    # draw coastlines, state and country boundaries, edge of map.
+    m.drawcoastlines()
+    m.drawcountries()
+    m.drawstates()
+
+    # draw parallels.
+    m.drawparallels(parallels, labels=[1, 0, 0, 0], fontsize=10)
+    # draw meridians
+    m.drawmeridians(meridians, labels=[0, 0, 0, 1], fontsize=10)
+
+    # overlay the averages histogram over map
+    plt.pcolormesh(lngs, lats, ratings, vmin=0, vmax=5)
+    plt.colorbar(orientation='horizontal')
+    return m
+
+
+def createEUMap(lats, lngs, ratings):
+    euLat = [51, 27, 71]
+    euLng = [20, -16, 45]
+    parallels = [30, 40, 50, 60, 70]
+    meridians = [350, 0, 10, 20, 30, 40]
+    # create polar stereographic Basemap instance.
+    m = Basemap(projection='stere', lat_0=euLat[0], lon_0=euLng[0],
+            llcrnrlat=euLat[1], urcrnrlat=euLat[2],
+            llcrnrlon=euLng[1], urcrnrlon=euLng[2],
+            rsphere=6371200, resolution='l', area_thresh=10000)
+    # draw coastlines, state and country boundaries, edge of map.
+    m.drawcoastlines()
+    m.drawcountries()
+
+    # draw parallels.
+    m.drawparallels(parallels, labels=[1, 0, 0, 0], fontsize=10)
+    # draw meridians
+    m.drawmeridians(meridians, labels=[0, 0, 0, 1], fontsize=10)
+
+    # overlay the averages histogram over map
+    plt.pcolormesh(lngs, lats, ratings, vmin=0, vmax=5)
+    plt.colorbar(orientation='horizontal')
+    return m
 
 
 def getWords():
