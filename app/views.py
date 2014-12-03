@@ -33,14 +33,17 @@ def description(request):
 
     topList = Word.objects.all()[:5]
     bottomList = Word.objects.all().order_by('rating')[:5]
-    resultList = []
+
+    return render_to_response('description.html',{'topList' : topList, 'bottomList' : bottomList}, context_instance=RequestContext(request))
+
+def getDescription(request):
+
     if request.method == 'POST' and request.POST.get('qry') != "":
         query = request.POST.get('qry')
 
         resultList = Word.objects.filter(Q(value__icontains=query)).order_by('-rating')[:5]
-
-    return render_to_response('description.html',{'topList' : topList, 'bottomList' : bottomList, 'resultList' : resultList }, context_instance=RequestContext(request))
-
+        return jpickle.encode(resultList)
+   # return render_to_response('descriptionresult.html',{'resultList' : resultList }, context_instance=RequestContext(request))
 
 def listEntries(request):
 
