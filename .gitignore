@@ -8,4 +8,5 @@ oldData/
 privateData/
 newerData/
 .DS_STORE
-.idea/
+.*
+!/.gitignore
