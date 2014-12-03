@@ -2,30 +2,29 @@
 {% block title %} Descriptions {% endblock %}
 {% block content %}
 
-    <div class="container">
-        <div class="row">
+    <div class="description-container row" style="background-image:url('{{ STATIC_URL }}images/background.jpg');">
 
-            <form method="post" role="form" class="form-horizontal" action="">
-            {% csrf_token %}
-            <input type="text" id="qry" name="qry">
-            <input type="submit" value="Submit" name="comment"/>
+            <div class="description-searcher col-md-7">
+                <div class="description-searcher-title">
+                    <div class="description-searcher-title-img"><span class="glyphicon glyphicon-tags"></span></div>
+                    <div class="description-searcher-title-main text">Search for the rating for your words!</div>
+                    <div class="description-searcher-title-secondary text text--secondary">Simply add your word or part of it in the box below</div>
+                </div>
+                <form method="post" role="form" class="description-searcher-form" action="">
+                {% csrf_token %}
+                <input type="text" id="qry" name="qry">
+                <input type="submit" value="Submit" name="comment"/>
+                </form>
 
-            </form>
-
-            <div class="col-md-3">
-                <ul class="list-group">
-                    <li class="list-group-item pba--darkred text--white">Top 5</li>
-                {% for word in resultList %}
-                   <li class="list-group-item">{{ word.value }}   {{ word.rating }}      {{ word.votes }}</li>
-                {% empty %}
-                    no comments existed
-                {% endfor %}
-                </ul>
+                <div class="description-searcher-result"></div>
+                <div class="description-searcher-placeholder">
+                    <img src="{{STATIC_URL}}images/description.png">
+                </div>
             </div>
 
+            <div class="ranking col-md-4 col-md-offset-1">
 
-            <div class="col-md-3 col-md-offset-6">
-                <ul class="list-group">
+               <ul class="list-group">
                     <li class="list-group-item pba--darkred text--white">Top 5</li>
                 {% for word in topList %}
                    <li class="list-group-item">{{ word.value }} {{ word.rating }}   {{ word.votes }}</li>
@@ -33,21 +32,19 @@
                     no comments existed
                 {% endfor %}
                 </ul>
-            </div>
-      </div>
 
-        <div class="row">
-                <div class="col-md-3 col-md-offset-6">
-                    <ul class="list-group">
-                        <li class="list-group-item pba--darkred text--white">Bottom 5</li>
-                    {% for word in bottomList %}
-                       <li class="list-group-item">{{ word.value }} {{ word.rating }}     {{ word.votes }}</li>
-                    {% empty %}
-                        no comments existed
-                    {% endfor %}
-                    </ul>
-                </div>
-          </div>
+
+                <ul class="list-group">
+                    <li class="list-group-item pba--darkred text--white">Bottom 5</li>
+                {% for word in bottomList %}
+                   <li class="list-group-item">{{ word.value }} {{ word.rating }}     {{ word.votes }}</li>
+                {% empty %}
+                    no comments existed
+                {% endfor %}
+                </ul>
+
+
+            </div>
     </div>
 
 
