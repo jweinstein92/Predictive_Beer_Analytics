@@ -2,6 +2,75 @@
 {% block title %} PBA - Home {% endblock %}
 {% block content %}
 
-    <div class="banner"><img src="{{STATIC_URL}}images/Banner.png"></div>
+    <div class="row" style="background-image:url('{{ STATIC_URL }}images/background.jpg');">
+        <div class="banner-container col-md-4 col-md-offset-8">
+            <div class="banner">
+                <img src="{{STATIC_URL}}images/Banner-high.png">
+            </div>
+        </div>
+    </div>
+    <div class="row highlight">
+        <div class="col-md-4 featurette">
+            <div class="featurette-header">
+                <div class="featurette-header-img text text--secondary"><span class="glyphicon glyphicon-globe"></span></div>
+                <div class="featurette-header-title text">Prediction</div>
+            </div>
+            <div class="featurette-content text text--secondary">
+                Lorem ipsum dolor sit amet, consectetur adipiscing elit. Duis maximus vehicula nisi
+                vitae tempus. Cras tristique lectus quis enim feugiat, at commodo ante maximus.
+                Quisque consequat dolor ac aliquam fermentum. Nam facilisis enim sed enim porta,
+                id sollicitudin arcu varius. Lorem ipsum dolor sit amet, consectetur adipiscing
+                elit. Vestibulum dolor odio, euismod et eleifend ut, dictum quis nisi. In hac
+                habitasse platea dictumst. Morbi aliquet velit sed erat vehicula rhoncus sed
+                in nisl. Sed rutrum orci vitae lacinia molestie. Sed turpis lectus, vulputate
+                eget blandit at, aliquet ac mauris. Curabitur ut euismod ipsum. Praesent et interdum velit.
+            </div>
+            <div>
+                <a href="/Color">Check it out</a>
+            </div>
+        </div>
+
+        <div class="col-md-4 featurette">
+            <div class="featurette-header">
+                <div class="featurette-header-img text text--secondary"><span class="glyphicon glyphicon-tags"></span></div>
+                <div class="featurette-header-title text">Description</div>
+            </div>
+            <div class="featurette-content text text--secondary">
+                Lorem ipsum dolor sit amet, consectetur adipiscing elit. Duis maximus vehicula nisi
+                vitae tempus. Cras tristique lectus quis enim feugiat, at commodo ante maximus.
+                Quisque consequat dolor ac aliquam fermentum. Nam facilisis enim sed enim porta,
+                id sollicitudin arcu varius. Lorem ipsum dolor sit amet, consectetur adipiscing
+                elit. Vestibulum dolor odio, euismod et eleifend ut, dictum quis nisi. In hac
+                habitasse platea dictumst. Morbi aliquet velit sed erat vehicula rhoncus sed
+                in nisl. Sed rutrum orci vitae lacinia molestie. Sed turpis lectus, vulputate
+                eget blandit at, aliquet ac mauris. Curabitur ut euismod ipsum. Praesent et interdum velit.
+            </div>
+            <div>
+                <a href="/Color">Check it out</a>
+            </div>
+        </div>
+
+        <div class="col-md-4 featurette">
+            <div class="featurette-header">
+                <div class="featurette-header-img text text--secondary"><span class="glyphicon glyphicon-tint"></span></div>
+                <div class="featurette-header-title text">Colors</div>
+            </div>
+            <div class="featurette-content text text--secondary">
+                Lorem ipsum dolor sit amet, consectetur adipiscing elit. Duis maximus vehicula nisi
+                vitae tempus. Cras tristique lectus quis enim feugiat, at commodo ante maximus.
+                Quisque consequat dolor ac aliquam fermentum. Nam facilisis enim sed enim porta,
+                id sollicitudin arcu varius. Lorem ipsum dolor sit amet, consectetur adipiscing
+                elit. Vestibulum dolor odio, euismod et eleifend ut, dictum quis nisi. In hac
+                habitasse platea dictumst. Morbi aliquet velit sed erat vehicula rhoncus sed
+                in nisl. Sed rutrum orci vitae lacinia molestie. Sed turpis lectus, vulputate
+                eget blandit at, aliquet ac mauris. Curabitur ut euismod ipsum. Praesent et interdum velit.
+            </div>
+            <div>
+                <a href="/color">Check it out</a>
+            </div>
+        </div>
+
+
+    </div>
 
 {% endblock %}

@@ -89,12 +89,35 @@ accent
 
 .text {color:#000000; opacity:0.87;}
 .text--white {color:#FFFFFF; opacity:1;}
-.text--secondary {opacity:0.54;}
-.text--hint {opacity:0.26;}
+.text--secondary {opacity:0.64;}
+.text--hint {opacity:0.31;}
 .text--divider {opacity:0.12;}
 
 .loading {display:none;}
 .loading img {}
+
+
+.banner img
+{
+     width:100%;
+}
+.banner-container{padding:30px;padding-bottom: 50px;}
+.banner {
+    border-radius:8px;
+    padding: 5px;
+    background: rgb(255,255,255); /* for IE */
+    background: rgba(255,255,255,1);
+}
+
+
+.highlight {background:#F4F4F4; padding-left: 10%; padding-right:10%;}
+
+.featurette {margin-top: 10px;}
+.featurette-header {}
+.featurette-header-img { display:inline-block; width:18%; font-size:40px;}
+.featurette-header-title { display:inline-block; width:65%; font-size:30px; margin-top:5px;}
+.featurette-content {margin-top:5px;}
+.featurette-link {}
 
 .histogram {border:2px solid;}
 .histogram-header {}

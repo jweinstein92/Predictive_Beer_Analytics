@@ -1,8 +1,10 @@
 import sys
+import numpy
 from app.models import Comment
 from app.models import Location
 from app.models import AbvsRange
 from app.models import BeerStyle
+from app.models import StyleData
 from app.models import Abvs
 from app.models import Word
 from app.models import Color
@@ -81,11 +83,26 @@ def getPrediction(request):
         color = request.POST.get('color')
 
         abvData = Abvs.objects.get(location__exact=location, abvsrange__exact=abvRangeId)
+        abvLng = numpy.array(abvData.lngcoord, dtype=str)
+        abvLat = numpy.array(abvData.latcoord, dtype=object)
+        abvRatings = numpy.array(abvData.rating, dtype=object)
         styleData = StyleData.objects.get(location__exact=location, beerStyle__exact=beerStyle)
+        styleLng = numpy.array(styleData.lngcoord, dtype=object)
+        #styleLng = styleLng.view(numpy.float64)
+        styleLat = numpy.array(styleData.latcoord, dtype=object)
+        styleRatings = numpy.array(styleData.rating, dtype=object)
+
+        print abvLng[0]
+        print type(abvLng)
+
+
+
+
+
 
         #getWords()
 
-        return render_to_response('Histogram.html',{'location' : location , 'beerStyle' : beerStyle , 'abvs' : abvs, 'description' : description , 'color':color}, context_instance=RequestContext(request))
+        return render_to_response('Histogram.html',{'location' : location , 'beerStyle' : beerStyle , 'abvs' : abvRangeId, 'description' : description , 'color':color}, context_instance=RequestContext(request))
 
 
 def getWords():
