@@ -7,21 +7,26 @@
             <div class="description-searcher col-md-7">
                 <div class="description-searcher-title">
                     <div class="description-searcher-title-img text text--secondary"><span class="glyphicon glyphicon-tags"></span></div>
-                    <div class="description-searcher-title-main text">Search for the rating for your words!</div>
-                    <div class="description-searcher-title-secondary text text--secondary">Simply add your word or part of it in the box to the right</div>
-                    <form method="post" role="form" class="description-searcher-form" action="">
-                        {% csrf_token %}
-                        <div class="form-group">
-                        <input type="text" class="form-control" id="qry" name="qry">
-                            <button class="btn btn-warning pba--darkred"><span class="glyphicon glyphicon-search"></span></button>
-                            <!--<input type="submit" value="Submit" name="comment"/>-->
-                        </div>
-                    </form>
+                    <div class="description-searcher-title-text text">Search</div>
+
+
+                    <div class="description-searcher-title-form float-right">
+                        <form id="desc-query-form" method="post" class="description-searcher-form" action="/getDescription/">
+                            {% csrf_token %}
+
+                            <input type="text" class="form-control-pba" id="qry" name="qry">
+                                <button id="desc-query-btn" class="btn btn-warning pba--darkred js-form-btn"><span class="glyphicon glyphicon-search"></span></button>
+                                <input type="submit" value="Submit" name="comment"/>
+                        </form>
+                    </div>
                 </div>
                 <hr class="text"/>
-                <div class="description-searcher-result"></div>
-                <div class="description-searcher-placeholder">
+                <div id="desc-result" class="description-searcher-result"></div>
+                <div id="desc-placeholder" class="description-searcher-placeholder js-placeholder">
                     <img src="{{STATIC_URL}}images/description.png">
+                </div>
+                <div class="js-loading loading description-searcher-loader">
+                        <img src="{{STATIC_URL}}images/spiffygif_56x56.gif" />
                 </div>
             </div>
 

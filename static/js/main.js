@@ -27,5 +27,20 @@ $(document).ready(function () {
             });
     });
 
+    $(document).on('click', "#desc-query-btn", function (e) {
+        e.preventDefault();
+
+            var form = $("#desc-query-form");
+            $.ajax({
+                type: 'POST',
+                data: form.serialize(),
+                url: form.attr('action'),
+                success: function(data) {
+                    $('#desc-result').inner(data);
+
+                }
+            });
+    });
+
 
 });

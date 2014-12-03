@@ -13,7 +13,7 @@ urlpatterns = patterns('',
                        url(r'^map/', map),
                        url(r'^predictions/', prediction),
                        url(r'^getPrediction/', getPrediction),
-
+                       url(r'^getDescription/', getDescription),
                )
 
 # Uncomment the next two lines to enable the admin:

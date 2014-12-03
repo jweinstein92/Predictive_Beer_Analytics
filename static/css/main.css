@@ -106,10 +106,33 @@ accent
 
 /*description*/
 .description-container {background:#F4F4F4;padding-left: 10%; padding-right:10%;padding-top: 3%;}
+.form-control-pba {
+display: inline-block;
+width: 80%;
+height: 34px;
+padding: 6px 12px;
+margin-right: -40px;
+font-size: 14px;
+line-height: 1.428571429;
+color: #555;
+vertical-align: middle;
+background-color: #fff;
+background-image: none;
+border: 1px solid #ccc;
+border-radius: 4px;
+-webkit-box-shadow: inset 0 1px 1px rgba(0,0,0,0.075);
+box-shadow: inset 0 1px 1px rgba(0,0,0,0.075);
+-webkit-transition: border-color ease-in-out .15s,box-shadow ease-in-out .15s;
+transition: border-color ease-in-out .15s,box-shadow ease-in-out .15s;
+}
 
 .description-searcher{background:#FFFFFF; border-radius: 6px;}
-.description-searcher-form {}
+.description-searcher-title {margin-top:5px; position:relative;}
+.description-searcher-title-img {position:relative; top:5px;left:5px; display:inline-block; height:25px;width:8%;font-size: 30px;}
+.description-searcher-title-text { display:inline-block; width:20%; height:25px; font-size: 26px;}
+.description-searcher-title-form{ display:inline-block; height:25px; width: 65%; position:relative; left:100px;}
 .description-searcher-result {}
+.description-searcher-loader {}
 .description-searcher-placeholder {padding:20px;}
 .description-searcher-placeholder img {width:100%;}
 
