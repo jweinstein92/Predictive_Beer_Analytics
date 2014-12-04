@@ -1,9 +1,8 @@
 
-               <ul class="list-group">
-                    <li class="list-group-item pba--darkred text--white">Top 5</li>
-                {% for word in resultList %}
-                   <li class="list-group-item">{{ word.value }}   {{ word.rating }}      {{ word.votes }}</li>
-                {% empty %}
-                    no comments existed
-                {% endfor %}
-                </ul>
+    <ul class="description-list">
+    {% for word in resultList %}
+       <li class="description-list-item"><span class="description-list-item-box text text--white">{{ word.rating|floatformat:2 }}</span><span class="description-list-item-text text">{{ word.value }}</span></li>
+    {% empty %}
+        no words found
+    {% endfor %}
+    </ul>

@@ -6,9 +6,9 @@
 
             {% for color in colorList %}
                 {% if color.value != "#ffffff" %}
-                    <span class="color-box"style="background:{{ color.value }}"><span class="text text--white color-box-text">{{ color.rating|floatformat:3 }}</span></span>
+                    <span class="color-box"style="background:{{ color.value }}"><span class="text text--white color-box-text ">{{ color.rating|floatformat:3 }}</span></span>
                 {% else %}
-                    <span class="color-box"style="background:{{ color.value }}"><span class="text color-box-text">{{ color.rating|floatformat:3 }}</span></span>
+                    <span class="color-box color-box--border"style="background:{{ color.value }}"><span class="text color-box-text">{{ color.rating|floatformat:3 }}</span></span>
                 {% endif %}
             {% endfor %}
             <hr/>

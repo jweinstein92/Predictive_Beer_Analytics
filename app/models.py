@@ -1,8 +1,5 @@
 from django.db import models
 
-class Comment(models.Model):
-    text = models.CharField(max_length=60)
-
 class Word(models.Model):
     value = models.CharField(max_length=100)
     rating = models.DecimalField(max_digits=6,decimal_places=5)

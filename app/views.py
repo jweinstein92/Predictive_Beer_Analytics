@@ -1,7 +1,6 @@
 import sys
 import numpy
 import cStringIO
-from app.models import Comment
 from app.models import Location
 from app.models import AbvsRange
 from app.models import BeerStyle
@@ -11,7 +10,6 @@ from app.models import Word
 from app.models import Color
 from django.shortcuts import render_to_response
 from django.template import Context, RequestContext
-from app.forms import CommentForm
 import jsonpickle as jpickle
 from mpl_toolkits.basemap import Basemap
 import matplotlib.pyplot as plt
@@ -31,10 +29,10 @@ def home(request):
 
 def description(request):
 
-    topList = Word.objects.all()[:5]
+    topList = Word.objects.all().order_by('-rating')[:5]
     bottomList = Word.objects.all().order_by('rating')[:5]
 
-    return render_to_response('description.html',{'topList' : topList, 'bottomList' : bottomList}, context_instance=RequestContext(request))
+    return render_to_response('description.html',{'topList' : topList, 'bottomList' : reversed(bottomList)}, context_instance=RequestContext(request))
 
 def getDescription(request):
 
@@ -44,21 +42,6 @@ def getDescription(request):
         resultList = Word.objects.filter(Q(value__icontains=query)).order_by('-rating')[:5]
 
     return render_to_response('descriptionresult.html',{'resultList' : resultList }, context_instance=RequestContext(request))
-
-def listEntries(request):
-
-    if request.method == 'POST':
-        form = CommentForm(request.POST)
-
-        if form.is_valid():
-            newComment = Comment()
-            newComment.text = request.POST.get('text', '')
-            newComment.save()
-
-    form = CommentForm()
-    commentList = Comment.objects.all()
-
-    return render_to_response('list.html', {'commentList' : commentList, 'form' : form }, context_instance=RequestContext(request))
 
 
 def map(request):
@@ -76,21 +59,40 @@ def prediction(request):
     locations = Location.objects.all()
     abvsRanges = AbvsRange.objects.all()
     beerStyle = BeerStyle.objects.all()
+    colorsList = Color.objects.all()
 
-    return render_to_response('prediction.html',{'locationList': locations , 'abvsRangesList': abvsRanges , 'beerStyleList' : beerStyle}, context_instance=RequestContext(request))
+    return render_to_response('prediction.html',{'locationList': locations , 'abvsRangesList': abvsRanges , 'beerStyleList' : beerStyle, 'colorsList': colorsList}, context_instance=RequestContext(request))
 
 
 def getPrediction(request):
 
     if request.method == 'POST':
+        print "FOOOO"
         location = request.POST.get('location')
         beerStyle = request.POST.get('beerStyle')
         abvRangeId = request.POST.get('abvs')
         description = request.POST.get('description')
-        color = request.POST.get('color')
+        colorRating = request.POST.get('colorRating')
 
         abvData = Abvs.objects.get(location=location, abvsrange=abvRangeId)
         styleData = StyleData.objects.get(location=location, beerStyle=beerStyle)
+
+        # retreive the descriptor ratings to include in map creation
+        wordsArray = description.lower().split(',')
+        wordsRatings = Word.objects.filter(value__in = wordsArray)
+        wordDifference = 0
+        if (len(wordsRatings) > 0):
+            wordsTotal = 0
+            for word in wordsRatings:
+                wordsTotal += float(word.rating)
+            wordsAverage = wordsTotal / len(wordsRatings)
+            wordDifference = (wordsAverage - 3.5) * .6
+
+        # use the selected color rating to include in map creation
+        colorDifference = 0
+        if (float(colorRating) > 0):
+            colorDifference = float(colorRating) - 3.5
+
 
         # The data stored in the database returns as unicode. must make into string
         # and then into ndarray
@@ -104,11 +106,19 @@ def getPrediction(request):
 
         avgLng = (abvLng + styleLng) / 2
         avgLat = (abvLat + styleLat) / 2
-        avgRatings = (abvRatings + styleRatings) / 2
+        combinedRatings = abvRatings + styleRatings
+        if (wordDifference != 0 or colorDifference != 0):
+            for i in range(0, len(combinedRatings)):
+                for n in range(0, len(combinedRatings[i])):
+                    if combinedRatings[i][n] != 0:
+                        combinedRatings[i][n] += wordDifference + colorDifference
+        avgRatings = combinedRatings / 2
         if (location == '1'):
             map = createUSMap(avgLat, avgLng, avgRatings)
         else:
             map = createEUMap(avgLat, avgLng, avgRatings)
+        title = 'Average Beer Ratings with Composite Attributes'
+        plt.suptitle(title)
         # Encode image to png in base64
         io = cStringIO.StringIO()
         plt.savefig(io, format='png')
@@ -117,7 +127,7 @@ def getPrediction(request):
         #getWords()
 
         # print sio.getvalue().encode("base64").strip()
-        return render_to_response('Histogram.html',{'location' : location , 'beerStyle' : beerStyle , 'abvs' : abvRangeId, 'description' : description , 'color':color, 'map':data}, context_instance=RequestContext(request))
+        return render_to_response('Histogram.html',{'map':data}, context_instance=RequestContext(request))
 
 
 def createNdArray(arrayString):

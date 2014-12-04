@@ -31,27 +31,23 @@
             </div>
 
             <div class="ranking col-md-4 col-md-offset-1">
-
-               <ul class="list-group">
-                    <li class="list-group-item pba--darkred text--white">Top 5</li>
+                <span class="description-header text">Ranking of words</span>
+               <ul class="description-list text">
                 {% for word in topList %}
-                   <li class="list-group-item">{{ word.value }} {{ word.rating }}   {{ word.votes }}</li>
+                   <li class="description-list-item"><span class="description-list-item-box text text--white">{{ word.rating|floatformat:2 }}</span><span class="description-list-item-text text">{{ word.value }}</span></li>
                 {% empty %}
-                    no comments existed
+                    no words found
                 {% endfor %}
                 </ul>
 
-
-                <ul class="list-group">
-                    <li class="list-group-item pba--darkred text--white">Bottom 5</li>
+                <ul class="description-list">
+                    <li class="description-list-item text"><span class="separator-text">...</span></li>
                 {% for word in bottomList %}
-                   <li class="list-group-item">{{ word.value }} {{ word.rating }}     {{ word.votes }}</li>
+                   <li class="description-list-item"><span class="description-list-item-box text text--white">{{ word.rating|floatformat:2 }}</span><span class="description-list-item-text text">{{ word.value }}</span></li>
                 {% empty %}
-                    no comments existed
+                    no words found
                 {% endfor %}
                 </ul>
-
-
             </div>
     </div>
 

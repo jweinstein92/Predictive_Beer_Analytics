@@ -3,7 +3,7 @@
 <!DOCTYPE html>
 <html>
 <head>
-
+    <link rel="icon" type="image/png" href="{{ STATIC_URL }}images/pbafavicon.ico">
     <title>{% block title %}{% endblock %}</title>
 
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
@@ -15,7 +15,8 @@
     <link rel="stylesheet" type="text/css" href="//timschlechter.github.io/bootstrap-tagsinput/examples/lib/bootstrap-tagsinput/bootstrap-tagsinput.css"/>
     <link rel="stylesheet" type="text/css" href="{% static "css/main.css" %}"/>
     <link rel="stylesheet" type="text/css" href="{% static "css/map.css" %}"/>
-    <link rel="stylesheet" type="text/css" href="{% static "css/colorpicker.css" %}"/>
+{#    <link rel="stylesheet" type="text/css" href="{% static "css/colorpicker.css" %}"/>#}
+    <link rel="stylesheet" type="text/css" href="{% static "css/customColorPicker.css" %}"/>
 
     <script type="text/javascript" src="//ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>
     <script type="text/javascript" src="//netdna.bootstrapcdn.com/bootstrap/3.0.2/js/bootstrap.min.js"></script>
@@ -24,7 +25,8 @@
     <script src="https://maps.googleapis.com/maps/api/js?v=3.exp&libraries=visualization"></script>
     <script type="text/javascript" src="{% static "js/map.js" %}"></script>
     <script type="text/javascript" src="{% static "js/main.js" %}"></script>
-    <script type="text/javascript" src="{% static "js/jquery.tinycolorpicker.min.js" %}"></script>
+{#    <script type="text/javascript" src="{% static "js/jquery.tinycolorpicker.min.js" %}"></script>#}
+    <script type="text/javascript" src="{% static "js/customColorPicker.js" %}"></script>
 
     <title></title>
 </head>

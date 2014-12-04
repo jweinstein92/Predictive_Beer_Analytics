@@ -20,7 +20,7 @@ Execute::
 Each step adds more to already stored data. It can take hours to collect and analyze the data, 
 so we invoke each task separately by choosing one of the arguments.
 
-It is reccommended to run the scripts in the following order::
+It is recommended to run the scripts in the following order::
 
     $ predicitiveBeerAnalytics.py --users
     $ predicitiveBeerAnalytics.py --reviews
@@ -65,11 +65,22 @@ To normalize the data::
     $ predictiveBeerAnalytics.py --normalizeData
 
 
-Retreiving Description Keywords (``--keywords``)
+Retrieving Description Keywords (``--keywords``)
 ------------------------------------------------
-.. warning::
+Having the batch of beers downloaded, this loops over the list, extracts the keywords from each description and attaches it to the dictionary of beers. Tokenized words are then categorized and tagged according to its type using ``nltk`` language processing tool. Primal goal here is to capture the beer characteristics like taste or ingredients. Currently it returns nouns and adjective. The extraction itself is covered by the function located in **keywordExtractor.py**
 
-	Marek please!
+.. py:function:: extractKeywords(text)
+   
+   Extract the keywords from any given text.
+   
+   :param str text: Text subjected to extract from.
+   :return: Array of keywords
+   
+Each keyword is then associated with rating. The rating is calculated as an average of beer ratings possessing this specific keyword. The separate list of keywords is then generated along with the average of ratings of the beers .
+
+To extract keywords and update their ratings::
+
+    $ predictiveBeerAnalytics.py --keywords
 	
 Reading Beer Styles (``--styles``)
 --------------
@@ -88,6 +99,13 @@ Creating Maps (``--abvMap`` or ``--styleMap``)
 	
 ColorPalette module
 ---------------------
+addfas
+
+.. py:class:: Foo
+
+   .. py:method:: quux()
+
+   
 .. warning::
 
 	Marek please!
