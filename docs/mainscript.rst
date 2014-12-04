@@ -17,7 +17,7 @@ Execute::
     $ predictiveBeerAnalytics.py [--users | --reviews | --normalizeData | --keywords |
 	--dataPoints | --styles | --abvMap | --styleMap | --colorPalette]
    
-Each step adds more to already stored data. It can take hours to collect and analyze the data, 
+Each step adds more to already stored data. It can take hours to collect and analyse the data, 
 so we invoke each task separately by choosing one of the arguments.
 
 It is recommended to run the scripts in the following order::
@@ -99,15 +99,14 @@ Creating Maps (``--abvMap`` or ``--styleMap``)
 	
 ColorPalette module
 ---------------------
-addfas
+This module provides the whole **color processing** functionality. First it looks up the list of all already mined beers and uses the links provided to **download the beer labels** from untappd. With the image size being 100x100 px no additional cropping is required. For reading the image data, we use `imread()` method included ``scipy-misc`` package. For more comprehensive image manipulation and processing ``scikit-image`` would be prefered. However at this point we only need to read the data, so the miscellaneous scikit package is sufficient. 
 
-.. py:class:: Foo
+Once all the labels are downloaded, the **clustering** is performed on each of them. For that we use `K-Means clustering <http://en.wikipedia.org/wiki/K-means_clustering>`_ algorithm provided by `sklearn.cluster  
+<http://scikit-learn.org/stable/modules/generated/sklearn.cluster.KMeans.html>`_ module. 
 
-   .. py:method:: quux()
+The clustered colors are then **categorized** to fit the color palette and averaged beer rating for those colors are derived. The array of rated colors is the output we want. 
 
-   
-.. warning::
+To trigger this module use::
 
-	Marek please!
+    $ predictiveBeerAnalytics.py --colorPalette
 
-*

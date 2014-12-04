@@ -59,7 +59,7 @@
     --dataPoints | --styles | --abvMap | --styleMap | --colorPalette]
 </pre></div>
 </div>
-<p>Each step adds more to already stored data. It can take hours to collect and analyze the data,
+<p>Each step adds more to already stored data. It can take hours to collect and analyse the data,
 so we invoke each task separately by choosing one of the arguments.</p>
 <p>It is recommended to run the scripts in the following order:</p>
 <div class="highlight-python"><div class="highlight"><pre>$ predicitiveBeerAnalytics.py --users
@@ -146,24 +146,13 @@ $ predicitiveBeerAnalytics.py --colorPalette
 </div>
 <div class="section" id="colorpalette-module">
 <h2>ColorPalette module<a class="headerlink" href="#colorpalette-module" title="Permalink to this headline">¶</a></h2>
-<p>addfas</p>
-<dl class="class">
-<dt id="Foo">
-<em class="property">class </em><tt class="descname">Foo</tt><a class="headerlink" href="#Foo" title="Permalink to this definition">¶</a></dt>
-<dd><dl class="method">
-<dt id="Foo.quux">
-<tt class="descname">quux</tt><big>(</big><big>)</big><a class="headerlink" href="#Foo.quux" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
-
-</dd></dl>
-
-<div class="admonition warning">
-<p class="first admonition-title">Warning</p>
-<p class="last">Marek please!</p>
+<p>This module provides the whole <strong>color processing</strong> functionality. First it looks up the list of all already mined beers and uses the links provided to <strong>download the beer labels</strong> from untappd. With the image size being 100x100 px no additional cropping is required. For reading the image data, we use <cite>imread()</cite> method included <tt class="docutils literal"><span class="pre">scipy-misc</span></tt> package. For more comprehensive image manipulation and processing <tt class="docutils literal"><span class="pre">scikit-image</span></tt> would be prefered. However at this point we only need to read the data, so the miscellaneous scikit package is sufficient.</p>
+<p>Once all the labels are downloaded, the <strong>clustering</strong> is performed on each of them. For that we use <a class="reference external" href="http://en.wikipedia.org/wiki/K-means_clustering">K-Means clustering</a> algorithm provided by <a class="reference external" href="http://scikit-learn.org/stable/modules/generated/sklearn.cluster.KMeans.html">sklearn.cluster</a> module.</p>
+<p>The clustered colors are then <strong>categorized</strong> to fit the color palette and averaged beer rating for those colors are derived. The array of rated colors is the output we want.</p>
+<p>To trigger this module use:</p>
+<div class="highlight-python"><div class="highlight"><pre>$ predictiveBeerAnalytics.py --colorPalette
+</pre></div>
 </div>
-<ul class="simple">
-<li></li>
-</ul>
 </div>
 </div>
 
