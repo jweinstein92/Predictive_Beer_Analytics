@@ -156,9 +156,10 @@ transition: border-color ease-in-out .15s,box-shadow ease-in-out .15s;
 /*prediction*/
 .loading {display:none;}
 .loading img {}
-
+#prediction-container {padding-top:10px}
+.bootstrap-tagsinput {width:263px}
 .histogram {border:2px solid;}
 .histogram-header {}
 .histogram-header-title {}
 .hitogram-header-description {}
-.histogram-result {}
+.histogram-result img {width:100%}

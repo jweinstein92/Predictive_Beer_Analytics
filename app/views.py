@@ -76,8 +76,9 @@ def prediction(request):
     locations = Location.objects.all()
     abvsRanges = AbvsRange.objects.all()
     beerStyle = BeerStyle.objects.all()
+    colorsList = Color.objects.all()
 
-    return render_to_response('prediction.html',{'locationList': locations , 'abvsRangesList': abvsRanges , 'beerStyleList' : beerStyle}, context_instance=RequestContext(request))
+    return render_to_response('prediction.html',{'locationList': locations , 'abvsRangesList': abvsRanges , 'beerStyleList' : beerStyle, 'colorsList': colorsList}, context_instance=RequestContext(request))
 
 
 def getPrediction(request):

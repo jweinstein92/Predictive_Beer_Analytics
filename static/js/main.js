@@ -1,10 +1,12 @@
 $(document).ready(function () {
 
-    var $box = $('#colorPicker');
-        $box.tinycolorpicker();
-        var box = $box.data("plugin_tinycolorpicker")
-
-        box.setColor("#ff0000");
+    //var $box = $('#colorPicker');
+    //    $box.tinycolorpicker();
+    //    var box = $box.data("plugin_tinycolorpicker")
+    //
+    //    box.setColor("#ff0000");
+    //var $box = $('.colorbox');
+    //    $($($box).children()[0]).addClass("selected");
 
     $(document).ajaxStart(function () {
         $(".js-loading").show();
@@ -16,6 +18,7 @@ $(document).ready(function () {
         e.preventDefault();
 
             var form = $(this);
+            console.log(document.forms);
 
             $.ajax({
                 type: 'POST',
