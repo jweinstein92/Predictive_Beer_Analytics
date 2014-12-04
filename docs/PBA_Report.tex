@@ -1,4 +1,3 @@
-
 \documentclass[10pt]{IEEEtran}
 \pdfoutput=1
 
@@ -44,16 +43,18 @@ After data has been gathered, updated, and normalized with methods in the main s
 \section{Machine learning}
 There are two applications of machine learning: 
 
+\hspace{0.3 cm}
 \begin{itemize}
   \item \textbf{Natural language processing}
   \item \textbf{Image color analysis}
 \end{itemize}
+\hspace{0.3 cm}
 
-With its extraordinary lexical resources and easy-to-use interface, \textbf{Natural Language Toolkit (NLTK)} was an easy choice. It is used to tokenize the sentence in order to classify the words according to its type. After various filtering, we calculate the average rating of each keyword. The best, worst and the most used keywords are presented on the website. The relevance of the results is to be discussed later.
+With its extraordinary lexical resources and easy-to-use interface, \textbf{Natural Language Toolkit} (\href{http://www.nltk.org/}{NLTK}) was an easy choice. It is used to tokenize the sentence in order to classify the words according to its type. After various filtering (usage threshold, invalid characters etc.), we calculate the average rating of each keyword. The best, worst and the most used keywords are presented on the website. The relevance of the results is to be discussed later. The actual \textbf{keyword extraction} function is defined in \texttt{keywordExtractor.py}, making it easy to reuse in other projects. It is possible to introduce regular expressions in order to improve the keyword recognition, but the results are reasonable even without using it.
 
-While thinking about all aspects that can possibly affect the beer desirability, we introduced also the visual point of view. We have no information about the color of the bottle. Nevertheless, more than half of the beers from untappd have a link to the beer label picture attached. All we had to do is determine how the beers are rated in relation to the label color. The extraction of the dominant colors is done with \textbf{sklearn.cluster} module, built on \textbf{NumPy}, \textbf{SciPy}, and \textbf{matplotlib} open-source libraries. All of which are also used regularly in other context in this project. Currently, we use K-means clustering algorithm to determine five of the most used colors in each label. The class responsible for the calculations is designed such as the parameters like number of clustered colors are easy to change in the future.
+While thinking about all aspects that can possibly affect the beer desirability, we introduced also the visual point of view. We have no information about the color of the bottle. Nevertheless, more than half of the beers from untappd have a link to the beer label picture attached. All we had to do is determine how the beers are rated in relation to the label color. The \textbf{dominant colors clustering} is done with \href{http://scikit-learn.org/stable/modules/classes.html#module-sklearn.cluster}{sklearn.cluster} module, built on \href{http://www.numpy.org/}{NumPy}, \href{http://scipy.org/}{SciPy}, and \href{http://matplotlib.org/}{matplotlib}, well-known open-source libraries. All of which are also used regularly in other context in this project. Currently, we use \textbf{K-means clustering} to determine five of the most used colors in each label. The class responsible for the calculations \texttt{labels.py:Image} is designed such as the parameters like number of clustered colors are easy to change in the future.
 
-To check if the result is correct, we use the clustered colors to rebuild the picture as in the figure \ref{fig:colorClustering}. Since we observed a lot of labels not having rectangular shape, we made a custom masking algorithm based on the color differences. 
+To check if the result is correct, we use the clustered colors to rebuild the picture as in the figure \ref{fig:colorClustering}. Since we observed a lot of labels not having rectangular shape, we implemented a \textbf{custom masking algorithm} based on the color differences. It seeks a border at which certain threshold is overrode and generates numpy.mask. This is covered by \texttt{labels.py:Mask}. 
 
 \begin{figure}[b]
   \centering
