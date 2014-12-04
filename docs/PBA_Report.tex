@@ -12,25 +12,26 @@
 \hypersetup{colorlinks=true,citecolor=[rgb]{0,0.4,0}}
 
 
-\title{Predictive beer analytics}
+\title{Predictive Beer Analytics}
 \author{Joshua Weinstein, Jim Sundkvist, Marek Kühn}
 
 \begin{document}
 \maketitle
 
 \begin{abstract}
-This project aims to application of various concepts of Python programming as well as data mining and processing.
-Based on a large amount of user reviews, it uses complex machine-learning tools to be able to predict user-defined beers' desirability in the world. 
+This project aims to apply various concepts of Python programming as well as data mining and processing.
+Based on a large amount of user and beer data, the application uses varying techniques including data mining, natural language processing, and color analysis to predict user-defined beers' desirability in the world through a web application. 
 \end{abstract}
 
 \section{Introduction}
 
-Predictive beer analytics project has been initiated in fall 2014 as a part of "\textit{Data mining using python}" course on Denmark Technical University. Its purpose is not only exercise the study material, but also to give users some useful, informative outcome. To satisfy this, we used our previous experience with web development and created a lightweight web-service with visual representation of the results. The users can design their own beer by defining its style, alcohol by volume, keywords and dominant label color. This information is then used to generate desirability map (ref).
+The Predictive Beer Analytics project has been initiated in the Fall of 2014 as a part of "\textit{Data Mining Using Python}" course at Denmark Technical University. Its purpose is not only exercise the study material, but also to give users some useful, informative results. To satisfy this, we used our previous experience with web development and created a lightweight web-service with visual representations of the results. The users can design their own beer by defining its style, alcohol by volume, keywords and dominant label color. This information is then used to generate a desirability map (ref).
 
-The main control script for data update is on IPYTHON??.
+The application to retrieve and analyse data along with our web application (without the database) can be found on our GitHub account. The web-service can be run locally with an installation of Django, MySQL, and a copy of the database.
 
 \section{Data mining}
-For data mining through \textit{untappd API}, we use Requests HTTP library... JOSH Unfortunately, the free API key only allows us to make 100 request per hour (I made this up), but over time we managed to get sufficient amount of data as shown in figure \ref{fig:dataQuantity} 
+Being the main aspect of any data mining project, retrieving the data, and a lot of it, is the first course of action. All data used by Predictive Beer Analytics was gathered through the \textit{Untappd API}, a beer review website which provides access to the data it collects. Unfortunately, the service limited our access to their data to 100 calls an hour. This significantly increased the amount of time required to gather data. The script, \texttt{untappd.py} provides data structures to store Untappd data as well as uses the \textit{Requests} module to make calls to Untappd's servers. Due to the available requests through the API service, it was necessary to first retrieve a list of active users and then later use their username to gather information about beer they have reviewed in the past. Over the course of roughly two weeks of mining, a reasonable amount of information was stored. Seen in figure \ref{fig:dataQuantity}, over 200.000 user reviews are used to predict the desirability of a beer based on location. To keep this information up-to-date, \texttt{dataQuantity.py} script has been included in the library. 
+
 \begin{figure}[h]
   \centering
   \includegraphics[width=\columnwidth]{./graphics/quantity.png}
@@ -38,7 +39,7 @@ For data mining through \textit{untappd API}, we use Requests HTTP library... JO
   \label{fig:dataQuantity}
 \end{figure}
 
-To keep this information up-to-date, dataQuantity.py script has been included in the library. 
+After data has been gathered, updated, and normalized with methods in the main script \texttt{predictiveBeerAnalytics.py}, it is split up into users and beers where users contain a location and their ratings and beers are composed of descriptive keywords, alcohol content, label's location, style, and other unused information. These are then used in conjunction with other scripts we have written to analyse label colors, determine keywords from descriptions, find relationships between alcohol content and location, and  determining relationships between a user's location and the style of beer they enjoy.
 
 \section{Machine learning}
 There are two applications of machine learning: 
