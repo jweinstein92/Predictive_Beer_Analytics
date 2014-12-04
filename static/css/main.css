@@ -154,11 +154,16 @@ transition: border-color ease-in-out .15s,box-shadow ease-in-out .15s;
 .banner {border-radius:8px;padding: 5px;background: rgb(255,255,255); /* for IE */background: rgba(255,255,255,1);}
 
 /*prediction*/
-.loading {display:none;}
-.loading img {}
-
-.histogram {border:2px solid;}
-.histogram-header {}
-.histogram-header-title {}
-.hitogram-header-description {}
-.histogram-result {}
+.loading {display:none; height: 675px; width:1049px; vertical-align: middle}
+.loading img {display:block; margin-left: auto; margin-right: auto;}
+#about-prediction {padding-top: 10px}
+#prediction-container {padding-top:10px; width:100%}
+#prediction-result-container {float:right; margin-top:-10px; background-color: white; height:675px}
+#prediction-result {height: 675px; vertical-align: middle; display: table-cell; width: 1049px}
+#prediction-result img {margin-left: auto; margin-right: auto; display: block}
+.bootstrap-tagsinput {width:322px}
+/*.histogram {border:2px solid;}*/
+/*.histogram-header {}*/
+/*.histogram-header-title {}*/
+/*.hitogram-header-description {}*/
+/*.histogram-result img {display: block; margin-left: auto; margin-right: auto}*/
