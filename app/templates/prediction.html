@@ -4,71 +4,77 @@
 
     <div class="container" id="prediction-container">
         <div class="row">
-
-            <form id="prediction-form" class="form col-md-3" method="post" action="/getPrediction/">
-                {% csrf_token %}
-                <div class="form-group">Location:
-                    <select id="location" name="location" class="form-control">
-                          {% for location in locationList %}
-                                <option value="{{ location.id }}">{{ location.location }}</option>
-                          {% endfor %}
-                    </select>
-                </div>
-                <div class="form-group">Beer Style:
-                    <select id="beerType" name="beerStyle" class="form-control" placeholder="Type">
-                          {% for beerStyle in beerStyleList %}
-                            <option value="{{ beerStyle.id }}">{{ beerStyle.styleName }}</option>
-                        {% endfor %}
-                    </select>
-                </div>
-                <div class="form-group">Alcohol Content:
-                    <select id="abvs" name="abvs" class="form-control">
-                        {% for abvsrange in abvsRangesList %}
-                            <option value="{{ abvsrange.id}}">{{ abvsrange.range }}%</option>
-                        {% endfor %}
-                    </select>
-                </div>
-                <div class="input-group">Description Keywords:
-                    <div>
-                        <input data-role="tagsinput" id="description" name="description" type="text" />
+            <div class="col-md-3" id="prediction-form-container">
+                <form id="prediction-form" class="form" method="post" action="/getPrediction/">
+                    {% csrf_token %}
+                    <div class="form-group">Location:
+                        <select id="location" name="location" class="form-control">
+                              {% for location in locationList %}
+                                    <option value="{{ location.id }}">{{ location.location }}</option>
+                              {% endfor %}
+                        </select>
                     </div>
-                </div>
-                <div style="height:130px">
-                    <span class="colorpicker">Label Color:
+                    <div class="form-group">Beer Style:
+                        <select id="beerType" name="beerStyle" class="form-control" placeholder="Type">
+                              {% for beerStyle in beerStyleList %}
+                                <option value="{{ beerStyle.id }}">{{ beerStyle.styleName }}</option>
+                            {% endfor %}
+                        </select>
+                    </div>
+                    <div class="form-group">Alcohol Content:
+                        <select id="abvs" name="abvs" class="form-control">
+                            {% for abvsrange in abvsRangesList %}
+                                <option value="{{ abvsrange.id}}">{{ abvsrange.range }}%</option>
+                            {% endfor %}
+                        </select>
+                    </div>
+                    <div class="input-group">Description Keywords:
                         <div>
-                            <span class="bgbox"></span>
-                            <span class="hexbox"></span>
-                            <span class="clear"></span>
-                            <span class="colorbox">
-                                <b class="selected" style="background:transparent; border-style:solid; border-color:black" title="None"></b>
-                                {% for color in colorsList %}
-                                    <b style="background:{{ color.value }}"></b>
-                                {% endfor %}
-                            </span>
+                            <input data-role="tagsinput" id="description" name="description" type="text" />
                         </div>
-                    </span>
-                </div>
-                <input class="form-control" type="submit" value="calculate"/>
+                    </div>
+                    <div style="height:130px">
+                        <span class="colorpicker">Label Color:
+                            <div>
+                                <span class="bgbox"></span>
+                                <span class="hexbox"></span>
+                                <span class="clear"></span>
+                                <span class="colorbox">
+                                    <b class="selected" style="background:transparent; border-style:solid; border-color:black" title="None" data-role="0"></b>
+                                    {% for color in colorsList %}
+                                        <b style="background:{{ color.value }}" data-role="{{ color.rating }}"></b>
+                                    {% endfor %}
+                                </span>
+                            </div>
+                        </span>
+                    </div>
+                    <input class="form-control" type="submit" value="Calculate"/>
 
-{#                <div id="colorPicker">Label Color:#}
-{#                    <a class="color"><div class="colorInner"></div></a>#}
-{#                    <div class="track"></div>#}
-{#                    <ul class="dropdown"><li></li></ul>#}
-{#                    <input id="color" name="color" type="hidden" class="colorInput"/>#}
-{#                </div>#}
+    {#                <div id="colorPicker">Label Color:#}
+    {#                    <a class="color"><div class="colorInner"></div></a>#}
+    {#                    <div class="track"></div>#}
+    {#                    <ul class="dropdown"><li></li></ul>#}
+    {#                    <input id="color" name="color" type="hidden" class="colorInput"/>#}
+    {#                </div>#}
 
-                <div id="about-prediction">
-                    With our Prediction tool, you can see how well a beer with certain traits will do.......
-                </div>
-            </form>
+                    <div class="text text--secondary" id="about-prediction">
+                        Use the Predictor Tool to gauge the desirability of a beer with the traits you provide.
+                        Available traits are the alcohol content of the beer, the style of beer, the main color
+                        of the label, and even keywords to used to describe it. The maps are generated using hundreds
+                        of thousands of pieces of data regarding how a user in a specific location enjoyed a beer with
+                        the specifications you provide. Using information we have previously compiled, this data is merged
+                        together to create a single image.
+                    </div>
+                </form>
+            </div>
 
 
-            <div class="col-md-9">
+            <div class="col-md-9" id="prediction-result-container">
                 <div class="js-loading loading">
                     <img src="{{STATIC_URL}}images/spiffygif_56x56.gif" />
                 </div>
                 <div id="prediction-result">
-
+                    <img src="{{STATIC_URL}}images/description.png">
                 </div>
             </div>
 

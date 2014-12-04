@@ -84,14 +84,16 @@ def prediction(request):
 def getPrediction(request):
 
     if request.method == 'POST':
+        print "FOOOO"
         location = request.POST.get('location')
         beerStyle = request.POST.get('beerStyle')
         abvRangeId = request.POST.get('abvs')
         description = request.POST.get('description')
-        color = request.POST.get('color')
+        colorRating = request.POST.get('colorRating')
 
         abvData = Abvs.objects.get(location=location, abvsrange=abvRangeId)
         styleData = StyleData.objects.get(location=location, beerStyle=beerStyle)
+
         # retreive the descriptor ratings to include in map creation
         wordsArray = description.lower().split(',')
         wordsRatings = Word.objects.filter(value__in = wordsArray)
@@ -103,6 +105,10 @@ def getPrediction(request):
             wordsAverage = wordsTotal / len(wordsRatings)
             wordDifference = (wordsAverage - 3.5) * .6
 
+        # use the selected color rating to include in map creation
+        colorDifference = 0
+        if (float(colorRating) > 0):
+            colorDifference = float(colorRating) - 3.5
 
 
         # The data stored in the database returns as unicode. must make into string
@@ -118,11 +124,11 @@ def getPrediction(request):
         avgLng = (abvLng + styleLng) / 2
         avgLat = (abvLat + styleLat) / 2
         combinedRatings = abvRatings + styleRatings
-        if (wordDifference != 0):
+        if (wordDifference != 0 or colorDifference != 0):
             for i in range(0, len(combinedRatings)):
                 for n in range(0, len(combinedRatings[i])):
                     if combinedRatings[i][n] != 0:
-                        combinedRatings[i][n] += wordDifference
+                        combinedRatings[i][n] += wordDifference + colorDifference
         avgRatings = combinedRatings / 2
         if (location == '1'):
             map = createUSMap(avgLat, avgLng, avgRatings)
@@ -138,7 +144,7 @@ def getPrediction(request):
         #getWords()
 
         # print sio.getvalue().encode("base64").strip()
-        return render_to_response('Histogram.html',{'location' : location , 'beerStyle' : beerStyle , 'abvs' : abvRangeId, 'description' : description , 'color':color, 'map':data}, context_instance=RequestContext(request))
+        return render_to_response('Histogram.html',{'map':data}, context_instance=RequestContext(request))
 
 
 def createNdArray(arrayString):
