@@ -42,8 +42,8 @@ def getDescription(request):
         query = request.POST.get('qry')
 
         resultList = Word.objects.filter(Q(value__icontains=query)).order_by('-rating')[:5]
-        return jpickle.encode(resultList)
-   # return render_to_response('descriptionresult.html',{'resultList' : resultList }, context_instance=RequestContext(request))
+
+    return render_to_response('descriptionresult.html',{'resultList' : resultList }, context_instance=RequestContext(request))
 
 def listEntries(request):
 

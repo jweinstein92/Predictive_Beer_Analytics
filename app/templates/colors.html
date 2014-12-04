@@ -1,11 +1,22 @@
 {% extends 'base.html' %}
 {% block title %} Colors {% endblock %}
 {% block content %}
+    <div class="row color-main-container" style="background-image:url('{{ STATIC_URL }}images/background.jpg');">
+        <div class="col-md-8 col-md-offset-2 color-container">
 
-    <ul class="list-group">
-    {% for color in colorList %}
+            {% for color in colorList %}
+                {% if color.value != "#ffffff" %}
+                    <span class="color-box"style="background:{{ color.value }}"><span class="text text--white color-box-text">{{ color.rating|floatformat:3 }}</span></span>
+                {% else %}
+                    <span class="color-box"style="background:{{ color.value }}"><span class="text color-box-text">{{ color.rating|floatformat:3 }}</span></span>
+                {% endif %}
+            {% endfor %}
+            <hr/>
+            <span class="color-info text text--secondary"> The colors above, ladies and gentlemen are rated from a scale of 0 to 5. We have extracted
+            data from over 25000 beerlabels and with the help of science deduced the rating! Of all the colors it seems that colors shifting in violet enthralls beerdrinkers a little more...</span>
 
-       <li class="list-group-item"> <span style="color:{{ color.value }}">Color</span>{{ color.rating  }}  {{ color.votes }} </li>
-    {% endfor %}
-    </ul>
+        </div>
+
+    </div>
+
 {% endblock %}

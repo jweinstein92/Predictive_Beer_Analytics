@@ -162,3 +162,13 @@ transition: border-color ease-in-out .15s,box-shadow ease-in-out .15s;
 .histogram-header-title {}
 .hitogram-header-description {}
 .histogram-result {}
+
+/*color*/
+
+.color-container {background:#F4F4F4; border-radius:6px; margin-top:5%; padding-top:20px; padding-bottom:20px;}
+.color-main-container {height:700px;}
+.color-box {display:inline-block; height:100px; width:100px;border-radius:4px; margin:10px; font-weight:bold;}
+.color-box-text {display:block; height:100%; width:100%;vertical-align: middle; text-align: center; font-size: 30px; margin-top: 30px;}
+.color-list {margin-top: 30px; background:#F4F4F4; }
+.color-info {display:block; width:405px; margin:auto; font-size:18px;}
+
