@@ -63,7 +63,7 @@ To check if the result is correct, we use the clustered colors to rebuild the pi
   \label{fig:colorClustering}
 \end{figure}
 
-Having these colors extracted, they need to be associated with ratings. Otherwise there would be no measurable impact on the total beer desirability. We couldn't match those color directly to the user input, because that way its rating would have to be calculated  every time the request is made, which is not acceptable given the amount of data. So we come up with a solution by using template color palette. It serves as a fixed categorizing root. None of the available functions were suitable for comparing the RGB values of the colors, so we designed our own classification algorithm. It uses the well-known euclidean distance formula to determine which color from the template color palette is the closest. However, simple distance in RGB colorspace doesn't correspond to human perception. A change of one parameter results in much more different color than the same change distributed between multiple parameters. It was possible to overcome this by converting the colors to YUV colorspace (Fig. \ref{fig:colorspace}), which takes human perception into account, making the response more or less linear. 
+Having these colors extracted, they need to be associated with ratings. Otherwise there would be no measurable impact on the total beer desirability. We couldn't match those color directly to the user input, because that way its rating would have to be calculated  every time the request is made, which is not acceptable given the amount of data. So we come up with a solution by using \textbf{template color palette}. It serves as a \textbf{fixed categorizing root}. None of the available functions were suitable for comparing the RGB values of the colors, so we designed our own classification algorithm. It uses the well-known euclidean distance formula to determine which color from the template color palette is the closest. However, simple distance in RGB colorspace doesn't correspond to human perception. A change of one parameter results in much more different color than the same change distributed between multiple parameters. It was possible to overcome this by converting the colors to \textbf{YUV colorspace} (Fig. \ref{fig:colorspace}), which takes human perception into account, making the response more or less linear. 
 
 
 \begin{figure}[t]
@@ -75,43 +75,40 @@ Having these colors extracted, they need to be associated with ratings. Otherwis
 
 \section{Web service}
 
-The web-service uses one of the most popular Python frameworks - Django. This allowed us to create elegant web application while still being able to focus on the server-side python scripts rather than web-design.
+The web-service uses one of the most popular Python frameworks - \href{https://www.djangoproject.com/}{Django}. This allowed us to create elegant web application while still being able to focus on the server-side python scripts rather than web-design.
 
-TODO add more 
+The data that the webapp uses are stored in a \href{http://www.mysql.com/}{MySQL database}.
+The data itself is generated from the datamining scripts and saved to the webapps database by importing them as a csv file.
+The webapp uses \textbf{Django's database-abstraction API} to perform the basic CRUD functionality to the datamodel 
 
-The data that the webapp uses are stored in a MySQL database.
-The data itself is generated from the datamining scripts and saved to the webapps database by importing them as a scv file.
-The webapp uses Django's database-abstraction API to perform the basic CRUD functionality to the datamodel SE FIGURE ?.
+SE FIGURE ?.
  
-When it comes to security Django has some great features that will bring about basic security with minimum effort.
-Django's database-abstraction API automatically sanitizes any input so SQL-injection is not a problem.
-Cross-site-scripting is dealt with by using csrf tokens.
-Responses automatically has csrf tokens inside so when doing POST you only need to add it.
-In a Form simply having {% csrf_token %} takes care of the problem.
-Django also have some predefined user authentication and authorization functionality.
+When it comes to security, Django has some great features that will bring about basic \textbf{security} with minimum effort.
+Django's database-abstraction API automatically sanitizes any input so \textbf{SQL-injection is not a problem}.
+Cross-site-scripting is dealt with by using \textbf{cross-site request forgery (CSFR) tokens}. Those are automatically attached to the server responses so we need to add it only while doing POST.
+
+Django also have some \textbf{predefined user authentication and authorization functionality}.
 In the webapp we do not use any access control so this part is unnecessary until a time arrive when we do need it.
 
 The decision to use these technologies is pretty straight forward:
-The technologies were familiar, well used and documented, and easy to use.
-This lead to quite a fast development of the pba GUI.
+The technologies were familiar, widely used, well documented and easy to use.
+This lead to quite a fast development of the Predictive beer analytics GUI.
 
 
 
 \section{Discussion}
 
-Keywords - Regular expression.
+There is usually no simple way to determine the relevance of the results in these kind of projects. However, we tried to validate it as much as possible. 
 
-Hardcoded web color palette
+As we went through the list of keywords, we found a lot of invalid words which NLTK wasn't able to recognize. For example links, unknown abbreviations, misspelled word, html snippets etc. Those could be easily eliminated by defining usage threshold, that is to filter out words used less times than let's say 20. This is also to make the results more reliable, since the worst ones are used just once. There is still space for improvements here. For instance we can imagine using regular expressions for the rating of English phrases and idioms instead of just separate keywords. Altough after having the results generated, they seem reasonable enough for purposes of this project. In the end, it is only logical to expect words like "inexpensive" and "watery" to be much worse rated than "immeasurable" or "aged". Other language support has not been considered in this project.
+
+It is problematic to assign ratings to the whole color palette. There was an idea of double-clustering the colors to form rated groups, but it made them look dull and actually quite distant from the original ones. This method is too radical. Consequently, we decided to use supervised classification to assign the colors to template palette that covers all the common colors. At this point the palette is hard-coded in the labels:Image class. It is shared with the web-service and also used as a prediction parameter. To use full color picker on the website (e.g. using  \href{http://jquery.com/}{jQuery}), it is possible to use the same classification function defined in \texttt{labels.py}.
 
 \section{Further development}
-Collecting data
+At this early stage, the quality of the results highly increases with getting new data. The scripts to gain information from UNTAPPD are finished, so the only limit is the time. As seen in the figure \ref{fig:abvcomp}, there are still some areas with little or no user reviews. Those are rendered as zero rating blue. Another sources of beer information and reviews could also be implemented in the future. 
+It would be interesting to relate brewery information to the beer popularity. The required data is already available.
 
-Machine learning
-
-Website
-
-Including brewery information
-
+Depending on the quantity of mined data, the density of the map grid can be increased. Current grid area varies between 30 000 km$^2$ and 200 000 km$^2$. Another idea to consider would be implementing different location distribution method. Now we use latitude/longitude classification, but Google API offers also to lookup the current state or city. This would all lead to more detailed results. Machine learning could be improved by introducing more sophisticated algorithm to extract keywords and phrases. 
 
 \section{Results}
 At the beginning of Predictive Beer Analytics, our goal was to find relationships between the alcohol content or style of a beer and the location of a user's rating to determine what areas enjoy the most. As the project progressed, ambitions rose and we wanted to see if the color of the label or the description of beers made a significant impact on the desirability of a beer. Using \texttt{PBAMap.py}, \texttt{keywordClassifier.py} we are able to graphically visualize the effects of specific words, alcohol content, and beer style on a user's rating. Figure \ref{fig:abvcomp} shows the consistent and seemingly global idea that people typically enjoy stronger beers. While there is a clear correlation between user reviews and and a beer's alcohol content, the type of beers an area likes are typically varied and relatively unpredictable. Though it does seem that the United States enjoys IPAs more than ciders and fruitier beers.
@@ -124,9 +121,6 @@ It was also interesting to see that certain words used in a beer's description h
   \caption{Comparison of average beer ratings in US based on alcohol content}
   \label{fig:abvcomp}
 \end{figure}
-
-\section{Discussion}
-
 
 \section{Conclusion}
 
