@@ -137,7 +137,7 @@ transition: border-color ease-in-out .15s,box-shadow ease-in-out .15s;
 .description-searcher-placeholder {padding:20px;}
 .description-searcher-placeholder img {width:100%;}
 
-.ranking {background:#FFFFFF;border-radius: 6px; padding:20px; padding-top: 7px;}
+.ranking {background:#FFFFFF;border-radius: 6px; padding:20px; padding-top: 7px; margin-bottom:60px}
 .description-list {padding-left: 0;margin-bottom:0px;}
 .description-list-item {
 position: relative;
