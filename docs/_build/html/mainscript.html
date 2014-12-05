@@ -34,9 +34,6 @@
           <a href="genindex.html" title="General Index"
              accesskey="I">index</a></li>
         <li class="right" >
-          <a href="py-modindex.html" title="Python Module Index"
-             >modules</a> |</li>
-        <li class="right" >
           <a href="overview.html" title="Project overview"
              accesskey="P">previous</a> |</li>
         <li><a href="index.html">Predictive beer analytics 1.0 documentation</a> &raquo;</li> 
@@ -51,7 +48,7 @@
   <div class="section" id="getting-and-using-data">
 <h1>Getting and Using Data<a class="headerlink" href="#getting-and-using-data" title="Permalink to this headline">¶</a></h1>
 <p>All data used by this module is mined from the beer review website <a class="reference external" href="http://www.untappd.com">Untappd</a></p>
-<p>To obtain the neccessary data, you must first acquire a <strong>Client Id</strong> and <strong>Client Secrect</strong> key from
+<p>To obtain the necessary data, you must first acquire a <strong>Client Id</strong> and <strong>Client Secret</strong> key from
 <a class="reference external" href="http://untappd.com/api/docs">Untappd API</a>. Also, a <a class="reference external" href="https://developers.google.com/maps/documentation/geocoding/">Google Geocoding API</a> key is required. However, the Google Geocoding API limits their keys to 2500 calls a day. If you have more than 2500 users, you will either need multiple keys or will need to change PBAMap.py to handle the usage. These keys must then be placed in the apiConfig.ini located in /machine_learning.</p>
 <p>To easily obtain new data, we provided the control script <strong>predictiveBeerAnalytics.py</strong></p>
 <p>Execute:</p>
@@ -86,7 +83,7 @@ $ predicitiveBeerAnalytics.py --colorPalette
 </div>
 <div class="section" id="beer-data-reviews">
 <h2>Beer Data (<tt class="docutils literal"><span class="pre">--reviews</span></tt>)<a class="headerlink" href="#beer-data-reviews" title="Permalink to this headline">¶</a></h2>
-<p>This may only be run if <tt class="docutils literal"><span class="pre">--users</span></tt> has been previously run as it uses the usernames you have already mined. Each user has their beer ratings queried and returns a maximum of 50 reviews per user. This may be less depending on if they reviewed the same beer multiple times or have not reviewed more than 50 beers. Like <tt class="docutils literal"><span class="pre">--users</span></tt> it is recommended to leave this script running for long periods of time to obtain data. The more reviews retreived, the better the results will be. This script may be interrupted and restarted.</p>
+<p>This may only be run if <tt class="docutils literal"><span class="pre">--users</span></tt> has been previously run as it uses the usernames you have already mined. Each user has their beer ratings queried and returns a maximum of 50 reviews per user. This may be less depending on if they reviewed the same beer multiple times or have not reviewed more than 50 beers. Like <tt class="docutils literal"><span class="pre">--users</span></tt> it is recommended to leave this script running for long periods of time to obtain data. The more reviews retrieved, the better the results will be. This script may be interrupted and restarted.</p>
 <p>To mine beer data - user reviews, beer information (name, rating, alcohol content, label, style, description), and brewery information (name, location, beers brewed):</p>
 <div class="highlight-python"><div class="highlight"><pre>$ predictiveBeerAnalytics.py --reviews
 </pre></div>
@@ -131,7 +128,7 @@ $ predicitiveBeerAnalytics.py --colorPalette
 </div>
 <div class="section" id="reading-beer-styles-styles">
 <h2>Reading Beer Styles (<tt class="docutils literal"><span class="pre">--styles</span></tt>)<a class="headerlink" href="#reading-beer-styles-styles" title="Permalink to this headline">¶</a></h2>
-<p>This looks at all the beers and creates a file of the 20 most reviewed beer styles and stores them in the file styles.csv. This file is then used in <tt class="docutils literal"><span class="pre">-stylesMap</span></tt> to allow you to create maps based on user reviews and the style of the beer. Other styles may be added to this file, however there probably won&#8217;t be enough reviews to accurately describe the desirablity of that style in a region.</p>
+<p>This looks at all the beers and creates a file of the 20 most reviewed beer styles and stores them in the file styles.csv. This file is then used in <tt class="docutils literal"><span class="pre">-stylesMap</span></tt> to allow you to create maps based on user reviews and the style of the beer. Other styles may be added to this file, however there probably won&#8217;t be enough reviews to accurately describe the desirability of that style in a region.</p>
 <p>To create a list of the most rated beer styles:</p>
 <div class="highlight-python"><div class="highlight"><pre>$ predictiveBeerAnalytics.py --styles
 </pre></div>
@@ -139,10 +136,16 @@ $ predicitiveBeerAnalytics.py --colorPalette
 </div>
 <div class="section" id="creating-maps-abvmap-or-stylemap">
 <h2>Creating Maps (<tt class="docutils literal"><span class="pre">--abvMap</span></tt> or <tt class="docutils literal"><span class="pre">--styleMap</span></tt>)<a class="headerlink" href="#creating-maps-abvmap-or-stylemap" title="Permalink to this headline">¶</a></h2>
-<div class="admonition warning">
-<p class="first admonition-title">Warning</p>
-<p class="last">Josh please!</p>
+<p>Using <tt class="docutils literal"><span class="pre">--abvMap</span></tt> or <tt class="docutils literal"><span class="pre">--styleMap</span></tt> creates a visual representation of a specified trait&#8217;s affect on beer desirability based on location.</p>
+<p>To create image files of a map of the United States and Europe showing predicted user ratings in the area where abvAmount is the percentage of alcohol a beer may have. For example, the following will create maps predicting the ratings of a beer with a ABV of 5%:</p>
+<div class="highlight-python"><div class="highlight"><pre>$ predictiveBeerAnalytics.py --abvMap 5
+</pre></div>
 </div>
+<p>To create image files of a map of the United States and Europe showing predicted user ratings in the area where beerStyle is a beer&#8217;s style. For example, the following will create maps predicting the ratings of a  wietbier:</p>
+<div class="highlight-python"><div class="highlight"><pre>$ predictiveBeerAnalytics.py --styleMap wietbier
+</pre></div>
+</div>
+<p>The options of beer styles available for usage is created after running the <tt class="docutils literal"><span class="pre">styles</span></tt> script. You may edit the styles.csv file to allow other types of beers to be queried, but there may be little to no data available on them.</p>
 </div>
 <div class="section" id="colorpalette-module">
 <h2>ColorPalette module<a class="headerlink" href="#colorpalette-module" title="Permalink to this headline">¶</a></h2>
@@ -207,9 +210,6 @@ $ predicitiveBeerAnalytics.py --colorPalette
         <li class="right" style="margin-right: 10px">
           <a href="genindex.html" title="General Index"
              >index</a></li>
-        <li class="right" >
-          <a href="py-modindex.html" title="Python Module Index"
-             >modules</a> |</li>
         <li class="right" >
           <a href="overview.html" title="Project overview"
              >previous</a> |</li>

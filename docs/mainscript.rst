@@ -7,7 +7,7 @@ Getting and Using Data
 =====================================================
 All data used by this module is mined from the beer review website `Untappd <http://www.untappd.com>`_
 
-To obtain the neccessary data, you must first acquire a **Client Id** and **Client Secrect** key from 
+To obtain the necessary data, you must first acquire a **Client Id** and **Client Secret** key from 
 `Untappd API <http://untappd.com/api/docs>`_. Also, a `Google Geocoding API <https://developers.google.com/maps/documentation/geocoding/>`_ key is required. However, the Google Geocoding API limits their keys to 2500 calls a day. If you have more than 2500 users, you will either need multiple keys or will need to change PBAMap.py to handle the usage. These keys must then be placed in the apiConfig.ini located in /machine_learning.
 
 To easily obtain new data, we provided the control script **predictiveBeerAnalytics.py**
@@ -47,7 +47,7 @@ To mine user data - usernames, locations, and ids::
 
 Beer Data (``--reviews``)
 -------------------------
-This may only be run if ``--users`` has been previously run as it uses the usernames you have already mined. Each user has their beer ratings queried and returns a maximum of 50 reviews per user. This may be less depending on if they reviewed the same beer multiple times or have not reviewed more than 50 beers. Like ``--users`` it is recommended to leave this script running for long periods of time to obtain data. The more reviews retreived, the better the results will be. This script may be interrupted and restarted.
+This may only be run if ``--users`` has been previously run as it uses the usernames you have already mined. Each user has their beer ratings queried and returns a maximum of 50 reviews per user. This may be less depending on if they reviewed the same beer multiple times or have not reviewed more than 50 beers. Like ``--users`` it is recommended to leave this script running for long periods of time to obtain data. The more reviews retrieved, the better the results will be. This script may be interrupted and restarted.
 
 To mine beer data - user reviews, beer information (name, rating, alcohol content, label, style, description), and brewery information (name, location, beers brewed)::
     
@@ -84,7 +84,7 @@ To extract keywords and update their ratings::
 	
 Reading Beer Styles (``--styles``)
 --------------
-This looks at all the beers and creates a file of the 20 most reviewed beer styles and stores them in the file styles.csv. This file is then used in ``-stylesMap`` to allow you to create maps based on user reviews and the style of the beer. Other styles may be added to this file, however there probably won't be enough reviews to accurately describe the desirablity of that style in a region.
+This looks at all the beers and creates a file of the 20 most reviewed beer styles and stores them in the file styles.csv. This file is then used in ``-stylesMap`` to allow you to create maps based on user reviews and the style of the beer. Other styles may be added to this file, however there probably won't be enough reviews to accurately describe the desirability of that style in a region.
 
 To create a list of the most rated beer styles::
 
@@ -93,9 +93,17 @@ To create a list of the most rated beer styles::
 
 Creating Maps (``--abvMap`` or ``--styleMap``)
 --------------
-.. warning::
+Using ``--abvMap`` or ``--styleMap`` creates a visual representation of a specified trait's affect on beer desirability based on location.
 
-    Josh please!
+To create image files of a map of the United States and Europe showing predicted user ratings in the area where abvAmount is the percentage of alcohol a beer may have. For example, the following will create maps predicting the ratings of a beer with a ABV of 5%::
+
+	$ predictiveBeerAnalytics.py --abvMap 5
+	
+To create image files of a map of the United States and Europe showing predicted user ratings in the area where beerStyle is a beer's style. For example, the following will create maps predicting the ratings of a  wietbier::
+
+	$ predictiveBeerAnalytics.py --styleMap wietbier
+	
+The options of beer styles available for usage is created after running the ``styles`` script. You may edit the styles.csv file to allow other types of beers to be queried, but there may be little to no data available on them.
 	
 ColorPalette module
 ---------------------
@@ -105,6 +113,7 @@ Once all the labels are downloaded, the **clustering** is performed on each of t
 <http://scikit-learn.org/stable/modules/generated/sklearn.cluster.KMeans.html>`_ module. 
 
 The clustered colors are then **categorized** to fit the color palette and averaged beer rating for those colors are derived. The array of rated colors is the output we want. 
+
 
 To trigger this module use::
 
