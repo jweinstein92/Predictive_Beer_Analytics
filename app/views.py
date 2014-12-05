@@ -1,6 +1,7 @@
 import sys
 import numpy
 import cStringIO
+import os
 from app.models import Location
 from app.models import AbvsRange
 from app.models import BeerStyle
@@ -45,7 +46,14 @@ def getDescription(request):
 
 
 def map(request):
-    return render_to_response('map.html',{}, context_instance=RequestContext(request))
+    # Path for saving the images
+    euPath = "static/images/maps/EU_abv/"
+    usPath = "static/images/maps/US_abv/"
+
+    euList = os.listdir(euPath)
+    usList = os.listdir(usPath)
+
+    return render_to_response('map.html',{'euFiles': euList, 'usFiles': usList}, context_instance=RequestContext(request))
 
 
 def colors(request):
