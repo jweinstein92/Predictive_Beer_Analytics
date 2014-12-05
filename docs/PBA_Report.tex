@@ -97,16 +97,21 @@ acts as a master page.
 
 The data that the web application uses are stored in a \href{http://www.mysql.com/}{MySQL database}.
 The data itself is generated from the data mining scripts and saved to the webapps database by importing them as a csv file.
-The web application uses \textbf{Django's database-abstraction API} to perform the basic CRUD functionality to the data model 
+The web application uses \textbf{Django's database-abstraction API} to perform the basic CRUD functionality to the data model.
 
-SE FIGURE ?.
+\begin{figure}[t]
+  \centering
+  \includegraphics[width=6cm]{./graphics/pbaDataModel.png}
+  \caption{Database data model}
+  \label{fig:colorspace}
+\end{figure}
  
 When it comes to security, Django has some great features that will bring about basic \textbf{security} with minimum effort.
 Django's database-abstraction API automatically sanitizes any input so \textbf{SQL-injection is not a problem}.
 Cross-site-scripting is dealt with by using \textbf{cross-site request forgery (CSFR) tokens}. Those are automatically attached to the server responses so we need to add it only while doing POST.
 
-Django also have some \textbf{predefined user authentication and authorization functionality}.
-In the web application we do not use any access control so this part is unnecessary until a time arrive when we do need it.
+Django also has some \textbf{predefined user authentication and authorization functionality}.
+In the web application we do not use any access control so this part is unnecessary until a time arrives when we do need it.
 
 The decision to use these technologies is pretty straight forward:
 The technologies were familiar, widely used, well documented and easy to use.
@@ -122,13 +127,13 @@ There is usually no simple way to determine the relevance of the results in thes
 
 As we went through the list of keywords, we found a lot of invalid words which NLTK wasn't able to recognize. For example links, unknown abbreviations, misspelled word, html snippets etc. Those could be easily eliminated by defining usage threshold, that is to filter out words used less times than let's say 20. This is also to make the results more reliable, since the worst ones are used just once. There is still space for improvements here. For instance we can imagine using regular expressions for the rating of English phrases and idioms instead of just separate keywords. Altough after having the results generated, they seem reasonable enough for purposes of this project. In the end, it is only logical to expect words like "inexpensive" and "watery" to be much worse rated than "immeasurable" or "aged". Other language support has not been considered in this project.
 
-It is problematic to assign ratings to the whole color palette. There was an idea of double-clustering the colors to form rated groups, but it made them look dull and actually quite distant from the original ones. This method is too radical. Consequently, we decided to use supervised classification to assign the colors to template palette that covers all the common colors. At this point the palette is hard-coded in the labels:Image class. It is shared with the web-service and also used as a prediction parameter. To use full color picker on the website (e.g. using  \href{http://jquery.com/}{jQuery}), it is possible to use the same classification function defined in \texttt{labels.py}.
+It is problematic to assign ratings to the whole color palette. There was an idea of double-clustering the colors to form rated groups, but it made them look dull and actually quite distant from the original ones. This method is too radical. Consequently, we decided to use supervised classification to assign the colors to template palette that covers all the common colors. At this point the palette is hard-coded in the \texttt{labels:Image} class. It is shared with the web application and also used as a prediction parameter. To use full color picker on the website (e.g. using  \href{http://jquery.com/}{jQuery}), it is possible to use the same classification function defined in \texttt{labels.py}.
 
 \section{Further development}
-At this early stage, the quality of the results highly increases with getting new data. The scripts to gain information from UNTAPPD are finished, so the only limit is the time. As seen in the figure \ref{fig:abvcomp}, there are still some areas with little or no user reviews. Those are rendered as zero rating blue. Another sources of beer information and reviews could also be implemented in the future. 
-It would be interesting to relate brewery information to the beer popularity. The required data is already available.
+At this early stage, the quality of the results highly increases with getting new data. The scripts to gain information from Untappd are finished, so the only limit is the time. As seen in the figure \ref{fig:abvcomp}, there are still some areas with little or no user reviews. Those are rendered as zero rating blue. Other sources of beer information and reviews could also be implemented in the future. 
+It would be interesting to relate brewery information to the beer popularity as well. This required brewery data is already available to us.
 
-Depending on the quantity of mined data, the density of the map grid can be increased. Current grid area varies between 30 000 km$^2$ and 200 000 km$^2$. Another idea to consider would be implementing different location distribution method. Now we use latitude/longitude classification, but Google API offers also to lookup the current state or city. This would all lead to more detailed results. Machine learning could be improved by introducing more sophisticated algorithm to extract keywords and phrases. 
+Depending on the quantity of mined data, the density of the map's grid can be increased. Current grid area varies between 30 000 km$^2$ and 200 000 km$^2$. Another idea to consider would be implementing different location distribution methods. Now we use latitude/longitude classification, but Google API offers other ways to lookup the current state or city. This would all lead to more detailed results. Machine learning could be improved by introducing more sophisticated algorithm to extract keywords and phrases. 
 
 \section{Results}
 
