@@ -408,7 +408,7 @@ def processLabels():
             continue
 
         print ("Processing image " + file +
-               " [" + str(i - 1) + "/" + str(stop) + "]")
+               " [" + str(i - 1) + "/" + str(len(fileList)) + "]")
         beerLabel = labels.Image(path + file)
 
         beerLabel.preprocess()

@@ -28,6 +28,8 @@ The Predictive Beer Analytics project has been initiated in the Fall of 2014 as 
 
 The application to retrieve and analyse data along with our web application (without the database) can be found on our GitHub account. The web-service can be run locally with an installation of \href{https://www.djangoproject.com/}{Django}, \href{http://www.mysql.com/}{MySQL}, and a copy of the database.
 
+For more information, the documentation is available on \href{http://predictive-beer-analytics.readthedocs.org/en/latest/}{ReadTheDocs.org}. 
+
 \section{Data mining}
 Being the main aspect of any data mining project, retrieving the data, and a lot of it, is the first course of action. All data used by Predictive Beer Analytics was gathered through the \href{https://untappd.com/api/docs}{Untappd API}, a beer review website which provides access to the data it collects. Unfortunately, the service limited our access to their data to 100 calls an hour. This significantly increased the amount of time required to gather data. The script, \texttt{untappd.py} provides data structures to store Untappd data as well as uses the \textit{Requests} module to make calls to Untappd's servers. Due to the available requests through the API service, it was necessary to first retrieve a list of active users and then later use their username to gather information about beer they have reviewed in the past. Over the course of roughly two weeks of mining, a reasonable amount of information was stored. Seen in Figure \ref{fig:dataQuantity}, over 200.000 user reviews are used to predict the desirability of a beer based on location. To keep this information up-to-date, \texttt{dataQuantity.py} script has been included in the library. 
 
@@ -110,11 +112,12 @@ The decision to use these technologies is pretty straight forward:
 The technologies were familiar, widely used, well documented and easy to use.
 This lead to quite a fast development of the Predictive beer analytics GUI.
 
+\section{Documentation}
+The documentation has been created with \href{http://sphinx-doc.org/}{Sphinx} tool. It allows us to generate the documentation in various formats including html, pdf, epub etc. from reStructuredText and python sources. For this to work, the \texttt{doctstring} convention is required. Apart from this, we also performed a brief code-style checking according to \href{https://www.python.org/dev/peps/}{PEP} conventions. The documentation is hosted on \href{http://predictive-beer-analytics.readthedocs.org/}{http://predictive-beer-analytics.readthedocs.org/}, which integrates directly to the GitHub account.
 
 
 
 \section{Discussion}
-
 There is usually no simple way to determine the relevance of the results in these kind of projects. However, we tried to validate it as much as possible. 
 
 As we went through the list of keywords, we found a lot of invalid words which NLTK wasn't able to recognize. For example links, unknown abbreviations, misspelled word, html snippets etc. Those could be easily eliminated by defining usage threshold, that is to filter out words used less times than let's say 20. This is also to make the results more reliable, since the worst ones are used just once. There is still space for improvements here. For instance we can imagine using regular expressions for the rating of English phrases and idioms instead of just separate keywords. Altough after having the results generated, they seem reasonable enough for purposes of this project. In the end, it is only logical to expect words like "inexpensive" and "watery" to be much worse rated than "immeasurable" or "aged". Other language support has not been considered in this project.
@@ -128,7 +131,8 @@ It would be interesting to relate brewery information to the beer popularity. Th
 Depending on the quantity of mined data, the density of the map grid can be increased. Current grid area varies between 30 000 km$^2$ and 200 000 km$^2$. Another idea to consider would be implementing different location distribution method. Now we use latitude/longitude classification, but Google API offers also to lookup the current state or city. This would all lead to more detailed results. Machine learning could be improved by introducing more sophisticated algorithm to extract keywords and phrases. 
 
 \section{Results}
-At the beginning of Predictive Beer Analytics, our goal was to find relationships between the alcohol content or style of a beer and the location of a user's rating to determine what areas enjoy the most. As the project progressed, ambitions rose and we wanted to see if the color of the label or the description of beers made a significant impact on the desirability of a beer. Using \texttt{PBAMap.py}, \texttt{keywordClassifier.py} we are able to graphically visualize the effects of specific words, alcohol content, and beer style on a user's rating. Figure \ref{fig:abvcomp} shows the consistent and seemingly global idea that people typically enjoy stronger beers. While there is a clear correlation between user reviews and and a beer's alcohol content, the type of beers an area likes are typically varied and relatively unpredictable. Though it does seem that the United States enjoys IPAs more than ciders and fruitier beers.
+
+ Using \texttt{PBAMap.py}, \texttt{keywordClassifier.py} we are able to graphically visualize the effects of specific words, alcohol content, and beer style on a user's rating. Figure \ref{fig:abvcomp} shows the consistent and seemingly global idea that people typically enjoy stronger beers. While there is a clear correlation between user reviews and and a beer's alcohol content, the type of beers an area likes are typically varied and relatively unpredictable. Though it does seem that the United States enjoys IPAs more than ciders and fruitier beers.
 
 It was also interesting to see that certain words used in a beer's description had a large impact on a user's review of the beer. For example, beer descriptions containing words like "inexpensive", "alcohol-free", and "grandma" all had an average rating of below three out of five stars. Whereas "sought-after", "chocolate-covered", and "fabled" all had ratings above four stars.
 
@@ -140,7 +144,7 @@ It was also interesting to see that certain words used in a beer's description h
 \end{figure}
 
 \section{Conclusion}
-
+At the beginning of Predictive Beer Analytics, our goal was to find relationships between the alcohol content or style of a beer and the location of a user's rating to determine what areas enjoy the most. As the project progressed, ambitions rose and we wanted to see if the color of the label or the description of beers made a significant impact on the desirability of a beer. Using techniques described in the data mining course, it was found that there were relationships between the beer properties and user ratings. There were also findings on the locations of certain preferred types of beer. It can be shown that the challenge of determining what makes a good beer was overcome.
 
 \bibliographystyle{IEEEtran}
 \bibliography{lyngby}
