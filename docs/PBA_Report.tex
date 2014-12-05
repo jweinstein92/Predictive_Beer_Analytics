@@ -24,9 +24,9 @@ Based on a large amount of user and beer data, the application uses varying tech
 
 \section{Introduction}
 
-The Predictive Beer Analytics project has been initiated in the Fall of 2014 as a part of "\textit{Data Mining Using Python}" course at Denmark Technical University. Its purpose is not only exercise the study material, but also to give users some useful, informative results. To satisfy this, we used our previous experience with web development and created a lightweight web-service with visual representations of the results. The users can design their own beer by defining its style, alcohol by volume, keywords and dominant label color. This information is then used to generate a desirability map (ref).
+The Predictive Beer Analytics project has been initiated in the Fall of 2014 as a part of "\textit{Data Mining Using Python}" course at Denmark Technical University. Its purpose is not only to exercise the study material, but also to give users some useful, informative results. To satisfy this, we used our previous experience with web development and created a lightweight web-service with visual representations of the results. The users can design their own beer by defining its style, alcohol by volume, keywords and dominant label color. This information is then used to generate a desirability map.
 
-The application to retrieve and analyse data along with our web application (without the database) can be found on our GitHub account. The web-service can be run locally with an installation of \href{https://www.djangoproject.com/}{Django}, \href{http://www.mysql.com/}{MySQL}, and a copy of the database.
+The application to retrieve and analyse data along with our web application (without the database) can be found on our \href{https://github.com/jweinstein92/Predictive_Beer_Analytics}{GitHub} account. The web-service can be run locally with an installation of \href{https://www.djangoproject.com/}{Django}, \href{http://www.mysql.com/}{MySQL}, and a copy of the database.
 
 For more information, the documentation is available on \href{http://predictive-beer-analytics.readthedocs.org/en/latest/}{ReadTheDocs.org}. 
 
@@ -65,7 +65,7 @@ To check if the result is correct, we use the clustered colors to rebuild the pi
   \label{fig:colorClustering}
 \end{figure}
 
-Having these colors extracted, they need to be associated with ratings. Otherwise there would be no measurable impact on the total beer desirability. We couldn't match those color directly to the user input, because that way its rating would have to be calculated  every time the request is made, which is not acceptable given the amount of data. So we come up with a solution by using \textbf{template color palette}. It serves as a \textbf{fixed categorizing root}. None of the available functions were suitable for comparing the RGB values of the colors, so we designed our own classification algorithm. It uses the well-known euclidean distance formula to determine which color from the template color palette is the closest. However, simple distance in RGB colorspace doesn't correspond to human perception. A change of one parameter results in much more different color than the same change distributed between multiple parameters. It was possible to overcome this by converting the colors to \textbf{YUV colorspace} (Fig. \ref{fig:colorspace}), which takes human perception into account, making the response more or less linear. 
+Having these colors extracted, they need to be associated with ratings. Otherwise there would be no measurable impact on the total beer desirability. We couldn't match those color directly to the user input, because that way its rating would have to be calculated  every time the request is made, which is not acceptable given the amount of data. So we came up with a solution by using \textbf{template color palette}. It serves as a \textbf{fixed categorizing root}. None of the available functions were suitable for comparing the RGB values of the colors, so we designed our own classification algorithm. It uses the well-known euclidean distance formula to determine which color from the template color palette is the closest. However, simple distance in RGB colorspace doesn't correspond to human perception. A change of one parameter results in much more different color than the same change distributed between multiple parameters. It was possible to overcome this by converting the colors to \textbf{YUV colorspace} (Fig. \ref{fig:colorspace}), which takes human perception into account, making the response more or less linear. 
 
 
 \begin{figure}[t]
@@ -75,23 +75,23 @@ Having these colors extracted, they need to be associated with ratings. Otherwis
   \label{fig:colorspace}
 \end{figure}
 
-\section{Web application}
+\section{Web Application}
 
-The web-service uses one of the most popular Python frameworks - \href{https://www.djangoproject.com/}{Django}. This allowed us to create elegant web application while still being able to focus on the server-side python scripts rather than web-design.
+The web application uses one of the most popular Python frameworks - \href{https://www.djangoproject.com/}{Django}. This allowed us to create elegant web application while still being able to focus on the server-side python scripts rather than web-design.
 
 The web-design and structure of the web application is pretty straight forward:
 A landing page that serves as a portal and first encounter information of the web applications functionality.
 A prediction page where the core of PBA is preformed.
 The user can fill in data that would reflect their beer and check where it would do well with a histogram.
-A Description page where a off the bat ranking of the processed words are presented.
+A Description page where a dynamically created ranking of the processed words are presented.
 Here it is also possible to search for a specific word.
 The result will be a list of similar words and their ranking starting form the highest rating.
 A color page where the user can see the rankings off colors used in beer labels.
 An about page where we tell the story and information about Predictive Beer Analytics.
 And last a map page where we showcase some predefined results from the predictor.
 
-Django uses the MVC architecture. So the Project has a data model, representing our processed data was created.
-A single view file that contains all (as the size of the Web application was not large enough to warrant separation of concerns in our eyes) application level functionality. And templates which uses Css and Javascript to make a smoother appearance.
+Django uses the MVC architecture. So the project has a data model, representing our processed data.
+A single view file that contains all (as the size of the Web application was not large enough to warrant separation of concerns in our eyes) application level functionality. And templates which uses CSS and JavaScript to make a smoother appearance.
 Bootstrap was used to speed up the styling in this regard. All templates extends the base.html template which
 acts as a master page.
 
