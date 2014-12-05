@@ -1,8 +1,11 @@
 Predictive Beer Analytics
 ========================
 
-Predictive Beer Analytics is a  
-
+Predictive Beer Analytics is a project that aims to 
+gather,process, and present beer data in such a way that
+the user can find out based on the desired characteristics of the beer where in the world that  
+particular beer is revered. Other fun tools for beer marketing is also included such as color 
+and word rating analyser.
 
 ## Authors
 
@@ -19,8 +22,8 @@ Predictive_Beer_Analytics/
 ├── docs/
 ├── machine_learning/
 │   ├── data/
-│	├── graphics/
-│	├── lib/
+│		├── graphics/
+│		├── lib/
 │   └── tests/
 └── static/
     ├── css
@@ -36,11 +39,13 @@ In the static directory you will find css, images, and javascript files that are
 
 Predictive Beer analytics documentation is included in the project, under the docs directory.
 
-5-line code snippet on how its used (if it's a library)
-copyright and licensing information (or "Read LICENSE")
+## Dependencies
 
-instructions to install, configure, and to run the programs
-instruction to grab the latest code and detailed instructions to build it (or quick overview and "Read INSTALL")
-instructions to submit bugs, feature requests, submit patches, join mailing list, get announcements, or join the user or dev community in other forms
-other contact info (email address, website, company name, address, etc)
-legal notices (crypto stuff)
+## How to install
+
+## Usage
+
+## Contact
+
+## Acknowledgements
+Thanks to [Untappd.com](https://untappd.com/) for allowing us to mine the data necessary to bring this project about.
