@@ -1,27 +1,60 @@
 {% extends 'base.html' %}
 {% block title %} About {% endblock %}
 {% block content %}
+    <div style="background-image:url('{{ STATIC_URL }}images/background.jpg'); height:676px">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-12 text" id="about-container">
+                    <p>
+                        In an age of uninformed masses, <strong>Predictive Beer Analytics</strong> seeks to answer
+                        the question on everyone's mind - what makes a refreshingly amazing beer? Three friends, aptly named
+                        Kühn and Friends after our team member Marek Kühn, decided to answer this question.
+                    </p>
 
-    <div class="container">
-        <div class="row">
-            <div class="col-md-12">
-                <span class="text text--white">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Cras sed ligula felis. Vestibulum sagittis a nisl in congue. Morbi malesuada ut nisi vel ullamcorper. Ut hendrerit sapien at rutrum consectetur. Maecenas vitae fringilla metus. Nam sagittis vulputate consectetur. Curabitur at aliquet tellus, ut maximus nulla. Integer ac tortor eu metus porttitor venenatis quis vitae velit. Donec congue accumsan orci id venenatis. Donec molestie tellus eu porta porta.</span>
+                    <p>
+                        After receiving the task of mining data and utilizing techniques earlier learned at the Technical
+                        University of Denmark, Jim Sundvkist and Josh Weinstein pondered what to do their final project on. After
+                        discussing various ideas, none of which inciting much interest, it was determined that an idea would stick
+                        over a beer in the near future. As the time arrived and beer was drunk and topics unrelated to school
+                        reigned, it dawned on Josh - why not do our project on beer as it is a large part of university culture
+                        and would be quite interesting to study. As the ideas flowed with the beer, it was settled. <strong>Predictive Beer
+                        Analytics</strong> would be. A final cheers was had as work could begin on our newly discovered endeavour.
+                    </p>
+
+                    <p>
+                        Progression showed the extent of work necessary to complete the task. A third member must be added to
+                        the group. With great luck Marek Kühn joined in our journey of analysing, visualizing, and presenting
+                        our data to the world (or at the very least, to people we knew). It was discussed that we would provide the
+                        following in our project:
+                            <ul>
+                                <li>Extensive amounts of data collected from the beer review service <a href="https://untappd.com/thepub">Untappd</a>
+                                    <ul>
+                                        - Including user locations, beer abv, beer labels, beer ratings, beer keywords, and beer style
+                                    </ul>
+                                </li>
+                                <li>
+                                    Color analysis of beer labels to determine if there is a correlation between label colors
+                                    and review scores
+                                </li>
+                                <li>
+                                    Keyword discovery from beer descriptions to see which words help or hurt a beer's popularity
+                                </li>
+                                <li>
+                                    Visualizations of where in the world specific beer traits would flourish - abv and style
+                                </li>
+                                <li>
+                                    Web service to display our findings along with a prediction tool where users can create
+                                    a beer using various traits to see where it would be successful
+                                </li>
+                            </ul>
+                    </p>
+
+                    <p>
+                        Work was completed, stress was had but the idea was strong. After weeks of hard work, research, and
+                        hundreds of thousands of pieces of data, <strong>Predictive Beer Analytics</strong> took shape.
+                    </p>
+                </div>
             </div>
         </div>
-
-        <div class="row">
-            <div class="col-md-12">
-                <span class="text">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Cras sed ligula felis. Vestibulum sagittis a nisl in congue. Morbi malesuada ut nisi vel ullamcorper. Ut hendrerit sapien at rutrum consectetur. Maecenas vitae fringilla metus. Nam sagittis vulputate consectetur. Curabitur at aliquet tellus, ut maximus nulla. Integer ac tortor eu metus porttitor venenatis quis vitae velit. Donec congue accumsan orci id venenatis. Donec molestie tellus eu porta porta.</span>
-            </div>
-        </div>
-
-        <div class="row">
-            <div class="col-md-12">
-                <span class="text text--secondary">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Cras sed ligula felis. Vestibulum sagittis a nisl in congue. Morbi malesuada ut nisi vel ullamcorper. Ut hendrerit sapien at rutrum consectetur. Maecenas vitae fringilla metus. Nam sagittis vulputate consectetur. Curabitur at aliquet tellus, ut maximus nulla. Integer ac tortor eu metus porttitor venenatis quis vitae velit. Donec congue accumsan orci id venenatis. Donec molestie tellus eu porta porta.</span>
-            </div>
-        </div>
-
-
     </div>
-
 {% endblock %}

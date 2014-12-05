@@ -192,3 +192,13 @@ border-bottom: 1px solid #ddd;
 .color-box-text {display:block; height:100%; width:100%;vertical-align: middle; text-align: center; font-size:30px; margin-top: 30px;}
 .color-list {margin-top: 30px; background:#F4F4F4; }
 .color-info {display:block; width:405px; margin:auto; font-size:18px;}
+
+/*about*/
+#about-container {
+    font-size:18px;
+    background:#FFFFFF;
+    border-radius:6px;
+    margin-top:5%;
+    padding-top:20px;
+    padding-bottom:20px;
+}
