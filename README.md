@@ -22,8 +22,8 @@ Predictive_Beer_Analytics/
 ├── docs/
 ├── machine_learning/
 │   ├── data/
-│		├── graphics/
-│		├── lib/
+│   ├── graphics/
+│   ├── lib/
 │   └── tests/
 └── static/
     ├── css
