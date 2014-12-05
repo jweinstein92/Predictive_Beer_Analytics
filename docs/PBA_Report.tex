@@ -158,51 +158,5 @@ At the beginning of Predictive Beer Analytics, our goal was to find relationship
 \clearpage
 \onecolumn
 \appendices
-\section{Code listings}
-
-\definecolor{darkgreen}{rgb}{0, 0.4, 0}
-\lstset{language=Python,
-  numbers=left,
-  frame=bottomline,
-  basicstyle=\scriptsize,
-  identifierstyle=\color{blue},
-  keywordstyle=\bfseries,
-  commentstyle=\color{darkgreen},
-  stringstyle=\color{red},
-  literate={Ö}{{\"O}}1 {é}{{\'e}}1 {Å}{{\AA}}1,
-}
-\lstlistoflistings
-
-\label{listing:PBA}\lstinputlisting{../machine_learning/lib/predictiveBeerAnalytics.py}
-
-\label{listing:Untappd}\lstinputlisting{../machine_learning/lib/untappd.py}
-
-\label{listing:keywordExtractor}\lstinputlisting{../machine_learning/lib/keywordExtractor.py}
-
-\label{listing:keywordClassifier}\lstinputlisting{../machine_learning/lib/keywordClassifier.py}
-
-\label{listing:dataPoints}\lstinputlisting{../machine_learning/lib/dataPoints.py}
-
-\label{listing:PBAMap}\lstinputlisting{../machine_learning/lib/PBAMap.py}
-
-\label{listing:labels}\lstinputlisting{../machine_learning/lib/labels.py}
-
-\label{listing:fileReader}\lstinputlisting{../machine_learning/lib/fileReader.py}
-
-\label{listing:dataQuantity}\lstinputlisting{../machine_learning/lib/dataQuantity.py}
-
-
-\newpage
-\section{Automatic generation of documentation}
-
-Demontration using epydoc:
-\begin{verbatim}
-epydoc --pdf -o /home/fnielsen/tmp/epydoc/ --name RBBase wikipedia/api.py
-\end{verbatim}
-This example does not use \verb!brede_str_nmf! but another more
-well-documented module called {\tt api.py} that are used to download
-material from Wikipedia. 
-
-%\includepdf[pages={-}]{/home/fnielsen/tmp/epydoc/api.pdf}
 
 \end{document}
