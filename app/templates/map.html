@@ -2,16 +2,54 @@
 {% block title %} Descriptions {% endblock %}
 {% block content %}
 
-    <div id="map-container">
-        <div id="panel">
-          <button onclick="toggleHeatmap()">Toggle Heatmap</button>
-          <button onclick="changeGradient()">Change gradient</button>
-          <button onclick="changeRadius()">Change radius</button>
-          <button onclick="changeOpacity()">Change opacity</button>
+<div id="maps-container">
+    <div id="carousel-us" class="carousel slide" data-ride="carousel">
+        <!-- Indicators -->
+        <ol class="carousel-indicators">
+            <li data-target="#carousel-us" data-slide-to="0" class="active"></li>
+            <li data-target="#carousel-us" data-slide-to="1"></li>
+            <li data-target="#carousel-us" data-slide-to="2"></li>
+        </ol>
+
+        <!-- Wrapper for slides -->
+        <div class="carousel-inner usabv" role="listbox">
+            {% for file in usFiles %}
+                <div class="item">
+                    <img src="{{ STATIC_URL }}images/maps/US_abv/{{ file }}" alt="...">
+                </div>
+            {% endfor %}
         </div>
-        <div id="map-canvas"></div>
+
+        <span class="right carousel-control"></span>
+    </div>
+    <!-- Second carousel -->
+    <div id="carousel-eu" class="carousel slide" data-ride="carousel">
+        <!-- Indicators -->
+        <ol class="carousel-indicators">
+            <li data-target="#carousel-eu" data-slide-to="0" class="active"></li>
+            <li data-target="#carousel-eu" data-slide-to="1"></li>
+            <li data-target="#carousel-eu" data-slide-to="2"></li>
+        </ol>
+
+        <!-- Wrapper for slides -->
+        <div class="carousel-inner euabv" role="listbox">
+            {% for file in euFiles %}
+                <div class="item">
+                    <img src="{{ STATIC_URL }}images/maps/EU_abv/{{ file }}" alt="...">
+                </div>
+            {% endfor %}
+        </div>
+
+        <span class="left carousel-control"></span>
     </div>
 
+    <div class="text text--secondary" id="map_teaser">
+        Ever wonder where in the United States and Europe people enjoy their beer strong and plentiful? Look no further as
+        we have done the analysis for you! As you can see above, as the concentration of alcohol increases, the rating
+        of the beer also increases. There seems to be a direct correlation between the a beer's ABV and how much a user
+        rates the beer. The people have spoken - stronger is better!
+    </div>
+</div>
 {% endblock %}
 
 
