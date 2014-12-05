@@ -75,13 +75,29 @@ Having these colors extracted, they need to be associated with ratings. Otherwis
   \label{fig:colorspace}
 \end{figure}
 
-\section{Web service}
+\section{Web application}
 
 The web-service uses one of the most popular Python frameworks - \href{https://www.djangoproject.com/}{Django}. This allowed us to create elegant web application while still being able to focus on the server-side python scripts rather than web-design.
 
-The data that the webapp uses are stored in a \href{http://www.mysql.com/}{MySQL database}.
-The data itself is generated from the datamining scripts and saved to the webapps database by importing them as a csv file.
-The webapp uses \textbf{Django's database-abstraction API} to perform the basic CRUD functionality to the datamodel 
+The web-design and structure of the web application is pretty straight forward:
+A landing page that serves as a portal and first encounter information of the web applications functionality.
+A prediction page where the core of PBA is preformed.
+The user can fill in data that would reflect their beer and check where it would do well with a histogram.
+A Description page where a off the bat ranking of the processed words are presented.
+Here it is also possible to search for a specific word.
+The result will be a list of similar words and their ranking starting form the highest rating.
+A color page where the user can see the rankings off colors used in beer labels.
+An about page where we tell the story and information about Predictive Beer Analytics.
+And last a map page where we showcase some predefined results from the predictor.
+
+Django uses the MVC architecture. So the Project has a data model, representing our processed data was created.
+A single view file that contains all (as the size of the Web application was not large enough to warrant separation of concerns in our eyes) application level functionality. And templates which uses Css and Javascript to make a smoother appearance.
+Bootstrap was used to speed up the styling in this regard. All templates extends the base.html template which
+acts as a master page.
+
+The data that the web application uses are stored in a \href{http://www.mysql.com/}{MySQL database}.
+The data itself is generated from the data mining scripts and saved to the webapps database by importing them as a csv file.
+The web application uses \textbf{Django's database-abstraction API} to perform the basic CRUD functionality to the data model 
 
 SE FIGURE ?.
  
@@ -90,7 +106,7 @@ Django's database-abstraction API automatically sanitizes any input so \textbf{S
 Cross-site-scripting is dealt with by using \textbf{cross-site request forgery (CSFR) tokens}. Those are automatically attached to the server responses so we need to add it only while doing POST.
 
 Django also have some \textbf{predefined user authentication and authorization functionality}.
-In the webapp we do not use any access control so this part is unnecessary until a time arrive when we do need it.
+In the web application we do not use any access control so this part is unnecessary until a time arrive when we do need it.
 
 The decision to use these technologies is pretty straight forward:
 The technologies were familiar, widely used, well documented and easy to use.
@@ -98,6 +114,7 @@ This lead to quite a fast development of the Predictive beer analytics GUI.
 
 \section{Documentation}
 The documentation has been created with \href{http://sphinx-doc.org/}{Sphinx} tool. It allows us to generate the documentation in various formats including html, pdf, epub etc. from reStructuredText and python sources. For this to work, the \texttt{doctstring} convention is required. Apart from this, we also performed a brief code-style checking according to \href{https://www.python.org/dev/peps/}{PEP} conventions. The documentation is hosted on \href{http://predictive-beer-analytics.readthedocs.org/}{http://predictive-beer-analytics.readthedocs.org/}, which integrates directly to the GitHub account.
+
 
 
 \section{Discussion}
