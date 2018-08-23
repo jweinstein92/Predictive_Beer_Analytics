@@ -39,7 +39,7 @@ In the static directory you will find css, images, and javascript files that are
 ## Documentation
 
 Predictive Beer Analytics documentation is included in the project, under the docs directory.
-Or can be accessed [here](http://www.predictive-beer-analytics.readthedocs.org)
+Or can be accessed [here](https://predictive-beer-analytics.readthedocs.io/en/latest/)
 
 ## Dependencies
 ```
@@ -56,7 +56,7 @@ mysql>=5.6.22
 ```
 
 ## Usage
-See [documentation](http://www.predictive-beer-analytics.readthedocs.org)
+See [documentation](https://predictive-beer-analytics.readthedocs.io/en/latest/
 
 ## Contact
 Josh Weinstein: joshweinstein92@gmail.com
